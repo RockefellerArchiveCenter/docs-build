@@ -28,6 +28,17 @@ private_dir = config.get('Directories', 'private')
 repository_name = "test"
 # repository_url = payload['repository']['ssh_url']
 
+def get_updates():
+    # If the repository exists, update the data
+    if isdir(join(repository_dir, repository_name)):
+        chdir(join(repository_dir, repository_name))
+        # call("git pull")
+    # If the repository doesn't already exist, make a directory and pull down the data
+    else:
+        mkdir(join(repository_dir, repository_name))
+        chdir(join(repository_dir, repository_name))
+        # call("git pull")
+        # call("git clone " + repository_url)
 
 def build_sites(directory):
     with open('config.yml') as f:
@@ -42,7 +53,8 @@ def build_sites(directory):
 def build_site(name, sites = [], *args):
     for site in sites:
         site_staging_dir = join(root_dir, site, staging_dir)
-        # this file is used to generate the home page
+
+        # this file is used to generate the site home page
         if not isdir(join(site_staging_dir, '_data')):
             makedirs(join(site_staging_dir, '_data'))
         copyfile(join(repository_dir, name, 'config.yml'), join(site_staging_dir, '_data', name + '.yml'))
@@ -69,16 +81,8 @@ def build_site(name, sites = [], *args):
 
         # set file permissions and ownership if necessary
 
+def main():
+    get_updates()
+    build_sites(repository_name)
 
-# If the repository exists, update the data
-if isdir(join(repository_dir, repository_name)):
-    chdir(join(repository_dir, repository_name))
-    # call("git pull")
-    build_sites(repository_name)
-# If the repository doesn't already exist, make a directory and pull down the data
-else:
-    mkdir(join(repository_dir, repository_name))
-    chdir(join(repository_dir, repository_name))
-    # call("git pull")
-    # call("git clone " + repository_url)
-    build_sites(repository_name)
+main()
