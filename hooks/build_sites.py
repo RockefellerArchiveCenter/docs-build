@@ -18,7 +18,12 @@ config.read('local_settings.cfg')
 # with open(sys.argv[1], 'r') as jsf:
 #   payload = json.loads(jsf.read())
 
-repository_dir = join(config.get('Directories', 'root'), config.get('Directories', 'repositories'))
+root_dir = config.get('Directories', 'root')
+repository_dir = join(root_dir, config.get('Directories', 'repositories'))
+staging_dir = config.get('Directories', 'staging')
+build_dir = config.get('Directories', 'build')
+public_dir = config.get('Directories', 'public')
+private_dir = config.get('Directories', 'private')
 # repository_name = payload['repository']['name']
 repository_name = "test"
 # repository_url = payload['repository']['ssh_url']
@@ -29,34 +34,34 @@ def build_sites(directory):
         yaml_config = yaml.load(f)
         # Does it make sense to rely on whether or not the repository is private?
         if yaml_config['public'] == True:
-            sites = [config.get('Directories', 'public'), config.get('Directories', 'private')]
+            sites = [public_dir, private_dir]
         else:
-            sites = [config.get('Directories', 'private')]
+            sites = [private_dir]
         build_site(directory, sites)
 
 def build_site(name, sites = [], *args):
     for site in sites:
-        # We are still in repository/name
+        site_staging_dir = join(root_dir, site, staging_dir)
         # this file is used to generate the home page
-        if not isdir(join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), 'data')):
-            makedirs(join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), 'data'))
-        copyfile(join(repository_dir, name, 'config.yml'), join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), 'data', name + '.yml'))
+        if not isdir(join(site_staging_dir, '_data')):
+            makedirs(join(site_staging_dir, '_data'))
+        copyfile(join(repository_dir, name, 'config.yml'), join(site_staging_dir, '_data', name + '.yml'))
 
-        if isdir(join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), name)):
-            rmtree(join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), name))
-        if isfile(join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), name)):
+        if isdir(join(site_staging_dir, name)):
+            rmtree(join(site_staging_dir, name))
+        if isfile(join(site_staging_dir, name)):
             # in case someone put something (like a softlink) in its place
-            remove(join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), name))
+            remove(join(site_staging_dir, name))
 
         try:
-            makedirs(join(config.get('Directories', 'root'), site, config.get('Directories', 'build')))
+            makedirs(join(root_dir, site, build_dir))
         except OSError:
             # dir exists
             pass
 
-        copytree(join(repository_dir, name), join(config.get('Directories', 'root'), site, config.get('Directories', 'staging'), name))
+        copytree(join(repository_dir, name), join(site_staging_dir, name))
 
-        chdir(join(config.get('Directories', 'root'), site))
+        chdir(join(root_dir, site))
 
         #staging --> build
         # print "jekyll build --source %s --destination %s" % (config.get('Directories', 'staging'), config.get('Directories', 'build'))
