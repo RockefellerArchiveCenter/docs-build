@@ -1,5 +1,11 @@
 {
     "github_ips_only": true,
     "enforce_secret": "",
-    "return_scripts_info": true
+    "return_scripts_info": true,
+    "root_dir": "/var/www",
+    "repositories_dir": "repositories",
+    "staging_dir": "staging",
+    "build_dir": "build",
+    "public_dir": "public",
+    "private_dir": "private"
 }
