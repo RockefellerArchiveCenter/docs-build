@@ -5,7 +5,6 @@
 # test setup file
 # add next steps to setup file
 # sort out git credentialing
-# script for theme updating
 # consider using existing config file
 # update readme
 
@@ -63,7 +62,14 @@ def create_structure(target, site, name):
 
     copytree(join(repository_dir, name), target)
 
-def build_sites(directory):
+def build_site(base_url, source, destination):
+    chdir(base_url)
+    print "building at " + base_url
+    print "jekyll build --source %s --destination %s" % (source, destination)
+    call("jekyll build --source %s --destination %s" % (source, destination), shell=True)
+    # set file permissions and ownership if necessary
+
+def build(directory):
     with open('_config.yml') as f:
         yaml_config = yaml.load(f)
         if yaml_config['type'] == 'docs':
@@ -71,15 +77,14 @@ def build_sites(directory):
                 sites = [public_dir, private_dir]
             else:
                 sites = [private_dir]
-            build_docs(directory, sites)
+            update_docs(directory, sites)
         if yaml_config['type'] == 'theme':
-            build_theme(directory, [public_dir, private_dir])
+            update_theme(directory, [public_dir, private_dir])
 
-def build_docs(name, sites = [], *args):
+def update_docs(name, sites = [], *args):
     print "*** building documentation ***"
     for site in sites:
         site_staging_dir = join(root_dir, site, staging_dir)
-
         # this file is used to generate the site home page
         if not isdir(join(site_staging_dir, '_data')):
             makedirs(join(site_staging_dir, '_data'))
@@ -87,15 +92,9 @@ def build_docs(name, sites = [], *args):
 
         create_structure(join(site_staging_dir, name), site, name)
 
-        chdir(join(root_dir, site))
+        build_site(join(root_dir, site), staging_dir, build_dir)
 
-        #staging --> build
-        print "building" + site
-        # call("jekyll build --source %s --destination %s" % (config.get('Directories', 'staging'), config.get('Directories', 'build')))
-
-        # set file permissions and ownership if necessary
-
-def build_theme(name, sites = [], *args):
+def update_theme(name, sites = [], *args):
     print "*** building theme ***"
     for site in sites:
         site_staging_dir = join(root_dir, site, staging_dir)
@@ -115,16 +114,10 @@ def build_theme(name, sites = [], *args):
                         copytree(join(repository_dir, s), join(root_dir, site, staging_dir, s))
 
     for site in sites:
-        chdir(join(root_dir, site))
-
-        #staging --> build
-        print "building " +site
-        # call("jekyll build --source %s --destination %s" % (config.get('Directories', 'staging'), config.get('Directories', 'build')))
-
-        # set file permissions and ownership if necessary
+        build_site(join(root_dir, site), staging_dir, build_dir)
 
 def main():
     get_updates()
-    build_sites(repository_name)
+    build(repository_name)
 
 main()
