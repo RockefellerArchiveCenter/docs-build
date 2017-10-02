@@ -23,7 +23,7 @@ then
     sudo ln -s `which nodejs` /usr/local/bin/node 2>/dev/null
 fi
 
-sudo pip install requests Flask ipaddress
+sudo pip install requests Flask ipaddress pyyaml json
 sudo gem install jekyll github-pages --no-rdoc --no-ri
 sudo npm install -g grunt-cli
 
