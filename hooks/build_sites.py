@@ -9,28 +9,29 @@
 # update readme
 
 import sys
-import json
+from json import loads
 import yaml
 from os import chdir, makedirs, listdir
-from os.path import join, isdir, isfile
+from os.path import join, isdir, isfile, normpath, abspath, dirname
 from posix import remove
 from shutil import copyfile, copytree, rmtree
 from subprocess import call
 from ConfigParser import ConfigParser, NoSectionError
 
-# use existing config file?
-config = ConfigParser()
-config.read('local_settings.cfg')
+base_path = normpath(abspath(join(dirname(__file__), '..')))
+
+with open(join(base_path, 'config.json'), 'r') as cfg:
+    config = loads(cfg.read())
 
 # with open(sys.argv[1], 'r') as jsf:
-#   payload = json.loads(jsf.read())
+#   payload = loads(jsf.read())
 
-root_dir = config.get('Directories', 'root')
-repository_dir = join(root_dir, config.get('Directories', 'repositories'))
-staging_dir = config.get('Directories', 'staging')
-build_dir = config.get('Directories', 'build')
-public_dir = config.get('Directories', 'public')
-private_dir = config.get('Directories', 'private')
+root_dir = config.get('root_dir')
+repository_dir = join(root_dir, config.get('repositories_dir'))
+staging_dir = config.get('staging_dir')
+build_dir = config.get('build_dir')
+public_dir = config.get('public_dir')
+private_dir = config.get('private_dir')
 # repository_name = payload['repository']['name']
 repository_name = "theme"
 # repository_url = payload['repository']['ssh_url']
