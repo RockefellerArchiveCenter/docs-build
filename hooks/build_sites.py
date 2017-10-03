@@ -5,19 +5,19 @@
 # test setup file
 # add next steps to setup file
 # sort out git credentialing
-# consider using existing config file
 # update readme
+# update package.json
 
 import sys
-from json import loads
 import yaml
+from json import loads
 from os import chdir, makedirs, listdir
 from os.path import join, isdir, isfile, normpath, abspath, dirname
 from posix import remove
 from shutil import copyfile, copytree, rmtree
 from subprocess import call
-from ConfigParser import ConfigParser, NoSectionError
 
+# base path for the GitHub Webhook handling application
 base_path = normpath(abspath(join(dirname(__file__), '..')))
 
 with open(join(base_path, 'config.json'), 'r') as cfg:
@@ -26,8 +26,8 @@ with open(join(base_path, 'config.json'), 'r') as cfg:
 # with open(sys.argv[1], 'r') as jsf:
 #   payload = loads(jsf.read())
 
-root_dir = config.get('root_dir')
-repository_dir = join(root_dir, config.get('repositories_dir'))
+site_root_dir = config.get('site_root_dir')
+repository_dir = config.get('repository_dir')
 staging_dir = config.get('staging_dir')
 build_dir = config.get('build_dir')
 public_dir = config.get('public_dir')
@@ -56,7 +56,7 @@ def create_structure(target, site, name):
         remove(target)
 
     try:
-        makedirs(join(root_dir, site, build_dir))
+        makedirs(join(site_root_dir, site, build_dir))
     except OSError:
         # dir exists
         pass
@@ -71,7 +71,7 @@ def build_site(base_url, source, destination):
     # set file permissions and ownership if necessary
 
 def build(directory):
-    with open('_config.yml') as f:
+    with open(join(repository_dir, directory, '_config.yml')) as f:
         yaml_config = yaml.load(f)
         if yaml_config['type'] == 'docs':
             if yaml_config['public'] == True:
@@ -85,7 +85,7 @@ def build(directory):
 def update_docs(name, sites = [], *args):
     print "*** building documentation ***"
     for site in sites:
-        site_staging_dir = join(root_dir, site, staging_dir)
+        site_staging_dir = join(site_root_dir, site, staging_dir)
         # this file is used to generate the site home page
         if not isdir(join(site_staging_dir, '_data')):
             makedirs(join(site_staging_dir, '_data'))
@@ -93,12 +93,12 @@ def update_docs(name, sites = [], *args):
 
         create_structure(join(site_staging_dir, name), site, name)
 
-        build_site(join(root_dir, site), staging_dir, build_dir)
+        build_site(join(site_root_dir, site), staging_dir, build_dir)
 
 def update_theme(name, sites = [], *args):
     print "*** building theme ***"
     for site in sites:
-        site_staging_dir = join(root_dir, site, staging_dir)
+        site_staging_dir = join(site_root_dir, site, staging_dir)
 
         create_structure(site_staging_dir, site, name)
 
@@ -112,10 +112,10 @@ def update_theme(name, sites = [], *args):
                     else:
                         sites = [private_dir]
                     for site in sites:
-                        copytree(join(repository_dir, s), join(root_dir, site, staging_dir, s))
+                        copytree(join(repository_dir, s), join(site_root_dir, site, staging_dir, s))
 
     for site in sites:
-        build_site(join(root_dir, site), staging_dir, build_dir)
+        build_site(join(site_root_dir, site), staging_dir, build_dir)
 
 def main():
     get_updates()
