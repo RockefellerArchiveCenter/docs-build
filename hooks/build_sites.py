@@ -2,8 +2,6 @@
 # pulls files and builds sites
 
 # TODO
-# test setup file
-# add next steps to setup file
 # sort out git credentialing
 # update readme
 # update package.json
@@ -30,8 +28,8 @@ site_root_dir = config.get('site_root_dir')
 repository_dir = config.get('repository_dir')
 staging_dir = config.get('staging_dir')
 build_dir = config.get('build_dir')
-public_dir = config.get('public_dir')
-private_dir = config.get('private_dir')
+public_site_dir = config.get('public_site_dir')
+private_site_dir = config.get('private_site_dir')
 # repository_name = payload['repository']['name']
 repository_name = "theme"
 # repository_url = payload['repository']['ssh_url']
@@ -75,12 +73,12 @@ def build(directory):
         yaml_config = yaml.load(f)
         if yaml_config['type'] == 'docs':
             if yaml_config['public'] == True:
-                sites = [public_dir, private_dir]
+                sites = [public_site_dir, private_site_dir]
             else:
-                sites = [private_dir]
+                sites = [private_site_dir]
             update_docs(directory, sites)
         if yaml_config['type'] == 'theme':
-            update_theme(directory, [public_dir, private_dir])
+            update_theme(directory, [public_site_dir, private_site_dir])
 
 def update_docs(name, sites = [], *args):
     print "*** building documentation ***"
@@ -108,9 +106,9 @@ def update_theme(name, sites = [], *args):
                 yaml_config = yaml.load(f)
                 if yaml_config['type'] == 'docs':
                     if yaml_config['public'] == True:
-                        sites = [public_dir, private_dir]
+                        sites = [public_site_dir, private_site_dir]
                     else:
-                        sites = [private_dir]
+                        sites = [private_site_dir]
                     for site in sites:
                         copytree(join(repository_dir, s), join(site_root_dir, site, staging_dir, s))
 

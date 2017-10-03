@@ -9,7 +9,7 @@ then
   sudo apt-get -y install \
       git make gcc \
       python-pip python-setuptools \
-      curl \
+      curl pbcopy \
       #nodejs npm
 else
   sudo yum -y install epel-release
@@ -17,7 +17,7 @@ else
   sudo yum -y install \
     git make gcc \
     python-pip python-setuptools \
-    curl \
+    curl pbcopy \
     #nodejs npm
 fi
 
@@ -60,10 +60,16 @@ eval "$(ssh-agent -s)"
 ssh-add -k ~/.ssh/id_rsa
 
 echo "
-Done installing.
+Done installing dependencies.
 
-1. set up config.json
-2. deploy in Apache
-2. Add SSH key to Github: https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
-3. Set up webhook URL.
+NEXT STEPS
+1. Update variables in config.json
+    See README.md for further information.
+2. Deploy in Apache by adding a WSGIScriptAlias directive to your
+VirtualHost file.
+    See README.md for details.
+2. Add the SSH key created above to GitHub.
+    See GitHub documentation for SSH keys.
+3. Set up webhook URL in GitHub.
+    See Github documentation for Webhooks.
 "
