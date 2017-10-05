@@ -37,21 +37,78 @@ You can configure what the application does by copying the sample config file
 
  `hooks_path`: Configures a path to import the hooks. If not set, it'll import the hooks from the default location (/.../docs-build/hooks)
 
- `repository_dir`: "/repositories",
+ `repository_dir`: Sets base directory into which repositories will be pulled from Github. See below for details
 
- `site_root_dir`: "/docs",
+ `site_root_dir`: Configures the root directory for the site.
 
- `public_site_dir`: "public",
+ `public_site_dir`: Sets the root directory for the public documentation site, which will be nested underneath `site_root_dir`.
 
- `private_site_dir`: "private",
+ `private_site_dir`: Sets the root directory for the private documentation site, which will be nested underneath `site_root_dir`.
 
- `staging_dir`: "staging",
+ `staging_dir`: Configures the staging directory to which directories will be copied before the build process, which will be nested below both `public_site_dir` and `private_site_dir`
 
- `build_dir`: "build"
+ `build_dir`: Configures the directory into which the final sites will be built, which will be nested below both `public_site_dir` and `private_site_dir`
 
 ## Build Hook
 
-Docs, theme, YAML config file, build structure
+`build_sites.py` is the script that actually builds the sites. At a very high level, this hook parses an incoming webhook payload, pulls the updated data from GitHub, and then rebuilds the site using Jekyll. This script handles build processes for documentation and theme repositories differently.
+
+#### YAML Configuration
+
+In order to work correctly, `build_sites.py` expects that the following variables will be available in a file named `_config.yml` located the root directory of a documentation or theme repository.
+
+    public: true
+    type: docs
+
+`public` indicates whether or not the documentation should be public. Values should be either `true` or `false` (booleans, not strings).
+
+`type` tells the application whether the repository is a documentation or theme repository, which helps it determine how to handle the build process.
+
+Other variables can be included in this config file if desired.
+
+#### Repository Structure
+
+The application will create a directory (configured `config.json` as described above) containing subdirectories (based on repository name) for each repository in which a webhook is configured. Based on the default values supplied in `config.json.sample` that structure would be:
+
+    /repositories/
+      ∟my-docs-theme/
+        ∟theme files
+      ∟my-public-docs/
+        ∟documentation files
+      ∟my-private-docs/
+        ∟documentation files
+
+#### Build Structure
+
+The build process copies directories and files from the repository directory to a new structure before executing the Jekyll build structure.
+
+Assuming the values in `config.json.sample`, the final structure would be:
+
+    /var/www/
+      ∟public/
+        ∟staging/
+          ∟theme files
+          ∟my-public-docs
+            ∟documentation files
+        ∟build/
+          ∟index.html
+          ∟my-public-docs/
+            ∟documentation.html
+      ∟private/
+        ∟staging/
+          ∟theme files
+            ∟my-public-docs/
+              ∟documentation files
+            ∟my-private-docs/
+              ∟documentation files
+        ∟build/
+          ∟index.html
+          ∟my-public-docs/
+            ∟documentation.html
+          ∟my-private-docs/
+            ∟documentation.html
+
+The `site_build_directory` for the public and private sites contain the final sites that need to be served up via Apache or some other method.
 
 ## Adding Hooks
 

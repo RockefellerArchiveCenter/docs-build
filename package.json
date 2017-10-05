@@ -4,12 +4,12 @@
   "description": "Build process for internal and external facing documentation sites",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/../..git"
+    "url": "git+https://github.com/RockefellerArchiveCenter/docs-build.git"
   },
   "author": "helrond",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/../issues"
+    "url": "https://github.com/RockefellerArchiveCenter/docs-build/issues"
   },
-  "homepage": "https://github.com/../python-github-webhooks"
+  "homepage": "https://github.com/RockefellerArchiveCenter/docs-build"
 }
