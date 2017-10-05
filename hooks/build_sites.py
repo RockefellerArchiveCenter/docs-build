@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 # pulls files and builds sites
 
-# TODO
-# sort out git credentialing
-# update readme
-# update package.json
-
 import sys
 import yaml
 from json import loads
@@ -21,8 +16,8 @@ base_path = normpath(abspath(join(dirname(__file__), '..')))
 with open(join(base_path, 'config.json'), 'r') as cfg:
     config = loads(cfg.read())
 
-# with open(sys.argv[1], 'r') as jsf:
-#   payload = loads(jsf.read())
+with open(sys.argv[1], 'r') as jsf:
+  payload = loads(jsf.read())
 
 site_root_dir = config.get('site_root_dir')
 repository_dir = config.get('repository_dir')
@@ -30,21 +25,21 @@ staging_dir = config.get('staging_dir')
 build_dir = config.get('build_dir')
 public_site_dir = config.get('public_site_dir')
 private_site_dir = config.get('private_site_dir')
-# repository_name = payload['repository']['name']
-repository_name = "theme"
-# repository_url = payload['repository']['ssh_url']
+repository_name = payload['repository']['name']
+repository_url = payload['repository']['ssh_url']
 
 def get_updates():
     # If the repository exists, update the data
     if isdir(join(repository_dir, repository_name)):
         chdir(join(repository_dir, repository_name))
-        # call("git pull")
+        print "pulling from "+repository_name
+        call("git pull", shell=True)
     # If the repository doesn't already exist, make a directory and pull down the data
     else:
         makedirs(join(repository_dir, repository_name))
-        chdir(join(repository_dir, repository_name))
-        # call("git pull")
-        # call("git clone " + repository_url)
+        chdir(repository_dir)
+        print "cloning "+repository_name
+        call("git clone " + repository_url, shell=True)
 
 def create_structure(target, site, name):
     if isdir(target):
