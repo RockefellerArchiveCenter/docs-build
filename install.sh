@@ -10,7 +10,7 @@ if python -mplatform | grep -qi Ubuntu
       git make gcc \
       python-pip python-setuptools \
       curl \
-      apache2 apache2-doc apache2-utils \
+      apache2 apache2-doc apache2-utils
   else
     sudo yum -y install epel-release
     sudo yum -y update
