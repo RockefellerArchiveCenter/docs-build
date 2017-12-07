@@ -5,20 +5,20 @@
 
 DIR=$(cd $(dirname $(readlink -f "$0" )); pwd)
 if python -mplatform | grep -qi Ubuntu
-then
-  sudo apt-get -y install \
+  then
+    sudo apt-get -y install \
       git make gcc \
       python-pip python-setuptools \
       curl \
       apache2 apache2-doc apache2-utils \
-else
-  sudo yum -y install epel-release
-  sudo yum -y update
-  sudo yum -y install \
-    git make gcc \
-    python-pip python-setuptools \
-    curl \
-    httpd mod_ssl \
+  else
+    sudo yum -y install epel-release
+    sudo yum -y update
+    sudo yum -y install \
+      git make gcc \
+      python-pip python-setuptools \
+      curl \
+      httpd mod_ssl
 fi
 
 # Install RVM and use RVM to install Ruby 2.1.8
@@ -33,16 +33,16 @@ gem install jekyll github-pages --no-rdoc --no-ri
 
 # Add ssh keys
 if [ -f ~/.ssh/id_rsa.pub ]
-then
-  echo "
-  An SSH key already exists.
-  "
-else
-  # create ssh key
-  echo "
-  Enter the email associated with a GitHub account for which you want to configure an SSH key: "
-  read github_email
-  ssh-keygen -t rsa -b 4096 -C "$github_email"
+  then
+    echo "
+    An SSH key already exists.
+    "
+  else
+    # create ssh key
+    echo "
+    Enter the email associated with a GitHub account for which you want to configure an SSH key: "
+    read github_email
+    ssh-keygen -t rsa -b 4096 -C "$github_email"
 fi
 
 eval "$(ssh-agent -s)"
