@@ -56,7 +56,7 @@ def index():
     # Allow Github IPs only
     if config.get('github_ips_only', True):
         src_ip = ip_address(
-            u'{}'.format(request.remote_addr)  # Fix stupid ipaddress issue
+            u'{0}'.format(request.remote_addr)  # Fix stupid ipaddress issue
         )
         whitelist = requests.get('https://api.github.com/meta').json()['hooks']
 
@@ -139,11 +139,11 @@ def index():
         'branch': branch,
         'event': event
     }
-    logging.info('Metadata:\n{}'.format(dumps(meta)))
+    logging.info('Metadata:\n{0}'.format(dumps(meta)))
 
     # Skip push-delete
     if event == 'push' and payload['deleted']:
-        logging.info('Skipping push-delete event for {}'.format(dumps(meta)))
+        logging.info('Skipping push-delete event for {0}'.format(dumps(meta)))
         return dumps({'status': 'skipped'})
 
     # Possible hooks
@@ -183,7 +183,7 @@ def index():
 
         # Log errors if a hook failed
         if proc.returncode != 0:
-            logging.error('{} : {} \n{}'.format(
+            logging.error('{0} : {1} \n{2}'.format(
                 s, proc.returncode, stderr
             ))
 
