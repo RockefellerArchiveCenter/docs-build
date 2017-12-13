@@ -29,21 +29,17 @@ repository_name = payload['repository']['name']
 repository_url = payload['repository']['ssh_url']
 
 def get_updates():
-    try:
-        # If the repository exists, update the data
-        if isdir(join(site_root_dir, repository_dir, repository_name)):
-            chdir(join(repository_dir, repository_name))
-            print "pulling from "+repository_name
-            call("git pull", shell=True)
-        # If the repository doesn't already exist, make a directory and pull down the data
-        else:
-            makedirs(join(site_root_dir, repository_dir, repository_name))
-            chdir(site_root_dir, repository_dir)
-            print "cloning "+repository_name
-            call("git clone " + repository_url, shell=True)
-    except Exception as e:
-        print e
-        return False
+    # If the repository exists, update the data
+    if isdir(join(site_root_dir, repository_dir, repository_name)):
+        chdir(join(site_root_dir, repository_dir, repository_name))
+        print "pulling from "+repository_name
+        call("git pull", shell=True)
+    # If the repository doesn't already exist, make a directory and pull down the data
+    else:
+        makedirs(join(site_root_dir, repository_dir, repository_name))
+        chdir(join(site_root_dir, repository_dir))
+        print "cloning "+repository_name
+        call("git clone " + repository_url, shell=True)
 
 def create_structure(target, site, name):
     if isdir(target):
@@ -58,7 +54,7 @@ def create_structure(target, site, name):
         # dir exists
         pass
 
-    copytree(join(repository_dir, name), target)
+    copytree(join(site_root_dir, repository_dir, name), target)
 
 def build_site(base_url, source, destination):
     chdir(base_url)
@@ -99,9 +95,9 @@ def update_theme(name, sites = [], *args):
 
         create_structure(site_staging_dir, site, name)
 
-    for s in listdir(repository_dir):
-        if isdir(join(repository_dir, s)):
-            with open(join(repository_dir, s, '_config.yml')) as f:
+    for s in listdir(join(site_root_dir, repository_dir)):
+        if isdir(join(site_root_dir, repository_dir, s)):
+            with open(join(site_root_dir, repository_dir, s, '_config.yml')) as f:
                 yaml_config = yaml.load(f)
                 if yaml_config['type'] == 'docs':
                     if yaml_config['public'] == True:
@@ -115,7 +111,7 @@ def update_theme(name, sites = [], *args):
         build_site(join(site_root_dir, site), staging_dir, build_dir)
 
 def main():
-    if get_updates():
-        build(repository_name)
+    get_updates()
+    build(repository_name)
 
 main()

@@ -6,6 +6,6 @@
     "repository_dir": "repositories",
     "staging_dir": "staging",
     "build_dir": "build",
-    "public_dir": "public",
-    "private_dir": "private"
+    "public_site_dir": "public",
+    "private_site_dir": "private"
 }
