@@ -28,7 +28,7 @@ source /etc/profile.d/rvm.sh
 rvm install 2.1.8
 rvm use 2.1.8 --default
 
-sudo pip install requests Flask ipaddress pyyaml
+sudo pip install pyyaml
 gem install jekyll github-pages --no-rdoc --no-ri
 
 # Add ssh keys

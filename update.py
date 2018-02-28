@@ -54,20 +54,20 @@ def build_site(base_url, source, destination):
     # set file permissions and ownership if necessary
 
 
-def build(directory):
+def build_structure(directory):
     with open(join(site_root_dir, repository_dir, directory, '_config.yml')) as f:
         yaml_config = yaml.load(f)
         if yaml_config['type'] == 'docs':
-            if yaml_config['public'] == True:
+            if yaml_config['public']:
                 sites = [public_site_dir, private_site_dir]
             else:
                 sites = [private_site_dir]
-            update_docs(directory, sites)
+            update_docs_structure(directory, sites)
         if yaml_config['type'] == 'theme':
-            update_theme(directory, [public_site_dir, private_site_dir])
+            update_theme_structure(directory, [public_site_dir, private_site_dir])
 
 
-def update_docs(name, sites=[], *args):
+def update_docs_structure(name, sites=[], *args):
     print "*** building documentation ***"
     for site in sites:
         site_staging_dir = join(site_root_dir, site, staging_dir)
@@ -75,17 +75,13 @@ def update_docs(name, sites=[], *args):
         if not isdir(join(site_staging_dir, '_data')):
             makedirs(join(site_staging_dir, '_data'))
         copyfile(join(site_root_dir, repository_dir, name, '_config.yml'), join(site_root_dir, site_staging_dir, '_data', name + '.yml'))
-
         create_structure(join(site_staging_dir, name), site, name)
 
-        # build_site(join(site_root_dir, site), staging_dir, build_dir)
 
-
-def update_theme(name, sites=[], *args):
+def update_theme_structure(name, sites=[], *args):
     print "*** building theme ***"
     for site in sites:
         site_staging_dir = join(site_root_dir, site, staging_dir)
-
         create_structure(site_staging_dir, site, name)
 
     for s in listdir(join(site_root_dir, repository_dir)):
@@ -93,22 +89,20 @@ def update_theme(name, sites=[], *args):
             with open(join(site_root_dir, repository_dir, s, '_config.yml')) as f:
                 yaml_config = yaml.load(f)
                 if yaml_config['type'] == 'docs':
-                    if yaml_config['public'] == True:
+                    if yaml_config['public']:
                         sites = [public_site_dir, private_site_dir]
                     else:
                         sites = [private_site_dir]
                     for site in sites:
                         copytree(join(site_root_dir, repository_dir, s), join(site_root_dir, site, staging_dir, s))
 
-    # for site in sites:
-    #     build_site(join(site_root_dir, site), staging_dir, build_dir)
 
 def main():
     for d in listdir(join(site_root_dir, repository_dir)):
-        print d
         get_updates(d)
-        build(d)
-    build_site(join(site_root_dir, public_site_dir), staging_dir, build_dir)
-    build_site(join(site_root_dir, private_site_dir), staging_dir, build_dir)
+        build_structure(d)
+    for site in [public_site_dir, private_site_dir]:
+        build_site(join(site_root_dir, site), staging_dir, build_dir)
+
 
 main()
