@@ -1,6 +1,6 @@
 # docs-build
 
-A Python script which retrieves updates for documentation repositories and themes, and builds internal and external-facing sites. It can be set to run at a specified time (for example on a nightly basis) using cron.
+A Python script which retrieves updates for documentation repositories and themes, and builds internal and external-facing sites. It can be set to run at a specified time (for example on a nightly basis) using cron. Requires a theme repository (see [docs-theme](https://github.com/RockefellerArchiveCenter/docs-theme) for an example) and at least one documentation repository (see [processing_manual](https://github.com/RockefellerArchiveCenter/processing_manual))
 
 ## Install
 
@@ -50,7 +50,6 @@ In order to work correctly, `build_sites.py` expects that the following variable
       - "processing"
       - "planning"
       - "project vitals"
-    slug: "processing_manual"
     title: "Guide to Processing Collections at the RAC"
     description: "A manual for arranging and describing archival collections."
 
@@ -60,8 +59,6 @@ In order to work correctly, `build_sites.py` expects that the following variable
 
 `tags` are a list of tags you wish to associate with the documentation.
 
-`slug` is a short reference to the repository. This should exactly match the name of the repository and should not include any spaces or slashes.
-
 `title` is the official title of the documentation, which will be displayed on the home page of the site.
 
 `description` is a short description of what the documentation is, the audience it is intended for, and what it helps that audience do. This text will be displayed on the home page of the site.
@@ -70,7 +67,7 @@ Other variables can be included in this config file if desired.
 
 #### Repository Structure
 
-The application will create a directory (configured in `config.json` as described above) containing subdirectories (based on repository name) for each repository in which a webhook is configured. Based on the default values supplied in `config.json.sample` that structure would be:
+The application will create a directory (configured in `config.json` as described above) containing subdirectories (based on repository name) for each documentation repository. Based on the default values supplied in `config.json.sample` that structure would be:
 
     /repositories/
       ∟my-docs-theme/
@@ -111,6 +108,14 @@ Assuming the values in `config.json.sample` above, the final structure would be:
             ∟documentation.html
 
 The `site_build_directory` for the public and private sites contain the final sites that need to be served up via Apache or some other method.
+
+#### Adding Repositories
+
+To add a repository, navigate to the root of the repositories directory, and then clone the repository you want to add:
+
+      git clone git@github.com:DocumentationWriter/my-awesome-docs.github
+
+If you want to see how things look immediately, you can trigger the build process by running `update.py`
 
 ## License
 

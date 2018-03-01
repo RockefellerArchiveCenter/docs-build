@@ -71,10 +71,16 @@ def update_docs_structure(name, sites=[], *args):
     print "*** building documentation ***"
     for site in sites:
         site_staging_dir = join(site_root_dir, site, staging_dir)
+        data_file = join(site_root_dir, site_staging_dir, '_data', name + '.yml')
         # this file is used to generate the site home page
         if not isdir(join(site_staging_dir, '_data')):
             makedirs(join(site_staging_dir, '_data'))
-        copyfile(join(site_root_dir, repository_dir, name, '_config.yml'), join(site_root_dir, site_staging_dir, '_data', name + '.yml'))
+        copyfile(join(site_root_dir, repository_dir, name, '_config.yml'), data_file)
+        with open(data_file) as f:
+            yaml_config = yaml.safe_load(f)
+        yaml_config['slug'] = name
+        with open(data_file, w) as f:
+            yaml.safe_dump(yaml_config, f, default_flow_style=False)
         create_structure(join(site_staging_dir, name), site, name)
 
 
@@ -87,7 +93,7 @@ def update_theme_structure(name, sites=[], *args):
     for s in listdir(join(site_root_dir, repository_dir)):
         if isdir(join(site_root_dir, repository_dir, s)):
             with open(join(site_root_dir, repository_dir, s, '_config.yml')) as f:
-                yaml_config = yaml.load(f)
+                yaml_config = yaml.safe_load(f)
                 if yaml_config['type'] == 'docs':
                     if yaml_config['public']:
                         sites = [public_site_dir, private_site_dir]
