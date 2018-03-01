@@ -1,6 +1,6 @@
 # docs-build
 
-A Python script which retrieves updates for documentation repositories and themes, and builds internal and external-facing sites. It can be set to run at a specified time (for example on a nightly basis) using cron. Requires a theme repository (see [docs-theme](https://github.com/RockefellerArchiveCenter/docs-theme) for an example) and at least one documentation repository (see [processing_manual](https://github.com/RockefellerArchiveCenter/processing_manual))
+A Python script which retrieves updates for documentation repositories and themes, and builds internal and external-facing sites. It can be set to run at a specified time (for example on a nightly basis) using cron. Requires a theme repository (see [docs-theme](https://github.com/RockefellerArchiveCenter/docs-theme) for an example) and at least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing_manual))
 
 ## Install
 
