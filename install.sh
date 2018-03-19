@@ -31,6 +31,7 @@ rvm install 2.1.8
 rvm use 2.1.8 --default
 
 sudo pip install pyyaml
+npm install lunr
 gem install jekyll github-pages --no-rdoc --no-ri
 
 # Add ssh keys
