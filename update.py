@@ -48,7 +48,7 @@ def create_structure(target, site, name):
 
 def build_site(base_url, source, destination):
     chdir(base_url)
-    call("node create-index.js", shell=True)
+    call("node %s/js/create-index.js" % (source), shell=True)
     print "Jekyll building at " + base_url
     call("/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source %s --destination %s" % (source, destination), shell=True)
     # set file permissions and ownership if necessary
