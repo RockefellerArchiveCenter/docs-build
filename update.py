@@ -51,7 +51,8 @@ def build_site(base_url, source, destination):
     print "Jekyll building at " + base_url
     call("/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source %s --destination %s" % (source, destination), shell=True)
     call("node %s/create-index.js %s/search-data.json %s/search-index.json" % (base_path, source, destination), shell=True)
-    # set file permissions and ownership if necessary
+    call("ln -s /home/docs/public/build/* /var/www/docs/external/", shell=True)
+    call("ln -s /home/docs/private/build/* /var/www/docs/internal/", shell=True)
 
 
 def build_structure(directory):
