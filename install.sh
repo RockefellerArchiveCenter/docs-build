@@ -10,7 +10,8 @@ if python -mplatform | grep -qi Ubuntu
       git make gcc \
       python-pip python-setuptools \
       curl \
-      apache2 apache2-doc apache2-utils
+      apache2 apache2-doc apache2-utils \
+      nodejs npm
   else
     sudo yum -y install epel-release
     sudo yum -y update
@@ -18,7 +19,8 @@ if python -mplatform | grep -qi Ubuntu
       git make gcc \
       python-pip python-setuptools \
       curl \
-      httpd mod_ssl
+      httpd mod_ssl \
+      nodejs npm
 fi
 
 # Install RVM and use RVM to install Ruby 2.1.8
@@ -29,6 +31,7 @@ rvm install 2.1.8
 rvm use 2.1.8 --default
 
 sudo pip install pyyaml
+npm install lunr
 gem install jekyll github-pages --no-rdoc --no-ri
 
 # Add ssh keys
