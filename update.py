@@ -77,7 +77,10 @@ def update_docs_structure(name, sites=[], *args):
         copyfile(join(site_root_dir, repository_dir, name, '_config.yml'), data_file)
         with open(data_file) as f:
             yaml_config = yaml.safe_load(f)
+        proc = subprocess.Popen('git remote get-url --all origin', stdout=subprocess.PIPE)
+        output = proc.stdout.read()
         yaml_config['slug'] = name
+        yaml_config['github_repo'] = 'https://github.com/{}'.format(output.split('git@github.com:', 1)[1])
         with open(data_file, 'w') as f:
             yaml.safe_dump(yaml_config, f, default_flow_style=False)
         create_structure(join(site_staging_dir, name), site, name)
