@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # pulls files and builds sites
 
+import subprocess
 import sys
 import yaml
 from json import loads
@@ -78,6 +79,7 @@ def update_docs_structure(name, sites=[], *args):
         with open(data_file) as f:
             yaml_config = yaml.safe_load(f)
         yaml_config['slug'] = name
+        yaml_config['github_repo'] = 'https://github.com/RockefellerArchiveCenter/{0}'.format(name)
         with open(data_file, 'w') as f:
             yaml.safe_dump(yaml_config, f, default_flow_style=False)
         create_structure(join(site_staging_dir, name), site, name)
