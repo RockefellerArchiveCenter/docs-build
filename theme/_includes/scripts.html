@@ -1,0 +1,24 @@
+<!--JQuery-->
+<script type="text/javascript" src="{{ site.baseurl }}/js/jquery-3.2.1.js"></script>
+
+<!--Popper-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+
+<!-- Bootstrap -->
+<script type="text/javascript" src="{{ site.baseurl }}/js/bootstrap.js"></script>
+
+<!-- mark.js -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+
+<!-- Lunr.js for search -->
+<script type="text/javascript" src="//unpkg.com/lunr/lunr.js"></script>
+<script async type="text/javascript" src="{{ site.url }}{{ site.baseurl }}/js/lunr-feed.js"></script>
+
+<!--SideNav-->
+<script type="text/javascript" src="{{ site.baseurl }}/js/toc.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#current').toc({classes: { list: 'list-group',item: 'list-group-item'}});
+});
+</script>

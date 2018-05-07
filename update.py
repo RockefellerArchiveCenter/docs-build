@@ -33,7 +33,7 @@ def get_updates(repository_name):
         call("git pull", shell=True)
 
 
-def create_structure(target, site, name):
+def create_structure(src, target, site):
     if isdir(target):
         rmtree(target)
     if isfile(target):
@@ -44,7 +44,7 @@ def create_structure(target, site, name):
     except OSError:
         # dir exists
         pass
-    copytree(join(site_root_dir, repository_dir, name), target)
+    copytree(src, target)
 
 
 def build_site(base_url, source, destination):
@@ -63,8 +63,6 @@ def build_structure(directory):
             else:
                 sites = [private_site_dir]
             update_docs_structure(directory, sites)
-        if yaml_config['type'] == 'theme':
-            update_theme_structure(directory, [public_site_dir, private_site_dir])
 
 
 def update_docs_structure(name, sites=[], *args):
@@ -82,29 +80,18 @@ def update_docs_structure(name, sites=[], *args):
         yaml_config['github_repo'] = 'https://github.com/RockefellerArchiveCenter/{0}'.format(name)
         with open(data_file, 'w') as f:
             yaml.safe_dump(yaml_config, f, default_flow_style=False)
-        create_structure(join(site_staging_dir, name), site, name)
+        create_structure(join(site_root_dir, repository_dir, name), join(site_staging_dir, name), site)
 
 
 def update_theme_structure(name, sites=[], *args):
     print "*** building theme ***"
     for site in sites:
         site_staging_dir = join(site_root_dir, site, staging_dir)
-        create_structure(site_staging_dir, site, name)
-
-    for s in listdir(join(site_root_dir, repository_dir)):
-        if isdir(join(site_root_dir, repository_dir, s)):
-            with open(join(site_root_dir, repository_dir, s, '_config.yml')) as f:
-                yaml_config = yaml.safe_load(f)
-                if yaml_config['type'] == 'docs':
-                    if yaml_config['public']:
-                        sites = [public_site_dir, private_site_dir]
-                    else:
-                        sites = [private_site_dir]
-                    for site in sites:
-                        copytree(join(site_root_dir, repository_dir, s), join(site_root_dir, site, staging_dir, s))
+        create_structure(join(base_path, name), site_staging_dir, site)
 
 
 def main():
+    update_theme_structure('theme', [public_site_dir, private_site_dir])
     for d in listdir(join(site_root_dir, repository_dir)):
         get_updates(d)
         build_structure(d)
