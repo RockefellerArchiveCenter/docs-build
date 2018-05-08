@@ -16,25 +16,35 @@ You can configure what the application does by copying the sample config file
 `config.json.sample` to `config.json` and adapting it to your needs:
 
     {
-        "repository_dir": "/repositories",
-        "site_root_dir": "/docs",
-        "public_site_dir": "public",
-        "private_site_dir": "private",
-        "staging_dir": "staging",
-        "build_dir": "build"
+        "site_root": "/var/www",
+        "repositories": "repositories",
+        "public_site": {
+          "root": "public",
+          "staging": "staging",
+          "build": "build",
+          "link": "link"
+        },
+        "private_site": {
+          "root": "private",
+          "staging": "staging",
+          "build": "build",
+          "link": "link"
+        }
     }
 
- `repository_dir`: Sets base directory into which repositories will be pulled from Github. See below for details
+`repositories`: Sets base directory into which repositories will be pulled from Github. See below for details
 
- `site_root_dir`: Configures the root directory for the site.
+`site_root`: Configures the root directory for the site.
 
- `public_site_dir`: Sets the root directory for the public documentation site, which will be nested underneath `site_root_dir`.
+`public_site` and `private_site`: Objects containing configs which will be set for each site.
 
- `private_site_dir`: Sets the root directory for the private documentation site, which will be nested underneath `site_root_dir`.
+`root`: Sets the root directory for the site, which will be nested underneath `site_root_dir`.
 
- `staging_dir`: Configures the staging directory to which directories will be copied before the build process, which will be nested below both `public_site_dir` and `private_site_dir`
+`staging`: Configures the staging directory to which directories will be copied before the build process, which will be nested below the `root` directory for that site.
 
- `build_dir`: Configures the directory into which the final sites will be built, which will be nested below both `public_site_dir` and `private_site_dir`
+`build`: Configures the directory into which the final sites will be built, which will be nested below the `root` directory for that site.
+
+`link`: Configures an optional symbolic link target. Useful if you want to build your site somewhere other than a web accessible directory on your server.
 
 ## Build Script
 
@@ -52,6 +62,8 @@ In order to work correctly, `build_sites.py` expects that the following variable
       - "project vitals"
     title: "Guide to Processing Collections at the RAC"
     description: "A manual for arranging and describing archival collections."
+    pages:
+      - ["About This Site", "index"]
 
 `public` indicates whether or not the documentation should be public. Values should be either `true` or `false` (booleans, not strings).
 
@@ -62,6 +74,8 @@ In order to work correctly, `build_sites.py` expects that the following variable
 `title` is the official title of the documentation, which will be displayed on the home page of the site.
 
 `description` is a short description of what the documentation is, the audience it is intended for, and what it helps that audience do. This text will be displayed on the home page of the site.
+
+`pages` lists all the pages included in this site. The first value in the list is the name, and the second is the filename of the page (without extension). This is used in building tables of contents.
 
 Other variables can be included in this config file if desired.
 
