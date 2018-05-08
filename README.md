@@ -84,12 +84,24 @@ Other variables can be included in this config file if desired.
 The application will create a directory (configured in `config.json` as described above) containing subdirectories (based on repository name) for each documentation repository. Based on the default values supplied in `config.json.sample` that structure would be:
 
     /repositories/
-      ∟my-docs-theme/
-        ∟theme files
       ∟my-public-docs/
         ∟documentation files
       ∟my-private-docs/
         ∟documentation files
+
+#### Theme
+
+The site uses a directory of Jekyll-based layouts to create a cohesive structure
+and theme.
+
+Layouts are written in HTML and are chiefly composed from a separate directory
+of Jekyll-based includes and one default layout template. They are styled with
+both Bootstrap and custom CSS and are rendered with the Liquid template language.
+
+The layout directory formats the various documentation files stored in the
+individual GitHub repositories and thereby creates the site's central interface for
+access to documentation. This process is achieved through the use of layout
+variables in the documentation files' YAML front matter.
 
 #### Build Structure
 
@@ -130,6 +142,17 @@ To add a repository, navigate to the root of the repositories directory, and the
       git clone git@github.com:DocumentationWriter/my-awesome-docs.github
 
 If you want to see how things look immediately, you can trigger the build process by running `update.py`
+
+## Contributing
+
+Pull requests accepted!
+
+## Authors
+
+Hillel Arnold  
+Hannah Sistrunk  
+Katie Martin  
+Darren Young  
 
 ## License
 

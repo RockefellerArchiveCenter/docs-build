@@ -53,12 +53,11 @@ def build_site(site):
 def build_structure(directory):
     with open(join(site_root, repositories, directory, '_config.yml')) as f:
         yaml_config = yaml.load(f)
-        if yaml_config['type'] == 'docs':
-            if yaml_config['public']:
-                sites = [public_site, private_site]
-            else:
-                sites = [private_site]
-            update_docs_structure(directory, sites)
+        if yaml_config['public']:
+            sites = [public_site, private_site]
+        else:
+            sites = [private_site]
+        update_docs_structure(directory, sites)
 
 
 def link_site(site):
