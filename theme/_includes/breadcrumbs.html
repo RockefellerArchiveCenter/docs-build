@@ -1,5 +1,10 @@
+{% for file in site.data %}
+  {% if page.dir contains file[0] %}
+  {% assign root = file[1].slug %}
+  {% endif %}
+{% endfor %}
+
 <nav class="breadcrumb">
-  <a class="breadcrumb-item" href="{{ site.url }}{{ site.baseurl }}/">{{ site.title }}</a>
-  <a class="breadcrumb-item" href="{{ site.url }}{{ site.baseurl }}/{{ page.type }}">{{ page.type }}</a></li>
+  <a class="breadcrumb-item" href="{{ site.url }}{{ site.baseurl }}/{{ root }}">{{ root }}</a></li>
   <li class="active">{{ page.title }}</li>
 </nav>
