@@ -3,7 +3,7 @@
 Theme file along with a Python script which retrieves updates for documentation
 repositories, and builds internal and external-facing sites. It can be set to
 run at a specified time (for example on a nightly basis) using cron. Requires at
-least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual))
+least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual)).
 
 ## Install
 
@@ -69,13 +69,14 @@ documentation repository. These files should be valid [YAML](http://yaml.org).
 
     public: true
     tags:
-      - "processing"
-      - "planning"
-      - "project vitals"
-    title: "Guide to Processing Collections at the RAC"
-    description: "A manual for arranging and describing archival collections."
+      - "policy"
+      - "preservation"
+      - "appraisal"
+      - "mission"
+    title: "Collection Policy"
+    description: "The main collecting areas of the Rockefeller Archive Center."
     pages:
-      - ["About This Site", "index"]
+      - ["Rockefeller Archive Center Collection Policy", "index"]
 
 `public` indicates whether or not the documentation should be public. Values
 should be either `true` or `false` (booleans, not strings).
