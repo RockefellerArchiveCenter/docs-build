@@ -7,7 +7,7 @@ layout: null
 {% capture nl %}
 {% endcapture %}
 {% capture tab %} {% endcapture %}
-{%- assign docs_pages = site.pages | where: 'layout', 'docs-content' -%}
+{%- assign docs_pages = site.pages | where: 'layout', 'docs' -%}
 { {% for page in docs_pages %}
   "{{ page.url }}": {
     "href": "{{ page.url }}",
