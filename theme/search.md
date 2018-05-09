@@ -1,5 +1,5 @@
 ---
-layout: master-about
+layout: default
 title: Search Results
 permalink: /search/
 ---
