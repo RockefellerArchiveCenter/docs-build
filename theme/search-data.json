@@ -1,0 +1,20 @@
+---
+layout: null
+---
+{% capture tl %}
+
+{% endcapture %}
+{% capture nl %}
+{% endcapture %}
+{% capture tab %} {% endcapture %}
+{%- assign docs_pages = site.pages | where: 'layout', 'docs' -%}
+{ {% for page in docs_pages %}
+  "{{ page.url }}": {
+    "href": "{{ page.url }}",
+    "title": "{{ page.title }}",
+    "text": "{{ page.content | strip_html | replace: tl, ' ' | replace: nl, ' ' | replace: '  ', ' ' | replace: '\.', '.' | replace: '\', '/' | strip_newlines | strip | escape }}",
+    "url": "{{ page.url | replace: '.html', '' }}"
+  }
+  {%- unless forloop.last %},{% endunless -%}
+{% endfor %}
+}
