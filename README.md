@@ -1,6 +1,9 @@
 # docs-build
 
-A Python script which retrieves updates for documentation repositories and themes, and builds internal and external-facing sites. It can be set to run at a specified time (for example on a nightly basis) using cron. Requires a theme repository (see [docs-theme](https://github.com/RockefellerArchiveCenter/docs-theme) for an example) and at least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing_manual))
+Theme file along with a Python script which retrieves updates for documentation
+repositories, and builds internal and external-facing sites. It can be set to
+run at a specified time (for example on a nightly basis) using cron. Requires at
+least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual))
 
 ## Install
 
@@ -8,12 +11,14 @@ A Python script which retrieves updates for documentation repositories and theme
     cd docs-build
     ./install.sh
 
-`./install.sh` will install all the necessary dependencies, and also set SSH keys which enable the application to interact with Github.
+`./install.sh` will install all the necessary dependencies, and also creates SSH
+keys which enable the application to interact with Github.
 
 ## Setup
 
 You can configure what the application does by copying the sample config file
-`config.json.sample` to `config.json` and adapting it to your needs:
+`config.json.sample` to `config.json` and adapting it to your needs. The structure
+of that file looks like this:
 
     {
         "site_root": "/var/www",
@@ -32,30 +37,37 @@ You can configure what the application does by copying the sample config file
         }
     }
 
-`repositories`: Sets base directory into which repositories will be pulled from Github. See below for details
+`repositories`: Sets base directory into which repositories will be pulled from
+Github.
 
 `site_root`: Configures the root directory for the site.
 
-`public_site` and `private_site`: Objects containing configs which will be set for each site.
+`public_site` and `private_site`: Objects containing configs to be set for each site.
 
 `root`: Sets the root directory for the site, which will be nested underneath `site_root_dir`.
 
-`staging`: Configures the staging directory to which directories will be copied before the build process, which will be nested below the `root` directory for that site.
+`staging`: Configures the staging directory to which directories will be copied
+before the build process, which will be nested below the `root` directory for that site.
 
-`build`: Configures the directory into which the final sites will be built, which will be nested below the `root` directory for that site.
+`build`: Configures the directory into which the final sites will be built,
+which will be nested below the `root` directory for that site.
 
-`link`: Configures an optional symbolic link target. Useful if you want to build your site somewhere other than a web accessible directory on your server.
+`link`: Configures an optional symbolic link target. Useful if you want to build
+your site somewhere other than a web accessible directory on your server.
 
 ## Build Script
 
-`update.py` is the script that pulls the updated data from GitHub, and then rebuilds the site using Jekyll. It handles build processes for documentation and theme repositories differently.
+`update.py` is the script that pulls the updated data from GitHub, and then
+rebuilds the site using Jekyll. It handles build processes for documentation and
+theme repositories differently.
 
-#### YAML Configuration
+#### Repository Configuration
 
-In order to work correctly, `build_sites.py` expects that the following variables will be available in a file named `_config.yml` located the root directory of a documentation or theme repository.
+In order to work correctly, `build_sites.py` expects that the following variables
+will be available in a file named `_config.yml` located the root directory of a
+documentation repository. These files should be valid [YAML](http://yaml.org).
 
     public: true
-    type: "docs"
     tags:
       - "processing"
       - "planning"
@@ -65,17 +77,21 @@ In order to work correctly, `build_sites.py` expects that the following variable
     pages:
       - ["About This Site", "index"]
 
-`public` indicates whether or not the documentation should be public. Values should be either `true` or `false` (booleans, not strings).
-
-`type` tells the application whether the repository is a documentation or theme repository, which helps it determine how to handle the build process.
+`public` indicates whether or not the documentation should be public. Values
+should be either `true` or `false` (booleans, not strings).
 
 `tags` are a list of tags you wish to associate with the documentation.
 
-`title` is the official title of the documentation, which will be displayed on the home page of the site.
+`title` is the official title of the documentation, which will be displayed on
+the home page of the site.
 
-`description` is a short description of what the documentation is, the audience it is intended for, and what it helps that audience do. This text will be displayed on the home page of the site.
+`description` is a short description of what the documentation is, the audience
+it is intended for, and what it helps that audience do. This text will be
+displayed on the home page of the site.
 
-`pages` lists all the pages included in this site. The first value in the list is the name, and the second is the filename of the page (without extension). This is used in building tables of contents.
+`pages` is a list of lists of the pages included in this site. The first value
+in each list is the name, and the second is the filename of the page (without the
+extension). These values are used when building tables of contents.
 
 Other variables can be included in this config file if desired.
 
@@ -84,15 +100,15 @@ Other variables can be included in this config file if desired.
 The application will create a directory (configured in `config.json` as described above) containing subdirectories (based on repository name) for each documentation repository. Based on the default values supplied in `config.json.sample` that structure would be:
 
     /repositories/
-      ∟my-public-docs/
+      ∟public/
         ∟documentation files
-      ∟my-private-docs/
+      ∟private/
         ∟documentation files
 
 #### Theme
 
-The site uses a directory of Jekyll-based layouts to create a cohesive structure
-and theme.
+The site uses a Jekyll-based theme to create a cohesive structure and
+customizable interface. These files are located in the `theme/` directory.
 
 Layouts are written in HTML and are chiefly composed from a separate directory
 of Jekyll-based includes and one default layout template. They are styled with
@@ -112,28 +128,16 @@ Assuming the values in `config.json.sample` above, the final structure would be:
     /var/www/
       ∟public/
         ∟staging/
-          ∟theme files
-          ∟my-public-docs
-            ∟documentation files
+          ∟files to be built
         ∟build/
-          ∟index.html
-          ∟my-public-docs/
-            ∟documentation.html
+          ∟generated site
       ∟private/
         ∟staging/
-          ∟theme files
-            ∟my-public-docs/
-              ∟documentation files
-            ∟my-private-docs/
-              ∟documentation files
+          ∟files to be built
         ∟build/
-          ∟index.html
-          ∟my-public-docs/
-            ∟documentation.html
-          ∟my-private-docs/
-            ∟documentation.html
+          ∟generated site
 
-The `site_build_directory` for the public and private sites contain the final sites that need to be served up via Apache or some other method.
+The `build` directory for the public and private sites contain the final sites that need to be served up via Apache or some other method.
 
 #### Adding Repositories
 
@@ -156,4 +160,4 @@ Darren Young
 
 ## License
 
-This code is released under an [MIT License](LICENSE)
+This code is released under an [MIT License](LICENSE).
