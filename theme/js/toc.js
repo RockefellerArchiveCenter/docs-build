@@ -6,8 +6,8 @@
       minimumHeaders: 3,
       headers: 'h2',
       listType: 'ul', // values: [ol|ul]
-      showEffect: 'none', // values: [show|slideDown|fadeIn|none]
-      showSpeed: '0', // set to 0 to deactivate effect
+      showEffect: 'slideDown', // values: [show|slideDown|fadeIn|none]
+      showSpeed: '200', // set to 0 to deactivate effect
     },
     settings = $.extend(defaults, options);
 
