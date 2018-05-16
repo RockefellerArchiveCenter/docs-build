@@ -1,0 +1,31 @@
+.footer-logo {
+    float: left;
+    height: 5em;
+    margin-right: 1em;
+
+}
+
+div.toc-striped li:nth-child(even) {
+    background: #efefef;
+}
+
+#current {
+  font-size: .8rem;
+}
+
+#current .list-group-item:first-child {
+    border-radius: 0;
+}
+
+#current .list-group-item:last-child {
+    border-radius: 0;
+}
+
+.docs-example {
+  background: #efefef;
+  padding: 15px;
+}
+
+.title-card {
+  min-height: 18rem;
+}

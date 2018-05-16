@@ -1,8 +1,16 @@
 {
-    "site_root_dir": "/var/www",
-    "repository_dir": "repositories",
-    "staging_dir": "staging",
-    "build_dir": "build",
-    "public_site_dir": "public",
-    "private_site_dir": "private"
+    "site_root": "/var/www",
+    "repositories": "repositories",
+    "public_site": {
+      "root": "public",
+      "staging": "staging",
+      "build": "build",
+      "link": "link"
+    },
+    "private_site": {
+      "root": "private",
+      "staging": "staging",
+      "build": "build",
+      "link": "link"
+    }
 }
