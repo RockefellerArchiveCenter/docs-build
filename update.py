@@ -75,7 +75,7 @@ def update_docs_structure(name, sites=[], *args):
         site_staging_dir = join(site_root, site['root'], site['staging'])
         data_file = join(site_root, site_staging_dir, '_data', name + '.yml')
         out = subprocess.Popen(["git log -1 --format=%ci"], stdout=subprocess.PIPE, shell=True)
-        date = out.communicate()
+        date = out.communicate()[0]
         # this file is used to generate the site home page
         if not isdir(join(site_staging_dir, '_data')):
             makedirs(join(site_staging_dir, '_data'))
