@@ -7,7 +7,7 @@ from os import chdir, makedirs, listdir, symlink
 from os.path import join, isdir, isfile, islink, normpath, abspath, dirname
 from posix import remove
 from shutil import copyfile, copytree, rmtree
-from subprocess import call, Popen
+import subprocess
 
 # base path for the build script
 base_path = normpath(abspath(join(dirname(__file__))))
@@ -26,7 +26,7 @@ def get_updates(repository_name):
     if isdir(join(site_root, repositories, repository_name)):
         chdir(join(site_root, repositories, repository_name))
         print "pulling from "+repository_name
-        call("git pull", shell=True)
+        subprocess.call("git pull", shell=True)
 
 
 def create_structure(src, target, site):
@@ -46,8 +46,8 @@ def build_site(site):
     base_url = join(site_root, site['root'])
     chdir(base_url)
     print "Jekyll building at " + base_url
-    call("/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source %s --destination %s" % (site['staging'], site['build']), shell=True)
-    call("node %s/create-index.js %s/search-data.json %s/search-index.json" % (base_path, site['build'], site['build']), shell=True)
+    subprocess.call("/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source %s --destination %s" % (site['staging'], site['build']), shell=True)
+    subprocess.call("node %s/create-index.js %s/search-data.json %s/search-index.json" % (base_path, site['build'], site['build']), shell=True)
 
 
 def build_structure(directory):
@@ -74,7 +74,7 @@ def update_docs_structure(name, sites=[], *args):
     for site in sites:
         site_staging_dir = join(site_root, site['root'], site['staging'])
         data_file = join(site_root, site_staging_dir, '_data', name + '.yml')
-        out = Popen(["git log -1 --format=%ci"], stdout=subprocess.PIPE, shell=True)
+        out = subprocess.Popen(["git log -1 --format=%ci"], stdout=subprocess.PIPE, shell=True)
         date = out.communicate()
         # this file is used to generate the site home page
         if not isdir(join(site_staging_dir, '_data')):
