@@ -7,7 +7,7 @@ from os import chdir, makedirs, listdir, symlink
 from os.path import join, isdir, isfile, islink, normpath, abspath, dirname
 from posix import remove
 from shutil import copyfile, copytree, rmtree
-from subprocess import call
+from subprocess import call, Popen
 
 # base path for the build script
 base_path = normpath(abspath(join(dirname(__file__))))
@@ -74,12 +74,15 @@ def update_docs_structure(name, sites=[], *args):
     for site in sites:
         site_staging_dir = join(site_root, site['root'], site['staging'])
         data_file = join(site_root, site_staging_dir, '_data', name + '.yml')
+        out = Popen(["git log -1 --format=%ci"], stdout=subprocess.PIPE, shell=True)
+        date = out.communicate()
         # this file is used to generate the site home page
         if not isdir(join(site_staging_dir, '_data')):
             makedirs(join(site_staging_dir, '_data'))
         copyfile(join(site_root, repositories, name, '_config.yml'), data_file)
         with open(data_file) as f:
             yaml_config = yaml.safe_load(f)
+        yaml_config['updated'] = date.rstrip()
         yaml_config['slug'] = name
         yaml_config['github_repo'] = 'https://github.com/RockefellerArchiveCenter/{0}'.format(name)
         with open(data_file, 'w') as f:
