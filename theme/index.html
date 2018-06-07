@@ -15,6 +15,7 @@ title: Rockefeller Archive Center Documentation
     </div>
     <div class="card-footer">
       {% for tag in doc.tags %}{% include tags.html %}{% endfor %}
+      <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
     </div>
   </div>
 </div>
