@@ -29,3 +29,15 @@ div.toc-striped li:nth-child(even) {
 .title-card {
   min-height: 18rem;
 }
+
+blockquote {
+  background: #f9f9f9;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+
+}
+blockquote p {
+  display: inline;
+}
