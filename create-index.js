@@ -3,7 +3,7 @@ var fs = require('fs');
 var data;
 var source = process.argv.slice(2)[0];
 var destination = process.argv.slice(2)[1];
-var regex = /[-\%\&\.\>\<\t]+/g
+var regex = /[\%\&\>\<\t]+/g
 
 buildIndex(source, destination);
 
