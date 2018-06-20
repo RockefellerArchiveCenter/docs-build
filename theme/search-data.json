@@ -9,7 +9,7 @@ layout: null
 {%- assign docs_pages = site.pages | where: 'layout', 'docs' -%}
 { {% for page in docs_pages %}
   "{{ page.url }}": {
-    {% assign text = page.content | remove: "		" %}
+    {% assign text = page.content | remove: "	" %}
     "href": "{{ page.url }}",
     "title": "{{ page.title }}",
     "text": "{{ text | strip_html | replace: tl, ' ' | replace: nl, ' ' | replace: '  ', ' ' | replace: '\', '/' | strip_newlines | strip | escape }}",
