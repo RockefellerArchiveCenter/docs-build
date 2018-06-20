@@ -12,7 +12,7 @@ layout: null
   "{{ page.url }}": {
     "href": "{{ page.url }}",
     "title": "{{ page.title }}",
-    "text": "{{ page.content | strip_html | replace: tl, ' ' | replace: nl, ' ' | replace: '  ', ' ' | replace: '\.', '.' | replace: '\', '/' | strip_newlines | strip | escape }}",
+    "text": "{{ page.content | strip_html | replace: tl, ' ' | replace: nl, ' ' | replace: '  ', ' ' | replace: '\.', '.' | replace: '\', '/' | replace '#', '' | strip_newlines | strip | escape }}",
     "url": "{{ page.url | replace: '.html', '' }}"
   }
   {%- unless forloop.last %},{% endunless -%}
