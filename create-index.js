@@ -3,13 +3,14 @@ var fs = require('fs');
 var data;
 var source = process.argv.slice(2)[0];
 var destination = process.argv.slice(2)[1];
+var regex = temp = /[^`~!@#$%^&*()-=+\|/?.>,<;:'"[{]}]+/g
 
 buildIndex(source, destination);
 
 function buildIndex(source, destination) {
   fs.readFile(source, 'utf8', function(err, data) {
       if (err) throw err;
-      documents = JSON.parse(data);
+      documents = JSON.parse(data.replace(regex, ''));
 
       var idx = lunr(function() {
           this.ref('href')
