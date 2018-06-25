@@ -9,6 +9,7 @@ title: Rockefeller Archive Center Documentation
   <div class="title-card card">
     <div class="card-body">
       <h2 class="card-title"><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
+      {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
       <p class="card-text">{{doc.description}}</p>
       <a class="btn btn-sm btn-primary" href="{{site.baseurl}}{{doc.slug}}" role="button">View Docs</a>
       <a class="btn btn-sm btn-primary" href="{{doc.github_repo}}" role="button">View Source on GitHub</a>
