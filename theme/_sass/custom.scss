@@ -2,7 +2,6 @@
     float: left;
     height: 5em;
     margin-right: 1em;
-
 }
 
 div.toc-striped li:nth-child(even) {
@@ -41,3 +40,6 @@ blockquote p {
   display: inline;
 }
 
+.table-responsive {
+  margin-bottom: 1em;
+}
