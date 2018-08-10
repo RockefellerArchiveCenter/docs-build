@@ -2,7 +2,6 @@
     float: left;
     height: 5em;
     margin-right: 1em;
-
 }
 
 div.toc-striped li:nth-child(even) {
@@ -24,6 +23,15 @@ div.toc-striped li:nth-child(even) {
 .docs-example {
   background: #efefef;
   padding: 15px;
+  font-family: Courier, monospace;
+}
+
+.docs-example > h6 {
+  font-weight: 600;
+}
+
+.docs-example > p:last-of-type {
+  margin-bottom: 0;
 }
 
 .title-card {
@@ -39,4 +47,8 @@ blockquote {
 
 blockquote p {
   display: inline;
+}
+
+.table-responsive {
+  margin-bottom: 1em;
 }
