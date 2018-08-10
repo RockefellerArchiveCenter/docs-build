@@ -23,6 +23,11 @@ div.toc-striped li:nth-child(even) {
 .docs-example {
   background: #efefef;
   padding: 15px;
+  font-family: Courier, monospace;
+}
+
+.docs-example > p:last-of-type {
+  margin-bottom: 0;
 }
 
 .title-card {
