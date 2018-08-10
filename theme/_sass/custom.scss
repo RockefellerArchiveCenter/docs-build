@@ -26,6 +26,10 @@ div.toc-striped li:nth-child(even) {
   font-family: Courier, monospace;
 }
 
+.docs-example > h6 {
+  font-weight: 600;
+}
+
 .docs-example > p:last-of-type {
   margin-bottom: 0;
 }
