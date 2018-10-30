@@ -2,9 +2,18 @@
 
 <input class="search" placeholder="Search" />
 
-<ul class ="list">
-  <li class="title-card card">
- { % include index.html %}
-      {% for tag in doc.category %}
-  </li>
-</ul>
+{% for category in doc.category %}
+
+<div id="documents">
+  <button class="filter-1">
+    Collection Management and Development
+  </button>
+  <button class="filter-2">
+    Preservation
+  </button>
+  <button class="filter-3">
+    Arrangement and Description
+  </button>
+  <button class="filter-4">
+    Reference and Outreach
+  </button>

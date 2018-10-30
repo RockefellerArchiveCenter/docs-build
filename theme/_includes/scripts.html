@@ -32,3 +32,36 @@ $(document).ready(function() {
 
 <!-- list.js for homepage search/filter -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+<!-- variables: category-->
+<!-- documents list-->
+<!-- code for filter 1: collection development and management-->
+<script type="text/javascript" src="{{ site.baseurl }}/js/list.js">
+var options = {
+  valueNames: [ 'category'
+
+};
+var #documentsList = new List('#documents', options);
+$('.filter-1').on('click', function() {
+  docs-lifecycleList.filter(function(item) {
+    var category =
+  })
+};)
+function resetList(){
+	userList.search();
+	userList.filter();
+	userList.update();
+	$(".filter-all").prop('checked', true);
+	$('.filter').prop('checked', false);
+	$('.search').val('');
+	//console.log('Reset Successfully!');
+};
+
+</script>
+
+<!-- code for filter 2: preservation-->
+
+<!-- code for filter 3: arrangement and description-->
+
+<!-- code for filter 4: referene and outreach-->
+© 2018 GitHub, Inc.
