@@ -2,7 +2,8 @@
 layout: default
 title: Rockefeller Archive Center Documentation
 ---
-
+<ul id="documents">
+  <li>
 {% for file in site.data %}
 {% assign doc = file[1] %}
 <div class="col-sm-4 mt-3">
@@ -21,3 +22,5 @@ title: Rockefeller Archive Center Documentation
   </div>
 </div>
 {% endfor %}
+</li>
+</ul>
