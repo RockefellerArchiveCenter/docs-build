@@ -24,7 +24,7 @@ $(document).ready(function() {
 </script>
 
 <!-- use Bootstrap table formatting for Markdown tables-->
-<script type"text/javascript">
+<script type="text/javascript">
   $(document).ready(function () {
     $("table").addClass("table table-striped table-bordered");
   });
@@ -32,3 +32,25 @@ $(document).ready(function() {
 
 <!-- list.js for homepage search/filter -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+<!-- variables: category-->
+<!-- documents list-->
+<!-- code for filter 1: collection development and management-->
+<script type="text/javascript" src="{{ site.baseurl }}/js/list.js">
+var options = {
+  valueNames: [ 'category' ]
+};
+
+var #documentsList = new List('#documents', options);
+$('.filter-1').on('click', function() {
+  docs-lifecycleList.filter(function(item) {
+    var category =
+  })
+};)
+</script>
+
+<!-- code for filter 2: preservation-->
+
+<!-- code for filter 3: arrangement and description-->
+
+<!-- code for filter 4: referene and outreach-->
