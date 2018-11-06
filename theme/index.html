@@ -3,21 +3,25 @@ layout: default
 title: Rockefeller Archive Center Documentation
 ---
 
+<ul id="documents">
 {% for file in site.data %}
 {% assign doc = file[1] %}
-<div class="col-sm-4 mt-3">
-  <div class="title-card card">
-    <div class="card-body">
-      <h2 class="card-title"><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
-      {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
-      <p class="card-text">{{doc.description}}</p>
-      <a class="btn btn-sm btn-primary" href="{{site.baseurl}}{{doc.slug}}" role="button">View Docs</a>
-      <a class="btn btn-sm btn-primary" href="{{doc.github_repo}}" role="button">View Source on GitHub</a>
+  <li>
+    <div class="col-sm-4 mt-3">
+      <div class="title-card card">
+        <div class="card-body">
+          <h2 class="card-title"><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
+          {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
+          <p class="card-text">{{doc.description}}</p>
+          <a class="btn btn-sm btn-primary" href="{{site.baseurl}}{{doc.slug}}" role="button">View Docs</a>
+          <a class="btn btn-sm btn-primary" href="{{doc.github_repo}}" role="button">View Source on GitHub</a>
+        </div>
+        <div class="card-footer">
+          {% for tag in doc.tags %}{% include tags.html %}{% endfor %}
+          <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
+        </div>
+      </div>
     </div>
-    <div class="card-footer">
-      {% for tag in doc.tags %}{% include tags.html %}{% endfor %}
-      <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
-    </div>
-  </div>
-</div>
+  </li>
 {% endfor %}
+</ul>
