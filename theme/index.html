@@ -2,8 +2,9 @@
 layout: default
 title: Rockefeller Archive Center Documentation
 ---
-
-<ul id="documents">
+<div id="docs-list">
+  {% include search-category.html %}
+<ul id="documents" class="list">
 {% for file in site.data %}
 {% assign doc = file[1] %}
   <li>
@@ -12,6 +13,7 @@ title: Rockefeller Archive Center Documentation
         <div class="card-body">
           <h2 class="card-title"><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
           {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
+          <p class="category" >{{ doc.category }}</p>
           <p class="card-text">{{doc.description}}</p>
           <a class="btn btn-sm btn-primary" href="{{site.baseurl}}{{doc.slug}}" role="button">View Docs</a>
           <a class="btn btn-sm btn-primary" href="{{doc.github_repo}}" role="button">View Source on GitHub</a>
@@ -25,3 +27,5 @@ title: Rockefeller Archive Center Documentation
   </li>
 {% endfor %}
 </ul>
+
+<div>

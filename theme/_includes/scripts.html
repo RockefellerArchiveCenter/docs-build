@@ -33,27 +33,54 @@ $(document).ready(function() {
 <!-- list.js for homepage search/filter -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 
-<!-- variables: category-->
-<!-- documents list-->
-<!-- code for filter 1: collection development and management-->
+<!-- code for filters-->
 <script type="text/javascript" src="{{ site.baseurl }}/js/list.js">
 var options = {
   valueNames: [ 'category' ]
 };
+var documentsList = new List ('#docs-list', options);
 
-var documentsList = new List ('#documents', options);
-$('.filter-1').on('click', function() {
+$('#filter-1').on('click', function() {
   documentsList.filter(function(item) {
-    if (category = collection development and management) {
+    if (item.values().category == "collection development and management") {
       return true;
     } else {
       return false;
     }
-  })
-};)
+  });
+  return false;
+});
+$('#filter-2').on('click', function() {
+  documentsList.filter(function(item) {
+    if (item.values().category == "preservation") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
+});
+$('#filter-3').on('click', function() {
+  documentsList.filter(function(item) {
+    if (item.values().category == "arrangement and description") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
+});
+$('#filter-4').on('click', function() {
+  documentsList.filter(function(item) {
+    if (item.values().category == "reference and outreach") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
+});
 </script>
-
-<!-- code for filter 2: preservation-->
 
 <!-- code for filter 3: arrangement and description-->
 
