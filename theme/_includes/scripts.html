@@ -36,7 +36,7 @@ $(document).ready(function() {
 <!-- code for filters-->
 <script type="text/javascript">
 var options = {
-  valueNames: [ 'category' ]
+  valueNames: [ 'category', 'card-title', 'card-text' ]
 };
 var documentsList = new List ('docs-list', options);
 
@@ -80,4 +80,14 @@ $('#filter-4').click(function() {
   });
   return false;
 });
+
+function resetList(){
+	userList.search();
+	userList.filter();
+	userList.update();
+	$(".filter-all").prop('checked', true);
+	$('.filter').prop('checked', false);
+	$('.search').val('');
+	//console.log('Reset Successfully!');
+};
 </script>
