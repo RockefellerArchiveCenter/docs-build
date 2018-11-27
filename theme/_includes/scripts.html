@@ -34,13 +34,13 @@ $(document).ready(function() {
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 
 <!-- code for filters-->
-<script type="text/javascript" src="{{ site.baseurl }}/js/list.js">
+<script type="text/javascript">
 var options = {
   valueNames: [ 'category' ]
 };
-var documentsList = new List ('#docs-list', options);
+var documentsList = new List ('docs-list', options);
 
-$('#filter-1').on('click', function() {
+$('#filter-1').click(function() {
   documentsList.filter(function(item) {
     if (item.values().category == "collection development and management") {
       return true;
@@ -50,7 +50,7 @@ $('#filter-1').on('click', function() {
   });
   return false;
 });
-$('#filter-2').on('click', function() {
+$('#filter-2').click(function() {
   documentsList.filter(function(item) {
     if (item.values().category == "preservation") {
       return true;
@@ -60,7 +60,7 @@ $('#filter-2').on('click', function() {
   });
   return false;
 });
-$('#filter-3').on('click', function() {
+$('#filter-3').click(function() {
   documentsList.filter(function(item) {
     if (item.values().category == "arrangement and description") {
       return true;
@@ -70,7 +70,7 @@ $('#filter-3').on('click', function() {
   });
   return false;
 });
-$('#filter-4').on('click', function() {
+$('#filter-4').click(function() {
   documentsList.filter(function(item) {
     if (item.values().category == "reference and outreach") {
       return true;
@@ -81,7 +81,3 @@ $('#filter-4').on('click', function() {
   return false;
 });
 </script>
-
-<!-- code for filter 3: arrangement and description-->
-
-<!-- code for filter 4: referene and outreach-->
