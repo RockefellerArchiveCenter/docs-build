@@ -13,12 +13,11 @@ title: Rockefeller Archive Center Documentation
         <div class="card-body">
           <h2 class="card-title"><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
           {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
-          <p class="category" >{{ doc.category }}</p>
           <p class="card-text">{{doc.description}}</p>
-          <a class="btn btn-sm btn-primary" href="{{site.baseurl}}{{doc.slug}}" role="button">View Docs</a>
           <a class="btn btn-sm btn-primary" href="{{doc.github_repo}}" role="button">View Source on GitHub</a>
         </div>
         <div class="card-footer">
+          <p class="category badge badge-pill badge-info" >{{ doc.category }}</p>
           {% for tag in doc.tags %}{% include tags.html %}{% endfor %}
           <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
         </div>

@@ -80,6 +80,10 @@ $('#filter-4').click(function() {
   });
   return false;
 });
+$('#filter-none').click(function() {
+  documentsList.filter();
+  return false;
+});
 
 function resetList(){
 	userList.search();
