@@ -38,6 +38,10 @@ var options = {
   valueNames: [ 'category', 'card-title', 'card-text', 'card-footer']
 };
 var documentsList = new List ('docs-list', options);
+$('#filter-none').click(function() {
+  documentsList.filter();
+  return false;
+});
 $('#filter-1').click(function() {
   documentsList.filter(function(item) {
     if (item.values().category == "collection development and management") {
@@ -78,4 +82,5 @@ $('#filter-4').click(function() {
   });
   return false;
 });
+
 </script>
