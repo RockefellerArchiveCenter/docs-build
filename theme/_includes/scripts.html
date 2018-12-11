@@ -24,7 +24,7 @@ $(document).ready(function() {
 </script>
 
 <!-- use Bootstrap table formatting for Markdown tables-->
-<script type"text/javascript">
+<script type"=text/javascript">
   $(document).ready(function () {
     $("table").addClass("table table-striped table-bordered");
   });
@@ -32,3 +32,55 @@ $(document).ready(function() {
 
 <!-- list.js for homepage search/filter -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+<!-- code for filters-->
+<script type="text/javascript">
+var options = {
+  valueNames: [ 'category', 'card-title', 'card-text', 'card-footer']
+};
+var documentsList = new List ('docs-list', options);
+$('#filter-none').click(function() {
+  documentsList.filter();
+  return false;
+});
+$('#filter-1').click(function() {
+  documentsList.filter(function(item) {
+    if (item.values().category == "collection development and management") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
+});
+$('#filter-2').click(function() {
+  documentsList.filter(function(item) {
+    if (item.values().category == "preservation") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
+});
+$('#filter-3').click(function() {
+  documentsList.filter(function(item) {
+    if (item.values().category == "arrangement and description") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
+});
+$('#filter-4').click(function() {
+  documentsList.filter(function(item) {
+    if (item.values().category == "reference and outreach") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
+});
+
+</script>
