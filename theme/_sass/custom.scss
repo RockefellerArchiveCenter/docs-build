@@ -8,6 +8,10 @@ div.toc-striped li:nth-child(even) {
     background: #efefef;
 }
 
+#documents {
+  list-style-type: none;
+}
+
 #current {
   font-size: .8rem;
 }

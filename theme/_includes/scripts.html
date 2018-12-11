@@ -24,6 +24,7 @@ $(document).ready(function() {
 </script>
 
 <!-- use Bootstrap table formatting for Markdown tables-->
+
 <script type="text/javascript">
   $(document).ready(function () {
     $("table").addClass("table table-striped table-bordered");
@@ -36,10 +37,13 @@ $(document).ready(function() {
 <!-- code for filters-->
 <script type="text/javascript">
 var options = {
-  valueNames: [ 'category', 'card-title', 'card-text' ]
+  valueNames: [ 'category', 'card-title', 'card-text', 'card-footer']
 };
 var documentsList = new List ('docs-list', options);
-
+$('#filter-none').click(function() {
+  documentsList.filter();
+  return false;
+});
 $('#filter-1').click(function() {
   documentsList.filter(function(item) {
     if (item.values().category == "collection development and management") {
@@ -80,18 +84,4 @@ $('#filter-4').click(function() {
   });
   return false;
 });
-$('#filter-none').click(function() {
-  documentsList.filter();
-  return false;
-});
-
-function resetList(){
-	userList.search();
-	userList.filter();
-	userList.update();
-	$(".filter-all").prop('checked', true);
-	$('.filter').prop('checked', false);
-	$('.search').val('');
-	//console.log('Reset Successfully!');
-};
 </script>
