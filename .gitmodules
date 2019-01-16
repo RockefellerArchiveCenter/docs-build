@@ -1,0 +1,6 @@
+[submodule "repositories/processing-manual"]
+	path = repositories/processing-manual
+	url = https://github.com/RockefellerArchiveCenter/processing-manual
+[submodule "repositories/archivematica-local"]
+	path = repositories/archivematica-local
+	url = https://github.com/RockefellerArchiveCenter/archivematica-local
