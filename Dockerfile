@@ -18,7 +18,7 @@ RUN pip install pyyaml
 
 RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum -y install nodejs
-RUN npm install lunr
+RUN npm install lunr http-server -g
 
 ADD . /home/docs/docs-build/
 

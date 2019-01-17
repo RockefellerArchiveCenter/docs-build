@@ -5,13 +5,15 @@ repositories, and builds internal and external-facing sites. It can be set to
 run at a specified time (for example on a nightly basis) using cron. Requires at
 least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual)).
 
-## Quickstart
+## Quick Start
 
 A Docker container is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
 
     git clone https://github.com/RockefellerArchiveCenter/docs-build.git
     cd docs-build
     docker-compose up
+
+The docs site will be available in your browser at `http://localhost:4000`.
 
 This container is also useful for development purposes. If you've made changes to files and want to regenerate the site, you can run `docker-compose exec docs python update.py`.
 
@@ -21,8 +23,7 @@ This container is also useful for development purposes. If you've made changes t
     cd docs-build
     ./install.sh
 
-`./install.sh` will install all the necessary dependencies, and also creates SSH
-keys which enable the application to interact with Github.
+`./install.sh` will install all the necessary dependencies, and also creates SSH keys which enable the application to interact with Github.
 
 ## Setup
 

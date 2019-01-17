@@ -8,5 +8,4 @@ python ./update.py
 
 cd /home/docs/private/build/
 
-echo "Starting server"
-python -m SimpleHTTPServer 4000
+http-server -p 4000
