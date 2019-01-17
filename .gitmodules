@@ -4,3 +4,39 @@
 [submodule "repositories/archivematica-local"]
 	path = repositories/archivematica-local
 	url = https://github.com/RockefellerArchiveCenter/archivematica-local
+[submodule "repositories/dm-transfer-workflow"]
+	path = repositories/dm-transfer-workflow
+	url = https://github.com/RockefellerArchiveCenter/dm-transfer-workflow
+[submodule "repositories/premis-rights-guidelines"]
+	path = repositories/premis-rights-guidelines
+	url = https://github.com/RockefellerArchiveCenter/premis-rights-guidelines
+[submodule "repositories/docs-policy"]
+	path = repositories/docs-policy
+	url = https://github.com/RockefellerArchiveCenter/docs-policy
+[submodule "repositories/docs-guide"]
+	path = repositories/docs-guide
+	url = https://github.com/RockefellerArchiveCenter/docs-guide
+[submodule "repositories/loan-policy"]
+	path = repositories/loan-policy
+	url = https://github.com/RockefellerArchiveCenter/loan-policy
+[submodule "repositories/exhibit-policy"]
+	path = repositories/exhibit-policy
+	url = https://github.com/RockefellerArchiveCenter/exhibit-policy
+[submodule "repositories/digital-preservation-policy"]
+	path = repositories/digital-preservation-policy
+	url = https://github.com/RockefellerArchiveCenter/digital-preservation-policy
+[submodule "repositories/reappraisal-policy"]
+	path = repositories/reappraisal-policy
+	url = https://github.com/RockefellerArchiveCenter/reappraisal-policy
+[submodule "repositories/social-media-policy"]
+	path = repositories/social-media-policy
+	url = https://github.com/RockefellerArchiveCenter/social-media-policy
+[submodule "repositories/textile-policy"]
+	path = repositories/textile-policy
+	url = https://github.com/RockefellerArchiveCenter/textile-policy
+[submodule "repositories/collection-policy"]
+	path = repositories/collection-policy
+	url = https://github.com/RockefellerArchiveCenter/collection-policy
+[submodule "repositories/nitrate-policy"]
+	path = repositories/nitrate-policy
+	url = https://github.com/RockefellerArchiveCenter/nitrate-policy
