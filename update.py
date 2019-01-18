@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # pulls files and builds sites
 
 import yaml
@@ -25,7 +25,7 @@ def get_updates(repository_name):
     # If the repository exists, update the data
     if isdir(join(site_root, repositories, repository_name)):
         chdir(join(site_root, repositories, repository_name))
-        print "pulling from "+repository_name
+        print("pulling from "+repository_name)
         subprocess.call("git pull", shell=True)
 
 
@@ -45,9 +45,15 @@ def create_structure(src, target, site):
 def build_site(site):
     base_url = join(site_root, site['root'])
     chdir(base_url)
-    print "Jekyll building at " + base_url
+    print("Jekyll building at " + base_url)
     subprocess.call("/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source %s --destination %s" % (site['staging'], site['build']), shell=True)
-    subprocess.call("node %s/create-index.js %s/search-data.json %s/search-index.json" % (base_path, site['build'], site['build']), shell=True)
+    for repo in repositories: #{{site.baseurl}}{{doc.slug}}
+        print(repositories)
+        subprocess.call("node %s/create-index.js %s/%s/search-data.json %s/%s/search-index.json" % (base_path, repositories['build'], repo, repositories['build'], repo), shell=True)
+        subprocess.call("node {base_path}/create-index.js {build_dir}/{repo}/search-data.json {build_dir}/{repo}/search-index.json".format(base_path=base_path, build_dir=repositories['build'], repo=repo), shell=True)
+#Does %s/create-index.js need to be generated separately so search-data.json and search-index.json can be built directly into repositories?
+#subprocess.call("node %s/search.md (repositories['build']), shell=True)  Need to create search.md file in all repositories upon site build
+
 
 
 def build_structure(directory):
@@ -70,7 +76,7 @@ def link_site(site):
 
 
 def update_docs_structure(name, sites=[], *args):
-    print "*** building documentation ***"
+    print("*** building documentation ***")
     for site in sites:
         site_staging_dir = join(site_root, site['root'], site['staging'])
         data_file = join(site_root, site_staging_dir, '_data', name + '.yml')
@@ -91,7 +97,7 @@ def update_docs_structure(name, sites=[], *args):
 
 
 def update_theme_structure(name, sites=[], *args):
-    print "*** building theme ***"
+    print("*** building theme ***")
     for site in sites:
         create_structure(join(base_path, name), join(site_root, site['root'], site['staging']), site)
 

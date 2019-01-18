@@ -2,11 +2,15 @@
 layout: default
 ---
 
-<div class="col-sm-4">
- {% include side-nav.html %}
-</div>
+  {% include side-nav.html %}
+    {% include overall-search.html %}
+<div class="row mt-4">
+  <div class="col-sm-4">
+  </div>
 
-<div class="col-sm-8">
-   <!-- {% include breadcrumbs.html %} -->
-   {{ content }}
+  <div class="col-sm-8">
+      <!-- {% include breadcrumbs.html %} -->
+      {{ content }}
+  </div>
 </div>
+    {% include scripts.html %}
