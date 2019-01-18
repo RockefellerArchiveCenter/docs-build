@@ -47,8 +47,9 @@ def build_site(site):
     chdir(base_url)
     print "Jekyll building at " + base_url
     subprocess.call("/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source %s --destination %s" % (site['staging'], site['build']), shell=True)
-    subprocess.call("node %s/create-index.js %s/search-data.json %s/search-index.json" % (base_path, site['build'], site['build']), shell=True)
-
+    for repo in repositories:
+        print repositories
+        subprocess.call("node {base_path}/create-index.js {build_dir}/{repo}/search-data.json {build_dir}/{repo}/search-index.json".format(base_path=base_path, build_dir=repositories['build'], repo=repo), shell=True)
 
 def build_structure(directory):
     with open(join(site_root, repositories, directory, '_config.yml')) as f:
