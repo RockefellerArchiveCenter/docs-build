@@ -101,7 +101,7 @@ def update_theme_structure(name, sites=[], *args):
 def main():
     update_theme_structure('theme', [public_site, private_site])
     for d in os.listdir(os.path.join(site_root, repositories)):
-        # get_updates(d)
+        get_updates(d)
         build_structure(d)
     for site in [public_site, private_site]:
         build_site(site)
