@@ -1,7 +1,8 @@
 FROM centos:6.10
 
-RUN yum -y install epel-release && yum -y update && yum -y install \
-  git make gcc \
+RUN yum -y install https://centos6.iuscommunity.org/ius-release.rpm \
+  epel-release && yum -y update && yum -y install \
+  git2u make gcc \
   python-pip python-setuptools \
   curl \
   httpd mod_ssl
