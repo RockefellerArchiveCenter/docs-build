@@ -37,10 +37,10 @@ $(document).ready(function() {
 <!-- code for filters-->
 <script type="text/javascript">
 var options = {
-  valueNames: [ 'category', 'card-title', 'card-text', 'card-footer']
+  valueNames: [ 'category', 'card-title', 'card-text', 'card-footer', 'sort-title']
 };
 var documentsList = new List ('docs-list', options);
-documentsList.sort('card-title', { order: "asc" });
+documentsList.sort('sort-title', { order: "asc" });
 $('#filter-none').click(function() {
   documentsList.filter();
   return false;
