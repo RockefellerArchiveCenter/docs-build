@@ -8,19 +8,6 @@ div.toc-striped li:nth-child(even) {
     background: #efefef;
 }
 
-.codeblock {
-    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    white-space: pre-wrap !important;
-    padding: 0.2rem 0.4rem;
-    font-size: 90%;
-    overflow: auto;
-    -ms-overflow-style: scrollbar;
-    color: #bd4147;
-    background-color: #f8f9fa;
-    border-radius: 0.25rem;
-    display: block;
-  }
-
 #documents {
   list-style-type: none;
 }
@@ -53,6 +40,13 @@ div.toc-striped li:nth-child(even) {
 
 .title-card {
   min-height: 18rem;
+}
+
+.codeblock {
+    color: #bd4147;
+    white-space: pre;
+    overflow: auto;
+    -ms-overflow-style: scrollbar;
 }
 
 blockquote {
