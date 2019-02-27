@@ -6,6 +6,7 @@ services:
     entrypoint: /home/docs/docs-build/entrypoint.sh
     volumes:
       - .:/home/docs/docs-build/
+      - /home/docs/docs-build/node_modules
     ports:
       - 4000:4000
       - 80:80
