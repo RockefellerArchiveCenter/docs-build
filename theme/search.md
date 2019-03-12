@@ -7,7 +7,8 @@ permalink: /search/
 <div class="container">
   <div class="row">
     <div class="col-sm-8">
-    {% include search-doc.html %}
+    {% capture doc-name %}{{ doc.slug }}{% endcapture %}
+    {% include search-doc.html content=doc-name %}
     </div>
   </div>
 </div>
