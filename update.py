@@ -61,6 +61,9 @@ class Site:
                 copyfile(
                     os.path.join(self.staging_dir, 'search-data.json'),
                     os.path.join(self.staging_dir, self.current_repo, 'search-data.json'))
+                copyfile(
+                    os.path.join(self.staging_dir, 'search.md'),
+                    os.path.join(self.staging_dir, self.current_repo, 'search.md'))
 
     def build(self):
         subprocess.call(
@@ -69,8 +72,6 @@ class Site:
         for repo in os.listdir(self.repositories_dir):
             if self.has_repo():
                 self.build_repo_index()
-            if self.has_repo():
-                self.build_repo_search()
 
     def has_repo(self):
         if self.site_config == config['public_site']:
@@ -84,10 +85,6 @@ class Site:
         subprocess.call(
             "node {base_path}/create-index.js {build_dir}/{repo}/search-data.json {build_dir}/{repo}/search-index.json".format(
                 base_path=base_path, build_dir=self.build_dir, repo=self.current_repo), shell=True)
-
-    def build_repo_search(self):
-        subprocess.call(
-            "node {build_dir}/{repo}/search.md".format(build_dir=self.build_dir, repo=self.current_repo), shell=True)
 
     def update_data_file(self, data_file):
         updated_date = self.get_updated_date()
