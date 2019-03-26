@@ -18,8 +18,8 @@ title: Rockefeller Archive Center Documentation
           <a class="btn btn-sm btn-primary" href="{{doc.github_repo}}" role="button">View Source on GitHub</a>
         </div>
         <div class="card-footer">
-          <p class="category badge badge-pill badge-info" >{{ doc.category }}</p>
-          {% for tag in doc.tags %}{% include tags.html %}{% endfor %}
+          <p class="category badge badge-pill badge-info">{{ doc.category }}</p>
+          <p class="category badge badge-pill badge-info">{{ doc.tags }}</p>
           <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
         </div>
       </div>
