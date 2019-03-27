@@ -70,6 +70,7 @@ class Site:
             "/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source {source} --destination {dest}".format(
                 source=self.staging_dir, dest=self.build_dir), shell=True)
         for repo in os.listdir(self.repositories_dir):
+            self.current_repo = repo
             if self.has_repo():
                 self.build_repo_index()
 
@@ -82,6 +83,7 @@ class Site:
             return True
 
     def build_repo_index(self):
+        print(self.current_repo)
         subprocess.call(
             "node {base_path}/create-index.js {build_dir}/{repo}/search-data.json {build_dir}/{repo}/search-index.json".format(
                 base_path=base_path, build_dir=self.build_dir, repo=self.current_repo), shell=True)

@@ -1,7 +1,6 @@
 ---
 layout: default
 title: Search Results
-permalink: /search/
 ---
 
 <div class="container">
