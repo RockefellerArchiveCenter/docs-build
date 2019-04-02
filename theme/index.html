@@ -10,16 +10,12 @@ title: Rockefeller Archive Center Documentation
 {% assign doc = file[1] %}
     <div class="col-sm-4 mt-3 d-inline-block">
       <li>
-      <div class="title-card card">
+      <div class="card">
         <div class="card-body">
           <h2 class="card-title"><a class="sort-title" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
+          <p class="text-muted">{{ doc.tags }}</p>
           {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
-          <p class="card-text">{{doc.description}}</p>
-          <a class="btn btn-sm btn-primary" href="{{doc.github_repo}}" role="button">View Source on GitHub</a>
-        </div>
-        <div class="card-footer">
           <p class="category badge badge-pill badge-info">{{ doc.category }}</p>
-          <p class="category badge badge-pill badge-info">{{ doc.tags }}</p>
           <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
         </div>
       </div>
@@ -28,4 +24,4 @@ title: Rockefeller Archive Center Documentation
 {% endfor %}
 </ul>
 
-<div>
+</div>
