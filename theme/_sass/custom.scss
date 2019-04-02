@@ -2,6 +2,9 @@ body {
     position: relative;
     height: 100%
 }
+a {
+  text-decoration: underline!important;
+}
 
 a.underline {
   color: #007bff;
