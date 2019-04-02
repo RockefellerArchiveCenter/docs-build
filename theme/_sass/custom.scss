@@ -1,3 +1,18 @@
+body {
+    position: relative;
+    height: 100%
+}
+
+a.underline {
+  color: #007bff;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+a.underline:hover {
+	text-decoration: none;
+}
+
 .footer-logo {
     float: left;
     height: 5em;
@@ -66,4 +81,12 @@ blockquote p {
 
 #documents {
   list-style: none;
+}
+
+.nav li {
+  display: inline-block;
+}
+.nav li.active {
+  background-color:red;
+  color: #fff;
 }
