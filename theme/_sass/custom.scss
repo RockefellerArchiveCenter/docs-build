@@ -2,18 +2,21 @@ body {
     position: relative;
     height: 100%
 }
+
+a.nounderline {
+  text-decoration: none!important;
+}
+
 a {
-  text-decoration: underline!important;
-}
-
-a.underline {
-  color: #007bff;
   text-decoration: underline;
-  background-color: transparent;
 }
 
-a.underline:hover {
+a:hover {
 	text-decoration: none;
+}
+
+a.nounderline:hover {
+	text-decoration: underline!important;
 }
 
 .footer-logo {
