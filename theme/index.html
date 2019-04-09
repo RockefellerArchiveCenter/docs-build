@@ -5,11 +5,11 @@ title: Rockefeller Archive Center Documentation
 
 <div class="container-fluid" id="docs-list">
   {% include search-category.html %}
-<div id="documents" class="list">
+<div id="documents" class="list row card-container">
 {% for file in site.data %}
 {% assign doc = file[1] %}
-    <div class="card-container col-sm-4 mt-3 d-inline-block">
-      <div class="card">
+    <div class="col-sm-4 mt-3">
+      <div class="card full-height">
         <div class="card-body">
           <h2 class="card-title"><a class="sort-title nounderline" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
           <p class="text-muted">{{ doc.tags }}</p>
