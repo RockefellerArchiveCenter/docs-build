@@ -1,6 +1,6 @@
 
 <div class="sticky-top">
-  <div class="container ">
+  <nav class="container" role="navigation" aria-label="documentation table of contents">
     <ol class="list-group">
       {% for file in site.data %}
         {% if page.dir contains file[0] %}
@@ -14,5 +14,5 @@
         {% endif %}
       {% endfor %}
     </ol>
-  </div>
+  </nav>
 </div>
