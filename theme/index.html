@@ -8,7 +8,7 @@ title: Rockefeller Archive Center Documentation
 <div id="documents" class="list">
 {% for file in site.data %}
 {% assign doc = file[1] %}
-    <div class="col-sm-4 mt-3 d-inline-block">
+    <div class="card-container col-sm-4 mt-3 d-inline-block">
       <div class="card">
         <div class="card-body">
           <h2 class="card-title"><a class="sort-title underline" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>

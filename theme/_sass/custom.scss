@@ -56,8 +56,13 @@ div.toc-striped li:nth-child(even) {
   margin-bottom: 0;
 }
 
+.card-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
 .title-card {
-  min-height: 18rem;
+  flex: 0 1 auto;
 }
 
 .codeblock {
