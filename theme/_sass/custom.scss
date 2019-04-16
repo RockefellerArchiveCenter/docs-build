@@ -5,14 +5,14 @@ body {
 
 a {
   text-decoration: underline;
-  & .hover {
+  &.nounderline {
+    text-decoration: none!important;
+  }
+  &.hover {
     text-decoration: none;
   }
-  & .nounderline:hover {
+  &.nounderline:hover {
     text-decoration: underline!important;
-  }
-  & .nounderline {
-    text-decoration: none!important;
   }
 }
 
