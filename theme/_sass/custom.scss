@@ -3,20 +3,17 @@ body {
     height: 100%
 }
 
-a.nounderline {
-  text-decoration: none!important;
-}
-
 a {
   text-decoration: underline;
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-a.nounderline:hover {
-	text-decoration: underline!important;
+  & .hover {
+    text-decoration: none;
+  }
+  & .nounderline:hover {
+    text-decoration: underline!important;
+  }
+  & .nounderline {
+    text-decoration: none!important;
+  }
 }
 
 .footer-logo {
@@ -43,14 +40,12 @@ div.toc-striped li:nth-child(even) {
   background: #efefef;
   padding: 15px;
   font-family: Courier, monospace;
-}
-
-.docs-example > h6 {
-  font-weight: 600;
-}
-
-.docs-example > p:last-of-type {
-  margin-bottom: 0;
+  & > h6 {
+    font-weight: 600;
+  }
+  & p:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .card-container {
