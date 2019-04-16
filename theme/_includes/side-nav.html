@@ -1,6 +1,7 @@
 
 <div class="sticky-top">
-  <nav class="container" role="navigation" aria-label="documentation table of contents">
+
+  <nav class="container" role="navigation" aria-label="{{page.title}} table of contents">
     <ol class="list-group">
       {% for file in site.data %}
         {% if page.dir contains file[0] %}
