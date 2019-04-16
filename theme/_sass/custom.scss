@@ -50,14 +50,12 @@ div.toc-striped li:nth-child(even) {
   background: #efefef;
   padding: 15px;
   font-family: Courier, monospace;
-}
-
-.docs-example > h6 {
-  font-weight: 600;
-}
-
-.docs-example > p:last-of-type {
-  margin-bottom: 0;
+  & > h6 {
+    font-weight: 600;
+  }
+  & p:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .card-container {
