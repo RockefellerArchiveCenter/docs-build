@@ -3,20 +3,17 @@ body {
     height: 100%
 }
 
-a.nounderline {
-  text-decoration: none!important;
-}
-
 a {
   text-decoration: underline;
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-a.nounderline:hover {
-	text-decoration: underline!important;
+  & .hover {
+    text-decoration: none;
+  }
+  & .nounderline:hover {
+    text-decoration: underline!important;
+  }
+  & .nounderline {
+    text-decoration: none!important;
+  }
 }
 
 .footer-logo {
