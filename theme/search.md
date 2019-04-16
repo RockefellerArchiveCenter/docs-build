@@ -12,7 +12,7 @@ title: Search Results
 </div>
 
 <div class="container">
-  <div class="row">
+  <div class="row mt-3">
     <div class="col">
       <div id="results"></div>
     </div>
