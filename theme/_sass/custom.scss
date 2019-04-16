@@ -2,18 +2,21 @@ body {
     position: relative;
     height: 100%
 }
+
+a.nounderline {
+  text-decoration: none!important;
+}
+
 a {
-  text-decoration: underline!important;
-}
-
-a.underline {
-  color: #007bff;
   text-decoration: underline;
-  background-color: transparent;
 }
 
-a.underline:hover {
+a:hover {
 	text-decoration: none;
+}
+
+a.nounderline:hover {
+	text-decoration: underline!important;
 }
 
 .footer-logo {
@@ -56,8 +59,13 @@ div.toc-striped li:nth-child(even) {
   margin-bottom: 0;
 }
 
+.card-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
 .title-card {
-  min-height: 18rem;
+  flex: 0 1 auto;
 }
 
 .codeblock {
@@ -92,4 +100,8 @@ blockquote p {
 .nav li.active {
   background-color:red;
   color: #fff;
+}
+
+.filter-button {
+  
 }

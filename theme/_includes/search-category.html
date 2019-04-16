@@ -1,23 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar-light justify-space-between">
+<nav class="navbar navbar-expand-lg navbar-light justify-space-between" role="navigation" aria-label="search and filter documentation by type">
   <div class="container-fluid expand-lg">
       <div class="form-row align-items-center">
+        <form class="col-auto" role="search">
+          <input class="search" placeholder="Search this page" type="search" aria-label="filter documentation sets" />
+        </form>
         <div class="col-auto">
-          <input class="search" placeholder="Search this page" />
+          <button type="button" class="btn-sm btn-primary filter-button" data-category="collection development and management">Collection Development and Management</button>
         </div>
         <div class="col-auto">
-          <button type="button" class="btn-sm btn-primary" id="filter-1">Collection Development and Management</button>
+          <button type="button" class="btn-sm btn-primary filter-button" data-category="preservation">Preservation</button>
         </div>
         <div class="col-auto">
-          <button type="button" class="btn-sm btn-primary" id="filter-2">Preservation</button>
+          <button type="button" class="btn-sm btn-primary filter-button" data-category="arrangement and description">Arrangement and Description</button>
         </div>
         <div class="col-auto">
-          <button type="button" class="btn-sm btn-primary" id="filter-3">Arrangement and Description</button>
+          <button type="button" class="btn-sm btn-primary filter-button" data-category="reference and outreach">Reference and Outreach</button>
         </div>
         <div class="col-auto">
-          <button type="button" class="btn-sm btn-primary" id="filter-4">Reference and Outreach</button>
-        </div>
-        <div class="col-auto">
-          <button type="button" class="btn btn-outline-secondary" id="filter-none">All</button>
+          <button type="button" class="btn-sm btn-outline-secondary" id="filter-none">All</button>
         </div>
       </div>
 </div>

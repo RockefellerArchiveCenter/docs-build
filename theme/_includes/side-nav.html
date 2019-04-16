@@ -1,16 +1,17 @@
 
 <div class="sticky-top">
-  <div class="container">
+
+  <nav class="container" role="navigation" aria-label="{{page.title}} table of contents">
     <ol class="list-group">
       {% for file in site.data %}
         {% if page.dir contains file[0] %}
         {% assign pages = file[1].pages %}
           {% for p in pages %}
-            <a class="list-group-item list-group-item-action{% if page.name contains p[1] %} active{% endif %}" href="{{site.baseurl}}{{p[1]}}">{{p[0]}}</a>
-            {% if page.name contains p[1] %}<div id="current"></div>{% endif %}
+            <a class="list-group-item list-group-item-action nounderline {% if page.name contains p[1] %} active{% endif %}" href="{{site.baseurl}}{{p[1]}}">{{p[0]}}</a>
+                {% if page.name contains p[1] %}<div id="current"></div>{% endif %}
           {% endfor %}
         {% endif %}
       {% endfor %}
     </ol>
-  </div>
+  </nav>
 </div>

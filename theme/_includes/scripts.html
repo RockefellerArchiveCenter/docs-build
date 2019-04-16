@@ -37,7 +37,7 @@ $(document).ready(function() {
 <!-- code for filters-->
 <script type="text/javascript">
 var options = {
-  valueNames: [ 'category', 'card-title', 'card-text', 'card-footer', 'sort-title']
+  valueNames: [ 'category', 'card-title', 'card-text', 'sort-title']
 };
 var documentsList = new List ('docs-list', options);
 documentsList.sort('sort-title', { order: "asc" });
@@ -45,44 +45,15 @@ $('#filter-none').click(function() {
   documentsList.filter();
   return false;
 });
-$('#filter-1').click(function() {
+$('.filter-button').click(function() {
+  var category = $(this).data('category')
   documentsList.filter(function(item) {
-    if (item.values().category == "collection development and management") {
+    if (item.values().category == category) {
       return true;
     } else {
       return false;
     }
   });
-  return false;
 });
-$('#filter-2').click(function() {
-  documentsList.filter(function(item) {
-    if (item.values().category == "preservation") {
-      return true;
-    } else {
-      return false;
-    }
-  });
-  return false;
-});
-$('#filter-3').click(function() {
-  documentsList.filter(function(item) {
-    if (item.values().category == "arrangement and description") {
-      return true;
-    } else {
-      return false;
-    }
-  });
-  return false;
-});
-$('#filter-4').click(function() {
-  documentsList.filter(function(item) {
-    if (item.values().category == "reference and outreach") {
-      return true;
-    } else {
-      return false;
-    }
-  });
-  return false;
-});
+
 </script>

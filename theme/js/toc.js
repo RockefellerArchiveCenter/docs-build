@@ -19,7 +19,7 @@
 
     function createLink (header) {
       var innerText = (header.textContent === undefined) ? header.innerText : header.textContent;
-      return "<a href='#" + fixedEncodeURIComponent(header.id) + "' onclick='ga('send', 'event', 'Side Navigation', 'click', '" + innerText + "')'>" + innerText + "</a>";
+      return "<a class='nounderline' href='#" + fixedEncodeURIComponent(header.id) + "' onclick='ga('send', 'event', 'Side Navigation', 'click', '" + innerText + "')'>" + innerText + "</a>";
     }
 
     var headers = $(settings.headers).filter(function() {

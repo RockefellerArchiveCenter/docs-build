@@ -70,8 +70,6 @@ if (searchTerm) {
   $('#results').empty().append('<img class="mx-auto d-block" src="/img/loading.gif" />')
   $('#query').attr("value", searchTerm);
 
-  ga('send', 'event', 'search', 'search', searchTerm);
-
   var url = document.URL, basePath=url.substring(0,url.lastIndexOf("/"));
 
   $.getJSON(basePath+"/search-index.json", function(data){
