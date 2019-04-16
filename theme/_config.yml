@@ -10,6 +10,7 @@ baseurl: # the subpath of your site, e.g. /blog
 
 # Build settings
 markdown: kramdown
+permalink: pretty
 
 # Local settings for building the site
 public: true
