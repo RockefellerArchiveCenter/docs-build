@@ -6,7 +6,7 @@
 
 <form class="form-inline" action="{{ site.baseurl }}/{{ doc.slug }}/search" method="get" role="search">
   <div class="input-group input-group-sm">
-    <input id="query" type="search" name="q" class="form-control" placeholder="Keyword"/>
+    <input id="query" type="search" name="q" class="form-control" placeholder="Keyword" onclick="ga('send', 'event', 'search', 'search', searchTerm)"/>
   <div class="input-group-btn">
     <button type="submit" class="btn btn-sm btn-outline-secondary">Search Documentation</button>
   </div>
