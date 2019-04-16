@@ -6,7 +6,7 @@
         {% if page.dir contains file[0] %}
         {% assign pages = file[1].pages %}
           {% for p in pages %}
-            <a class="list-group-item list-group-item-action{% if page.name contains p[1] %} active{% endif %}" href="{{site.baseurl}}{{p[1]}}">{{p[0]}}</a>
+            <a class="list-group-item list-group-item-action{% if page.name contains p[1] %} active{% endif %}" href="{{site.url}}/{{file[0]}}/{% if p[1] != 'index' %}{{p[0]}}{% endif %}">{{p[0]}}</a>
             {% if page.name contains p[1] %}<div id="current"></div>{% endif %}
           {% endfor %}
         {% endif %}
