@@ -31,6 +31,7 @@ div.toc-striped li:nth-child(even) {
 
 #documents {
   list-style-type: none;
+  list-style: none;
 }
 
 #current {
@@ -90,10 +91,6 @@ blockquote p {
   margin-bottom: 1em;
 }
 
-#documents {
-  list-style: none;
-}
-
 .nav li {
   display: inline-block;
 }
@@ -103,5 +100,5 @@ blockquote p {
 }
 
 .filter-button {
-  
+
 }
