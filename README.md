@@ -157,9 +157,13 @@ The `build` directory for the public and private sites contain the final sites t
 
 #### Adding Repositories
 
-To add a repository, navigate to the root of the repositories directory, and then clone the repository you want to add:
+Documentation repositories are managed as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). To add a new repository, from the root of this repository navigate into the `repositories/` directory:
 
-      git clone git@github.com:DocumentationWriter/my-awesome-docs.github
+      cd repositories/
+
+Then run the following command, substituting `submodule_url` with a URL for a repository on GitHub, such as `https://github.com/rockefellerArchiveCenter/processing-manual`:
+
+      git submodule add [submodule url]
 
 If you want to see how things look immediately, you can trigger the build process by running `update.py`
 
