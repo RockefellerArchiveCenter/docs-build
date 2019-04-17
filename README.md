@@ -28,6 +28,9 @@ This container is also useful for development purposes. If you've made changes t
 
 ## Setup
 
+Copy or move `_config.yml.example` to `_config.yml`. You may need to modify some
+of the configs in this file in order to build the site correctly for your needs.
+
 You can configure what the application does by copying the sample config file
 `config.json.sample` to `config.json` and adapting it to your needs. The structure
 of that file looks like this:
