@@ -14,7 +14,7 @@ A Docker container is included in this repository so you can quickly spin up a s
     cd docs-build
     docker-compose up
 
-The docs site will be available in your browser at `http://localhost:4000` with three sets of example documentation contained as submodules in the `/repositories` directory.
+The docs site will be available in your browser at `http://localhost:4000`. To include sets of documentation, you will need to add them as submodules in the `/repositories` directory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
 
 This container is also useful for development purposes. If you've made changes to files and want to regenerate the site, you can run `docker-compose exec docs python update.py`.
 
