@@ -5,12 +5,10 @@
 {% endfor %}
 
 <div class="container">
-<form action="{{ site.baseurl }}/{{ doc.slug }}/search" method="get" role="search">
-  <div class="input-group input-group-sm">
+<form class="form-inline" action="{{ site.baseurl }}/{{ doc.slug }}/search" method="get" role="search">
+  <div class="form-group">
     <input id="query" type="search" name="q" class="form-control" placeholder="Keyword" onclick="ga('send', 'event', 'search', 'search', searchTerm)"/>
-  <div class="input-group-btn">
-    <button type="submit" class="btn btn-sm btn-secondary">Search Documentation</button>
   </div>
-  </div>
+  <button type="submit" class="btn btn-secondary ml-2">Search Documentation</button>
 </form>
 </div>
