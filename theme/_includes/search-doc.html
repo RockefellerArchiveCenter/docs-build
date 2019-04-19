@@ -5,7 +5,7 @@
 {% endfor %}
 
 <div class="container">
-<form class="form-inline" action="{{ site.baseurl }}/{{ doc.slug }}/search" method="get" role="search">
+<form id="search-doc" class="form-inline" action="{{ site.baseurl }}/{{ doc.slug }}/search" method="get" role="search">
   <div class="form-group">
     <input id="query" type="search" name="q" class="form-control" placeholder="Keyword" onclick="ga('send', 'event', 'search', 'search', searchTerm)"/>
   </div>
