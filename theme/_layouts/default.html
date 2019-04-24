@@ -1,24 +1,24 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
-
   {% include head.html %}
 
+  {% include nav.html %}
   <body>
 
-    {% include header.html %}
-
-    <div>
-      <h1 class="display-4 text-center mt-3">{{ page.title }}</h1>
+  <main class="container" role="main">
+    {% unless page.layout == "docs" %}
+    <div class="container mt-3">
+          <h1 class="display-4 text-center">{{ page.title }}</h1>
     </div>
-
-    <div class="container">
-      <div class="row mt-4">
-        {{ content }}
-      </div>
+    {% endunless %}
+    <div class="row mt-3">
+      {{ content }}
     </div>
+  </main>
     {% include footer.html %}
 
     {% include scripts.html %}
-  </body>
 
+  </body>
 </html>

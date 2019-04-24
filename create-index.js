@@ -26,7 +26,6 @@ function buildIndex(source, destination) {
 
       fs.writeFile(destination, JSON.stringify(idx), function(err) {
           if (err) throw err;
-          console.log('New index file created at '+destination);
       });
 
   });

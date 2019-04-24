@@ -5,7 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
 
 <!-- Bootstrap -->
-<script type="text/javascript" src="{{ site.baseurl }}/js/bootstrap.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/js/bootstrap/bootstrap.min.js"></script>
 
 <!-- mark.js -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
@@ -24,8 +24,36 @@ $(document).ready(function() {
 </script>
 
 <!-- use Bootstrap table formatting for Markdown tables-->
-<script type"text/javascript">
+
+<script type="text/javascript">
   $(document).ready(function () {
     $("table").addClass("table table-striped table-bordered");
   });
+</script>
+
+<!-- list.js for homepage search/filter -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+
+<!-- code for filters-->
+<script type="text/javascript">
+var options = {
+  valueNames: [ 'category', 'card-title', 'card-text', 'sort-title']
+};
+var documentsList = new List ('docs-list', options);
+documentsList.sort('sort-title', { order: "asc" });
+$('#filter-none').click(function() {
+  documentsList.filter();
+  return false;
+});
+$('.filter-button').click(function() {
+  var category = $(this).data('category')
+  documentsList.filter(function(item) {
+    if (item.values().category == category) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+});
+
 </script>

@@ -5,16 +5,31 @@ repositories, and builds internal and external-facing sites. It can be set to
 run at a specified time (for example on a nightly basis) using cron. Requires at
 least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual)).
 
+## Quick Start
+
+A Docker container is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
+
+    git clone https://github.com/RockefellerArchiveCenter/docs-build.git
+    git submodule update --init --recursive
+    cd docs-build
+    docker-compose up
+
+The docs site will be available in your browser at `http://localhost:4000`. To include sets of documentation, you will need to add them as submodules in the `/repositories` directory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
+
+This container is also useful for development purposes. If you've made changes to files and want to regenerate the site, you can run `docker-compose exec docs python update.py`.
+
 ## Install
 
     git clone https://github.com/RockefellerArchiveCenter/docs-build.git
     cd docs-build
     ./install.sh
 
-`./install.sh` will install all the necessary dependencies, and also creates SSH
-keys which enable the application to interact with Github.
+`./install.sh` will install all the necessary dependencies, and also creates SSH keys which enable the application to interact with Github.
 
 ## Setup
+
+Copy or move `_config.yml.example` to `_config.yml`. You may need to modify some
+of the configs in this file in order to build the site correctly for your needs.
 
 You can configure what the application does by copying the sample config file
 `config.json.sample` to `config.json` and adapting it to your needs. The structure
@@ -142,9 +157,13 @@ The `build` directory for the public and private sites contain the final sites t
 
 #### Adding Repositories
 
-To add a repository, navigate to the root of the repositories directory, and then clone the repository you want to add:
+Documentation repositories are managed as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). To add a new repository, from the root of this repository navigate into the `repositories/` directory:
 
-      git clone git@github.com:DocumentationWriter/my-awesome-docs.github
+      cd repositories/
+
+Then run the following command, substituting `submodule_url` with a URL for a repository on GitHub, such as `https://github.com/rockefellerArchiveCenter/processing-manual`:
+
+      git submodule add [submodule url]
 
 If you want to see how things look immediately, you can trigger the build process by running `update.py`
 

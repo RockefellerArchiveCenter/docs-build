@@ -12,8 +12,9 @@ function displaySearchResults(results, query) {
   $('#results').empty().hide();
   if (results.length) { // Are there any results?
     var appendString = '<table class="table table-striped"><tbody>'
+    var url = $("#search-doc").attr('action'), basePath=url.substring(0,url.lastIndexOf("/"));
 
-    $.getJSON("/search-data.json", function(documents){
+    $.getJSON(basePath+"/search-data.json", function(documents){
       results.forEach(function (r) {  // Iterate over the results
 
         var snippets = []
@@ -69,9 +70,9 @@ if (searchTerm) {
   $('#results').empty().append('<img class="mx-auto d-block" src="/img/loading.gif" />')
   $('#query').attr("value", searchTerm);
 
-  ga('send', 'event', 'search', 'search', searchTerm);
+  var url = $("#search-doc").attr('action'), basePath=url.substring(0,url.lastIndexOf("/"));
 
-  $.getJSON("/search-index.json", function(data){
+  $.getJSON(basePath+"/search-index.json", function(data){
     let index = lunr.Index.load(data)
 
     let results = index.search(searchTerm); // Get lunr to perform a search
