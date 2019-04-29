@@ -48,7 +48,7 @@ $('#filter-none').click(function() {
 $('.filter-button').click(function() {
   var category = $(this).data('category')
   documentsList.filter(function(item) {
-    if (item.values().category == category) {
+    if (item.values().category.includes(category)) {
       return true;
     } else {
       return false;
