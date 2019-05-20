@@ -99,7 +99,7 @@ class Site:
             yaml.safe_dump(yaml_config, f, default_flow_style=False)
 
     def get_updated_date(self):
-        out = subprocess.Popen(["git log -1 --format=%ci"], stdout=subprocess.PIPE, shell=True)
+        out = subprocess.Popen(["git --git-dir={0}/.git show --format=%ci".format(self.current_repo_dir)], stdout=subprocess.PIPE, shell=True)
         return out.communicate()[0]
 
     def link(self):
