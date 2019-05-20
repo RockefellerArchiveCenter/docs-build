@@ -14,7 +14,7 @@ A Docker container is included in this repository so you can quickly spin up a s
     cd docs-build
     docker-compose up
 
-The docs site will be available in your browser at `http://localhost:4000`. To include sets of documentation, you will need to add them as submodules in the `/repositories` directory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
+The docs site will be available in your browser at `http://localhost:4000`. To include sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
 
 This container is also useful for development purposes. If you've made changes to files and want to regenerate the site, you can run `docker-compose exec docs python update.py`.
 
@@ -36,24 +36,25 @@ You can configure what the application does by copying the sample config file
 of that file looks like this:
 
     {
-        "site_root": "/var/www",
-        "repositories": "repositories",
+        "site_root": "/home/docs",
+        "repositories": "docs-build/repositories",
         "public_site": {
           "root": "public",
           "staging": "staging",
           "build": "build",
-          "link": "link"
+          "link": "/var/www/external"
         },
         "private_site": {
           "root": "private",
           "staging": "staging",
           "build": "build",
-          "link": "link"
+          "link": "/var/www/internal"
         }
     }
 
 `repositories`: Sets base directory into which repositories will be pulled from
-Github.
+Github using git submodules. This directory must be a subdirectory of the root
+directory of this repository.
 
 `site_root`: Configures the root directory for the site.
 
@@ -76,7 +77,7 @@ your site somewhere other than a web accessible directory on your server.
 rebuilds the site using Jekyll. It handles build processes for documentation and
 theme repositories differently.
 
-#### Repository Configuration
+#### Documentation Repository Configuration
 
 In order to work correctly, `build_sites.py` expects that the following variables
 will be available in a file named `_config.yml` located the root directory of a
@@ -111,15 +112,6 @@ extension). These values are used when building tables of contents.
 
 Other variables can be included in this config file if desired.
 
-#### Repository Structure
-
-The application will create a directory (configured in `config.json` as described above) containing subdirectories (based on repository name) for each documentation repository. Based on the default values supplied in `config.json.sample` that structure would be:
-
-    /repositories/
-      ∟public/
-        ∟documentation files
-      ∟private/
-        ∟documentation files
 
 #### Theme
 
@@ -137,7 +129,7 @@ variables in the documentation files' YAML front matter.
 
 #### Build Structure
 
-The build process copies directories and files from the repository directory to a new structure before executing the Jekyll build structure.
+The build process copies directories and files to a "staging" structure before executing the Jekyll build, which generates HTML files and places them in their final location.
 
 Assuming the values in `config.json.sample` above, the final structure would be:
 
