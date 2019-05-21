@@ -1,7 +1,17 @@
 <header class="site-header">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light justify-space-between" role="navigation" aria-label="homepage">
-  <div class="container-fluid">
-    <a class="navbar-brand nounderline" href="{{site.baseurl}}/">{{ site.title }}</a>
-  </div>
-</nav>
+
+<div class="branding">
+  <img class="footer-logo" src="//rockarch.org/images/RAC-logo.png" alt="RAC logo">
+		<a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}
+				<br /><span class="site-subtitle">{{ site.subtitle }}</span>
+		</a>
+</div>
+	<nav class="site-nav">
+		<ul class="list-unstyled">
+			<li><a href="{{ site.baseurl }}/about">About</a></li>
+			<!-- Social icons from Font Awesome, if enabled  -->
+		</ul>
+	</nav>
+
+
 </header>
