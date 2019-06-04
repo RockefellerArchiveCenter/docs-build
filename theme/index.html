@@ -9,7 +9,7 @@ title: Rockefeller Archive Center Documentation
 {% for file in site.data %}
 {% assign doc = file[1] %}
     <div class="col-sm-4 mt-3">
-      <div class="card full-height">
+      <div class="card full-height shadow">
         <div class="card-body">
           <h2 class="card-title"><a class="sort-title nounderline" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
           <p class="text-monospace">{% for tag in doc.tags %}{% include tags.html %}{% endfor %}</p>
@@ -17,7 +17,7 @@ title: Rockefeller Archive Center Documentation
           <p>{% for category in doc.category %}{% include category.html %}{% endfor %}</p>
           <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
         </div>
-      </div>
+        </div>
     </div>
 {% endfor %}
 </div>
