@@ -84,11 +84,9 @@ will be available in a file named `_config.yml` located the root directory of a
 documentation repository. These files should be valid [YAML](http://yaml.org).
 
     public: true
+    category: "collection development and management"
     tags:
       - "policy"
-      - "preservation"
-      - "appraisal"
-      - "mission"
     title: "Collection Policy"
     description: "The main collecting areas of the Rockefeller Archive Center."
     pages:
@@ -97,7 +95,9 @@ documentation repository. These files should be valid [YAML](http://yaml.org).
 `public` indicates whether or not the documentation should be public. Values
 should be either `true` or `false` (booleans, not strings).
 
-`tags` are a list of tags you wish to associate with the documentation.
+`categories` indicate what archival life cycle category(s) applies to the documentation. Categories enable filtering of documentation items on homepage. Values should be `"collection development and management"`, `"preservation"`, `"arrangement and description"`, and/or `"reference and outreach"`.
+
+`tags` are used to describe what type of documentation the item is. Values should be either `"policy"` or `"workflow"`.
 
 `title` is the official title of the documentation, which will be displayed on
 the home page of the site.
