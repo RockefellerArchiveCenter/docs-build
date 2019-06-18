@@ -12,9 +12,12 @@ title: Rockefeller Archive Center Documentation
       <div class="card full-height shadow">
         <div class="card-body">
           <h2 class="card-title"><a class="sort-title nounderline" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
-          <p class="text-monospace">{% for tag in doc.tags %}{% include tags.html %}{% endfor %}</p>
+          <!-- <p class="text-monospace">{% for tag in doc.tags %}{% include tags.html %}{% endfor %}</p> -->
           {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
-          <p>{% for category in doc.category %}{% include category.html %}{% endfor %}</p>
+          <p class="text-monospace">{% for category in doc.category %}{% include category.html %}<br/><br/>{% endfor %}</p>
+
+          </div>
+          <div class="card-footer">
           <p class="card-text text-muted"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
         </div>
         </div>
