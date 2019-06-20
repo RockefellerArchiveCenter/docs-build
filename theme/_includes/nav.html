@@ -1,22 +1,21 @@
+
 <header class="site-header">
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation" aria-label="homepage">
-<div class="container-fluid">
-    <div>
+  <nav class="navbar navbar-expand-lg" role="navigation" aria-label="homepage">
+    <div class="container-fluid">
+      <div>
       <img class="header-logo" src="//rockarch.org/images/RAC-logo.png" alt="RAC logo"/>
-		    <a class="navbar-brand site-title nounderline" href="{{ site.baseurl }}/">{{ site.title }}
-		    </a>
+      <a class="navbar-brand nounderline" href="{{ site.baseurl }}/">{{ site.title }} </a>
         <br/><span class="site-subtitle">{{ site.subtitle }}</span>
+      </div>
+
+      <ul class="navbar-nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link nounderline" href="{{ site.baseurl }}/about">About <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nounderline" href="//github.com/RockefellerArchiveCenter">GitHub</a>
+        </li>
+      </ul>
     </div>
-
-        <div>
-          <ul class="list-unstyled">
-			    <li><a class="nounderline mr-sm" href="{{ site.baseurl }}/about">About</a></li>
-          <li><a class="nounderline mr-sm" href="//github.com/RockefellerArchiveCenter">Rockefeller Archive Center GitHub Repositories</a></li>
-          </ul>
-        </div>
-
-
-</div>
-</nav>
+  </nav>
 </header>

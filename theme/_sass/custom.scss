@@ -4,22 +4,16 @@ body {
 }
 
 a {
-  color: #0B5DB5;
   text-decoration: underline;
   &.nounderline {
-    text-decoration: none!important;
-    color: #0B5DB5;
+    text-decoration: none;
   }
   &.hover {
     text-decoration: none;
   }
   &.nounderline:hover {
-    text-decoration: underline!important;
+    text-decoration: underline;
   }
-}
-
-.btn-primary {
-  background-color: #0B5DB5;
 }
 
 .footer-logo {
@@ -50,7 +44,6 @@ div.toc-striped li:nth-child(even) {
 #current .list-group-item {
     border-radius: 0;
     font-size: .8rem;
-    color: #0B5DB5
 }
 
 .docs-example {
@@ -85,22 +78,6 @@ div.toc-striped li:nth-child(even) {
   margin-bottom: 1em;
 }
 
-.list-group {
-  color: #0B5DB5!important;
-}
-
-.nav li {
-  display: inline-block;
-}
-
-.navbar-text {
-  color: #0B5DB5!important;
-}
-
-.filter-button {
-
-}
-
-.site-title {
-  color: #0B5DB5!important;
+.site-subtitle {
+  color: #737373;
 }
