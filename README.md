@@ -10,11 +10,11 @@ least one documentation repository (see [processing-manual](https://github.com/R
 A Docker container is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
 
     git clone https://github.com/RockefellerArchiveCenter/docs-build.git
-    git submodule update --init --recursive
-    cd docs-build
+    cd docs-build/repositories
+    git submodule add https://github.com/RockefellerArchiveCenter/docs-guide.git
     docker-compose up
 
-The docs site will be available in your browser at `http://localhost:4000`. To include sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
+The docs site will be available in your browser at `http://localhost:4000`. This will include the RAC's Documentation Site Guide to Managing Content as an example piece of documentation. To include additional sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
 
 This container is also useful for development purposes. If you've made changes to files and want to regenerate the site, you can run `docker-compose exec docs python update.py`.
 
