@@ -1,0 +1,9 @@
+[submodule "repositories/processing-manual"]
+	path = repositories/processing-manual
+	url = https://github.com/RockefellerArchiveCenter/processing-manual
+[submodule "repositories/archivematica-local"]
+	path = repositories/archivematica-local
+	url = https://github.com/RockefellerArchiveCenter/archivematica-local
+[submodule "repositories/dm-transfer-workflow"]
+	path = repositories/dm-transfer-workflow
+	url = https://github.com/RockefellerArchiveCenter/dm-transfer-workflow
