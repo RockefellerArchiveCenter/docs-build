@@ -10,11 +10,11 @@ least one documentation repository (see [processing-manual](https://github.com/R
 A Docker container is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
 
     git clone https://github.com/RockefellerArchiveCenter/docs-build.git
-    git submodule update --init --recursive
-    cd docs-build
+    cd docs-build/repositories
+    git submodule add https://github.com/RockefellerArchiveCenter/docs-guide.git
     docker-compose up
 
-The docs site will be available in your browser at `http://localhost:4000`. To include sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
+The docs site will be available in your browser at `http://localhost:4000`. This will include the RAC's Documentation Site Guide to Managing Content as an example piece of documentation. To include additional sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
 
 This container is also useful for development purposes. If you've made changes to files and want to regenerate the site, you can run `docker-compose exec docs python update.py`.
 
@@ -84,11 +84,9 @@ will be available in a file named `_config.yml` located the root directory of a
 documentation repository. These files should be valid [YAML](http://yaml.org).
 
     public: true
+    category: "collection development and management"
     tags:
       - "policy"
-      - "preservation"
-      - "appraisal"
-      - "mission"
     title: "Collection Policy"
     description: "The main collecting areas of the Rockefeller Archive Center."
     pages:
@@ -97,7 +95,9 @@ documentation repository. These files should be valid [YAML](http://yaml.org).
 `public` indicates whether or not the documentation should be public. Values
 should be either `true` or `false` (booleans, not strings).
 
-`tags` are a list of tags you wish to associate with the documentation.
+`categories` indicate what archival life cycle category(s) applies to the documentation. Categories enable filtering of documentation items on homepage. Values should be `"collection development and management"`, `"preservation"`, `"arrangement and description"`, and/or `"reference and outreach"`.
+
+`tags` are used to describe what type of documentation the item is. Values should be either `"policy"` or `"workflow"`.
 
 `title` is the official title of the documentation, which will be displayed on
 the home page of the site.

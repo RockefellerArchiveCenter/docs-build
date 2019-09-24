@@ -7,9 +7,3 @@
 [submodule "repositories/dm-transfer-workflow"]
 	path = repositories/dm-transfer-workflow
 	url = https://github.com/RockefellerArchiveCenter/dm-transfer-workflow
-[submodule "shred-policy-memo"]
-	path = shred-policy-memo
-	url = https://github.com/RockefellerArchiveCenter/shred-policy-memo
-[submodule "repositories/shred-policy-memo"]
-	path = repositories/shred-policy-memo
-	url = https://github.com/RockefellerArchiveCenter/shred-policy-memo
