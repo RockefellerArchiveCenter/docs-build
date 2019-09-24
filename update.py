@@ -5,6 +5,7 @@ from json import loads
 import os
 from shutil import copyfile, copytree, rmtree
 import subprocess
+import time
 
 
 base_path = os.path.normpath(os.path.abspath(os.path.join(os.path.dirname(__file__))))
@@ -20,13 +21,14 @@ def copy_dir(src, target):
 
 class UpdateRoutine:
     def run(self):
+        print("Update process started at {time}".format(time.time()))
         subprocess.call("git submodule update --remote", shell=True)
         for s in [config['public_site'], config['private_site']]:
             site = Site(s)
             site.update_theme()
             site.stage()
             site.build()
-            site.link()
+            #site.link()
 
 
 class Site:
