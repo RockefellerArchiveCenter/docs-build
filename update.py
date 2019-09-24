@@ -21,7 +21,7 @@ def copy_dir(src, target):
 
 class UpdateRoutine:
     def run(self):
-        print("Update process started at {time}".format(time.time()))
+        print("Update process started at {time}".format(time=time.time()))
         subprocess.call("git submodule update --remote", shell=True)
         for s in [config['public_site'], config['private_site']]:
             site = Site(s)
