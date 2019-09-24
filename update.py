@@ -84,9 +84,11 @@ class Site:
 
     def build_repo_index(self):
         print(self.current_repo)
-        subprocess.call(
-            "node {base_path}/create-index.js {build_dir}/{repo}/search-data.json {build_dir}/{repo}/search-index.json".format(
-                base_path=base_path, build_dir=self.build_dir, repo=self.current_repo), shell=True)
+        if os.path.isfile("{base_path}/{build_dir}/{repo}/search-data.json".format(
+                          base_path=base_path, build_dir=self.build_dir, repo=self.current_repo)):
+            subprocess.call(
+                "node {base_path}/create-index.js {build_dir}/{repo}/search-data.json {build_dir}/{repo}/search-index.json".format(
+                    base_path=base_path, build_dir=self.build_dir, repo=self.current_repo), shell=True)
 
     def update_data_file(self, data_file):
         updated_date = self.get_updated_date()
