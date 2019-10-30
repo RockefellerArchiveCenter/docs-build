@@ -19,16 +19,24 @@ def copy_dir(src, target):
     copytree(src, target)
 
 
+def call_command(command):
+    c = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = c.communicate()
+    if len(output[1]):
+        print("Error calling `{command}`: {output}".format(command=" ".join(command), output=output[1]))
+
+
 class UpdateRoutine:
     def run(self):
         print("Update process started at {time}".format(time=time.time()))
-        subprocess.call("git submodule update --remote", shell=True)
+        call_command(["git", "submodule", "update", "--remote"])
         for s in [config['public_site'], config['private_site']]:
             site = Site(s)
             site.update_theme()
             site.stage()
             site.build()
             #site.link()
+        print("Update process completed at {time}".format(time=time.time()))
 
 
 class Site:
@@ -44,9 +52,11 @@ class Site:
             os.makedirs(d)
 
     def update_theme(self):
+        print("Updating theme")
         copy_dir(os.path.join(base_path, 'theme'), os.path.join(self.staging_dir))
 
     def stage(self):
+        print("Staging site")
         os.makedirs(os.path.join(self.staging_dir, '_data'))
         for repo in os.listdir(self.repositories_dir):
             self.current_repo = repo
@@ -60,37 +70,23 @@ class Site:
                 copy_dir(
                     os.path.join(self.current_repo_dir),
                     os.path.join(self.staging_dir, self.current_repo))
-                copyfile(
-                    os.path.join(self.staging_dir, 'search-data.json'),
-                    os.path.join(self.staging_dir, self.current_repo, 'search-data.json'))
-                copyfile(
-                    os.path.join(self.staging_dir, 'search.md'),
-                    os.path.join(self.staging_dir, self.current_repo, 'search.md'))
 
     def build(self):
-        subprocess.call(
-            "/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source {source} --destination {dest}".format(
-                source=self.staging_dir, dest=self.build_dir), shell=True)
+        print("Building site")
+        call_command(["/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll", "build",
+                      "--source", self.staging_dir, "--destination", self.build_dir])
         for repo in os.listdir(self.repositories_dir):
             self.current_repo = repo
-            if self.has_repo():
-                self.build_repo_index()
 
     def has_repo(self):
+        if not os.path.isdir(self.current_repo_dir):
+            return False
         if self.site_config == config['public_site']:
             with open(os.path.join(self.current_repo_dir, '_config.yml')) as f:
-                yaml_config = yaml.load(f)
+                yaml_config = yaml.safe_load(f)
                 return True if yaml_config['public'] else False
         elif self.site_config == config['private_site']:
             return True
-
-    def build_repo_index(self):
-        print(self.current_repo)
-        if os.path.isfile("{base_path}/{build_dir}/{repo}/search-data.json".format(
-                          base_path=base_path, build_dir=self.build_dir, repo=self.current_repo)):
-            subprocess.call(
-                "node {base_path}/create-index.js {build_dir}/{repo}/search-data.json {build_dir}/{repo}/search-index.json".format(
-                    base_path=base_path, build_dir=self.build_dir, repo=self.current_repo), shell=True)
 
     def update_data_file(self, data_file):
         updated_date = self.get_updated_date()
