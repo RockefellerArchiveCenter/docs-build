@@ -4,12 +4,12 @@
   {% include head.html %}
 
   {% include nav.html %}
-  <body>
+  <body data-spy="scroll" data-target="#current" data-offset="100">
 
   <main class="container" role="main">
     {% unless page.layout == "docs" %}
      <div class="container mt-5">
-           <h1 class="display-5 text-center">{{ page.title }}</h1>
+       <h1 class="display-5 text-center">{{ page.title }}</h1>
      </div>
      {% endunless %}
     <div class="row mt-4 pb-3">
