@@ -83,3 +83,8 @@ div.toc-striped li:nth-child(even) {
 .site-subtitle {
   color: #737373;
 }
+
+.table-of-contents {
+  height: 95vh;
+  overflow: scroll;
+}
