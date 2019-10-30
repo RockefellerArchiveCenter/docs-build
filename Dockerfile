@@ -1,10 +1,11 @@
-FROM centos:6.10
+  FROM centos:6.10
 
 RUN yum -y install https://centos6.iuscommunity.org/ius-release.rpm \
   epel-release && yum -y update && yum -y install \
   git2u make gcc \
   python-pip python-setuptools \
   curl \
+  jq \
   httpd mod_ssl
 
 # Install RVM and use RVM to install Ruby 2.1.8
@@ -13,7 +14,7 @@ RUN curl -sSL https://get.rvm.io | bash -s stable
 RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
   rvm install 2.1.8 && \
   rvm use 2.1.8 --default && \
-  gem install rb-inotify:0.9.10 ruby_dep:1.3.1 listen:3.0.8 jekyll:3.6.2 --no-rdoc --no-ri"
+  gem install rb-inotify:0.9.10 ruby_dep:1.3.1 listen:3.0.8 public_suffix:3.1.1 jekyll:3.6.2"
 
 RUN pip install pyyaml
 
