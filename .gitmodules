@@ -13,10 +13,6 @@
 [submodule "shred-policy-memo"]
 	path = shred-policy-memo
 	url = https://github.com/RockefellerArchiveCenter/shred-policy-memo
-[submodule "repositories/shred-policy-memo"]
-	path = repositories/shred-policy-memo
-	url = git@github.com:RockefellerArchiveCenter/shred-policy-memo.git
-	branch = development
 [submodule "repositories/social-media-policy"]
 	path = repositories/social-media-policy
 	url = https://github.com/RockefellerArchiveCenter/social-media-policy
@@ -65,19 +61,3 @@
 	path = repositories/aurora
 	url = https://github.com/RockefellerArchiveCenter/aurora
 	branch = docs-development
-[submodule "repositories/digitization-guide"]
-	path = repositories/digitization-guide
-	url = git@github.com:RockefellerArchiveCenter/digitization-guide.git
-	branch = development
-[submodule "repositories/info-sheets"]
-	path = repositories/info-sheets
-	url = git@github.com:RockefellerArchiveCenter/info-sheets.git
-	branch = development
-[submodule "repositories/library-policy"]
-	path = repositories/library-policy
-	url = git@github.com:RockefellerArchiveCenter/library-policy.git
-	branch = development
-[submodule "repositories/reading-room-manual"]
-	path = repositories/reading-room-manual
-	url = git@github.com:RockefellerArchiveCenter/reading-room-manual.git
-	branch = development
