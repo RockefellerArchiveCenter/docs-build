@@ -29,6 +29,7 @@ def call_command(command):
 class UpdateRoutine:
     def run(self):
         print("Update process started at {time}".format(time=time.time()))
+        call_command(["git", "submodule", "init"])
         call_command(["git", "submodule", "update", "--remote"])
         for s in [config['public_site'], config['private_site']]:
             site = Site(s)
