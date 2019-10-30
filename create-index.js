@@ -8,8 +8,9 @@ var regex = /[\%\&\>\<\t]+/g
 buildIndex(source, destination);
 
 function buildIndex(source, destination) {
-  fs.readFile(source, 'utf8', function(err, data) {
-      if (err) throw err;
+  fs.access(source, fs.F_OK, (err) => {
+  if not (err) {
+    fs.readFile(source, 'utf8', function(err, data) {
       clean_data = data.replace(regex, '')
       documents = JSON.parse(clean_data);
 
@@ -22,12 +23,13 @@ function buildIndex(source, destination) {
           for (doc in documents) {
               this.add(documents[doc])
           }
-      })
+        });
 
-      fs.writeFile(destination, JSON.stringify(idx), function(err) {
-          if (err) throw err;
+        fs.writeFile(destination, JSON.stringify(idx), function(err) {
+            if (err) throw err;
+        });
+
       });
-
+    }
   });
-
 }
