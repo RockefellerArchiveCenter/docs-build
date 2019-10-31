@@ -36,7 +36,6 @@ class UpdateRoutine:
             site.update_theme()
             site.stage()
             site.build()
-            #site.link()
         print("Update process completed at {time}".format(time=time.time()))
 
 
@@ -102,15 +101,6 @@ class Site:
     def get_updated_date(self):
         out = subprocess.Popen(["git --git-dir={0}/.git show --format=%ci".format(self.current_repo_dir)], stdout=subprocess.PIPE, shell=True)
         return out.communicate()[0]
-
-    def link(self):
-        target = self.site_config.get('link')
-        if target:
-            if os.path.isfile(target) or os.path.islink(target):
-                os.remove(target)
-            if os.path.isdir(target):
-                os.path.rmtree(target)
-            os.symlink(self.build_dir, target)
 
 
 UpdateRoutine().run()
