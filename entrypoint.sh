@@ -6,10 +6,11 @@ cp config.json.sample config.json
 echo "Performing initial build of site"
 python ./update.py
 
-ROOT=$(cat config.json | jq '.site_root' | head -c -2 | tail -c +2)
-SITE=$(cat config.json | jq '.private_site .root' | head -c -2 | tail -c +2)
-BUILD=$(cat config.json | jq '.private_site .build' | head -c -2 | tail -c +2)
+cd /home/docs/private/build/
 
-cd ${ROOT} && cd ${SITE} && cd ${BUILD}
+http-server -p 4000 . &
 
-http-server -p 4000
+cd /home/docs/docs-build/ && inotifywait -m theme/ |
+while read -e modify,attrib,move,create,delete -r directory events filename; do
+  python ./update.py
+done

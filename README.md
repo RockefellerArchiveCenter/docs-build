@@ -16,16 +16,6 @@ A Docker container is included in this repository so you can quickly spin up a s
 
 The docs site will be available in your browser at `http://localhost:4000`. This will include the RAC's Documentation Site Guide to Managing Content as an example piece of documentation. To include additional sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
 
-This container is also useful for development purposes. If you've made changes to files and want to regenerate the site, you can run `docker-compose exec docs python update.py`.
-
-## Install
-
-    git clone https://github.com/RockefellerArchiveCenter/docs-build.git
-    cd docs-build
-    ./install.sh
-
-`./install.sh` will install all the necessary dependencies, and also creates SSH keys which enable the application to interact with Github.
-
 ## Setup
 
 Copy or move `_config.yml.example` to `_config.yml`. You may need to modify some

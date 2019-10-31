@@ -1,11 +1,11 @@
-  FROM centos:6.10
+FROM centos:6.10
 
 RUN yum -y install https://centos6.iuscommunity.org/ius-release.rpm \
   epel-release && yum -y update && yum -y install \
   git2u make gcc \
   python-pip python-setuptools \
   curl \
-  jq \
+  inotify-tools \
   httpd mod_ssl
 
 # Install RVM and use RVM to install Ruby 2.1.8

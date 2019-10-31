@@ -5,7 +5,7 @@ from json import loads
 import os
 from shutil import copyfile, copytree, rmtree
 import subprocess
-import time
+from datetime import datetime
 
 
 base_path = os.path.normpath(os.path.abspath(os.path.join(os.path.dirname(__file__))))
@@ -28,7 +28,7 @@ def call_command(command):
 
 class UpdateRoutine:
     def run(self):
-        print("Update process started at {time}".format(time=time.time()))
+        print("Update process started at {time}".format(time=datetime.now()))
         call_command(["git", "submodule", "init"])
         call_command(["git", "submodule", "update", "--remote"])
         for s in [config['public_site'], config['private_site']]:
@@ -36,7 +36,7 @@ class UpdateRoutine:
             site.update_theme()
             site.stage()
             site.build()
-        print("Update process completed at {time}".format(time=time.time()))
+        print("Update process completed at {time}".format(time=datetime.now()))
 
 
 class Site:
