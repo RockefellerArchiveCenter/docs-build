@@ -10,7 +10,8 @@ cd /home/docs/private/build/
 
 http-server -p 4000 . &
 
-cd /home/docs/docs-build/ && inotifywait -m theme/ |
-while read -e modify,attrib,move,create,delete -r directory events filename; do
+cd /home/docs/docs-build/ && inotifywait -e modify,move,create,delete -m theme/ |
+while read -r directory events filename; do
+  echo "Regenerating..."
   python ./update.py
 done
