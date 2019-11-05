@@ -92,3 +92,32 @@ div.toc-striped li:nth-child(even) {
   height: 95vh;
   overflow-y: auto;
 }
+
+// Skip link
+.skip-link {
+  background: rgba(255,255,255,.9);
+  padding: 20px 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.visually-hidden {
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    &:focus {
+      clip: auto;
+      height: auto;
+      overflow: auto;
+      position: absolute;
+      width: auto;
+      z-index: 99;
+    }
+}
