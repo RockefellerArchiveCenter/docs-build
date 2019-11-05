@@ -90,5 +90,5 @@ div.toc-striped li:nth-child(even) {
 
 #table-of-contents {
   height: 95vh;
-  overflow: scroll;
+  overflow-y: auto;
 }
