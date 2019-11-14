@@ -39,11 +39,20 @@ if (documentsList.items.length) {
 }
 
 $('#filter-none').on('click', function() {
+  $('.filter-button').each(function() {
+    $(this).removeClass('active')
+  });
+  $(this).addClass('sr-only')
   documentsList.filter();
   return false;
 });
 
 $('.filter-button').on('click', function() {
+  $('.filter-button').each(function() {
+    $(this).removeClass('active')
+  });
+  $(this).addClass('active')
+  $('#filter-none').removeClass('sr-only')
   var category = $(this).data('category')
   documentsList.filter(function(item) {
     if (item.values().category.includes(category)) {
