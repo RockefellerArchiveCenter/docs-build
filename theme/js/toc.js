@@ -19,7 +19,7 @@
 
     function createLink (header) {
       var innerText = (header.textContent === undefined) ? header.innerText : header.textContent;
-      return "<a class='nounderline list-group-item list-group-item-action' href='#" + fixedEncodeURIComponent(header.id) + "' onclick='ga('send', 'event', 'Side Navigation', 'click', '" + innerText + "')'>" + innerText + "</a>";
+      return "<a class='nounderline list-group-item list-group-item-action' id='toc-link' href='#" + fixedEncodeURIComponent(header.id) + "' >" + innerText + "</a>";
     }
 
     var headers = $(settings.headers).filter(function() {
