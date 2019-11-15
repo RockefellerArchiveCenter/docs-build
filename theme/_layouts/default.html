@@ -5,18 +5,20 @@
 
   <body data-spy="scroll" data-target="#current" data-offset="100">
     <a href="#main" class="skip-link visually-hidden">Jump directly to main content</a>
+
     {% include nav.html %}
 
-  <main id="main" class="container" role="main">
-    {% unless page.layout == "docs" %}
-     <div class="container mt-5">
-       <h1 class="display-5 text-center">{{ page.title }}</h1>
-     </div>
-     {% endunless %}
-    <div class="row mt-4 pb-3">
-      {{ content }}
-    </div>
-  </main>
+    <main id="main" class="container" role="main">
+      {% unless page.layout == "docs" %}
+       <div class="container mt-5">
+         <h1 class="display-5 text-center">{{ page.title }}</h1>
+       </div>
+       {% endunless %}
+      <div class="row mt-4 pb-3">
+        {{ content }}
+      </div>
+    </main>
+    
     {% include footer.html %}
 
     {% include scripts.html %}
