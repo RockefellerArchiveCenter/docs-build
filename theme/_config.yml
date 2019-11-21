@@ -5,6 +5,7 @@
 
 # Site settings
 title: docs.rockarch.org
+subtitle: Rockefeller Archive Center Documentation
 description: "A central platform for the documentation of the Rockefeller Archive Center"
 baseurl: # the subpath of your site, e.g. /blog
 site.url: https://docs.rockarch.org

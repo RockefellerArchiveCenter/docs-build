@@ -1,0 +1,63 @@
+[submodule "repositories/processing-manual"]
+	path = repositories/processing-manual
+	url = https://github.com/RockefellerArchiveCenter/processing-manual
+	branch = development
+[submodule "repositories/archivematica-local"]
+	path = repositories/archivematica-local
+	url = https://github.com/RockefellerArchiveCenter/archivematica-local
+	branch = development
+[submodule "repositories/dm-transfer-workflow"]
+	path = repositories/dm-transfer-workflow
+	url = https://github.com/RockefellerArchiveCenter/dm-transfer-workflow
+	branch = development
+[submodule "shred-policy-memo"]
+	path = shred-policy-memo
+	url = https://github.com/RockefellerArchiveCenter/shred-policy-memo
+[submodule "repositories/social-media-policy"]
+	path = repositories/social-media-policy
+	url = https://github.com/RockefellerArchiveCenter/social-media-policy
+	branch = development
+[submodule "repositories/textile-policy"]
+	path = repositories/textile-policy
+	url = https://github.com/RockefellerArchiveCenter/textile-policy
+	branch = development
+[submodule "repositories/premis-rights-guidelines"]
+	path = repositories/premis-rights-guidelines
+	url = https://github.com/RockefellerArchiveCenter/premis-rights-guidelines
+	branch = development
+[submodule "repositories/loan-policy"]
+	path = repositories/loan-policy
+	url = https://github.com/RockefellerArchiveCenter/loan-policy
+	branch = development
+[submodule "repositories/collection-policy"]
+	path = repositories/collection-policy
+	url = https://github.com/RockefellerArchiveCenter/collection-policy
+	branch = development
+[submodule "repositories/exhibit-policy"]
+	path = repositories/exhibit-policy
+	url = https://github.com/RockefellerArchiveCenter/exhibit-policy
+	branch = development
+[submodule "repositories/docs-policy"]
+	path = repositories/docs-policy
+	url = https://github.com/RockefellerArchiveCenter/docs-policy
+	branch = development
+[submodule "repositories/nitrate-policy"]
+	path = repositories/nitrate-policy
+	url = https://github.com/RockefellerArchiveCenter/nitrate-policy
+	branch = development
+[submodule "repositories/reappraisal-policy"]
+	path = repositories/reappraisal-policy
+	url = https://github.com/RockefellerArchiveCenter/reappraisal-policy
+	branch = development
+[submodule "repositories/digital-preservation-policy"]
+	path = repositories/digital-preservation-policy
+	url = https://github.com/RockefellerArchiveCenter/digital-preservation-policy
+	branch = development
+[submodule "repositories/docs-guide"]
+	path = repositories/docs-guide
+	url = https://github.com/RockefellerArchiveCenter/docs-guide
+	branch = development
+[submodule "repositories/aurora"]
+	path = repositories/aurora
+	url = https://github.com/RockefellerArchiveCenter/aurora
+	branch = docs-development

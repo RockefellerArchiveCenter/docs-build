@@ -1,24 +1,32 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
-
   {% include head.html %}
 
-  <body>
+  <body data-spy="scroll" data-target="#current" data-offset="100">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5KTSCGW" onkeypress="
+    "height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
-    {% include header.html %}
+    <a href="#main" class="skip-link visually-hidden">Jump directly to main content</a>
 
-    <div>
-      <h1 class="display-4 text-center mt-3">{{ page.title }}</h1>
-    </div>
+    {% include nav.html %}
 
-    <div class="container">
-      <div class="row mt-4">
+    <main id="main" class="container" role="main">
+      {% unless page.layout == "docs" %}
+       <div class="container mt-5">
+         <h1 class="display-5 text-center">{{ page.title }}</h1>
+       </div>
+       {% endunless %}
+      <div class="row mt-4 pb-3">
         {{ content }}
       </div>
-    </div>
+    </main>
+    
     {% include footer.html %}
 
     {% include scripts.html %}
-  </body>
 
+  </body>
 </html>

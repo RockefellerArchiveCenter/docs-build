@@ -1,54 +1,122 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+    height: 100%
+}
+
+a {
+  text-decoration: underline;
+  &.nounderline {
+    text-decoration: none;
+  }
+  &.hover {
+    text-decoration: none;
+  }
+  &.nounderline:hover {
+    text-decoration: underline;
+  }
+}
+
 .footer-logo {
     float: left;
     height: 5em;
     margin-right: 1em;
 }
 
+.header-logo {
+  float: left;
+  height: 5em;
+  margin-right: 1em;
+}
+
+.full-height {
+  height: 100%;
+}
+
 div.toc-striped li:nth-child(even) {
     background: #efefef;
 }
 
-#current {
-  font-size: .8rem;
+#documents {
+  list-style-type: none;
+  list-style: none;
 }
 
-#current .list-group-item:first-child {
+#current .list-group-item {
     border-radius: 0;
-}
-
-#current .list-group-item:last-child {
-    border-radius: 0;
+    font-size: .8rem;
+    padding: 1em 1em 1em 3em;
 }
 
 .docs-example {
   background: #efefef;
   padding: 15px;
   font-family: Courier, monospace;
+  & > h6 {
+    font-weight: 600;
+  }
+  & p:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
-.docs-example > h6 {
-  font-weight: 600;
-}
-
-.docs-example > p:last-of-type {
-  margin-bottom: 0;
+.card-container {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .title-card {
-  min-height: 18rem;
+  flex: 0 1 auto;
 }
 
-blockquote {
-  background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-
-blockquote p {
-  display: inline;
+.codeblock {
+    color: #bd4147;
+    white-space: pre;
+    overflow: auto;
+    -ms-overflow-style: scrollbar;
 }
 
 .table-responsive {
   margin-bottom: 1em;
+}
+
+.site-subtitle {
+  color: #737373;
+}
+
+#table-of-contents {
+  height: 95vh;
+  overflow-y: auto;
+}
+
+// Skip link
+.skip-link {
+  background: rgba(255,255,255,.9);
+  padding: 20px 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.visually-hidden {
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    &:focus {
+      clip: auto;
+      height: auto;
+      overflow: auto;
+      position: absolute;
+      width: auto;
+      z-index: 99;
+    }
 }

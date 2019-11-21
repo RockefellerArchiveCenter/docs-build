@@ -1,109 +1,106 @@
 #!/usr/bin/env python
-# pulls files and builds sites
 
 import yaml
 from json import loads
-from os import chdir, makedirs, listdir, symlink
-from os.path import join, isdir, isfile, islink, normpath, abspath, dirname
-from posix import remove
+import os
 from shutil import copyfile, copytree, rmtree
 import subprocess
+from datetime import datetime
 
-# base path for the build script
-base_path = normpath(abspath(join(dirname(__file__))))
 
-with open(join(base_path, 'config.json'), 'r') as cfg:
+base_path = os.path.normpath(os.path.abspath(os.path.join(os.path.dirname(__file__))))
+with open(os.path.join(base_path, 'config.json.sample'), 'r') as cfg:
     config = loads(cfg.read())
 
-site_root = config.get('site_root')
-repositories = config.get('repositories')
-public_site = config.get('public_site')
-private_site = config.get('private_site')
 
-
-def get_updates(repository_name):
-    # If the repository exists, update the data
-    if isdir(join(site_root, repositories, repository_name)):
-        chdir(join(site_root, repositories, repository_name))
-        print "pulling from "+repository_name
-        subprocess.call("git pull", shell=True)
-
-
-def create_structure(src, target, site):
-    if isdir(target):
+def copy_dir(src, target):
+    if os.path.isdir(target):
         rmtree(target)
-    if isfile(target):
-        remove(target)
-    try:
-        makedirs(join(site_root, site['root'], site['build']))
-    except OSError:
-        # dir exists
-        pass
     copytree(src, target)
 
 
-def build_site(site):
-    base_url = join(site_root, site['root'])
-    chdir(base_url)
-    print "Jekyll building at " + base_url
-    subprocess.call("/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll build --source %s --destination %s" % (site['staging'], site['build']), shell=True)
-    subprocess.call("node %s/create-index.js %s/search-data.json %s/search-index.json" % (base_path, site['build'], site['build']), shell=True)
+def call_command(command):
+    c = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = c.communicate()
+    if len(output[1]):
+        print("Error calling `{command}`: {output}".format(command=" ".join(command), output=output[1]))
 
 
-def build_structure(directory):
-    with open(join(site_root, repositories, directory, '_config.yml')) as f:
-        yaml_config = yaml.load(f)
-        if yaml_config['public']:
-            sites = [public_site, private_site]
-        else:
-            sites = [private_site]
-        update_docs_structure(directory, sites)
+class UpdateRoutine:
+    def run(self):
+        print("Update process started at {time}".format(time=datetime.now()))
+        call_command(["git", "submodule", "init"])
+        call_command(["git", "submodule", "update", "--remote"])
+        for s in [config['public_site'], config['private_site']]:
+            site = Site(s)
+            site.update_theme()
+            site.stage()
+            site.build()
+        print("Update process completed at {time}".format(time=datetime.now()))
 
 
-def link_site(site):
-    target = site['link']
-    if isfile(target) or islink(target):
-        remove(target)
-    if isdir(target):
-        rmtree(target)
-    symlink(join(site_root, site['root'], site['build']), target)
+class Site:
+    def __init__(self, site_config):
+        self.root = os.path.join(config['site_root'], site_config['root'])
+        self.staging_dir = os.path.join(self.root, site_config['staging'])
+        self.build_dir = os.path.join(self.root, site_config['build'])
+        self.repositories_dir = os.path.join(config['site_root'], config['repositories'])
+        self.site_config = site_config
+        for d in [self.build_dir, os.path.join(self.staging_dir)]:
+            if os.path.isdir(d):
+                rmtree(d)
+            os.makedirs(d)
 
+    def update_theme(self):
+        print("Updating theme")
+        copy_dir(os.path.join(base_path, 'theme'), os.path.join(self.staging_dir))
 
-def update_docs_structure(name, sites=[], *args):
-    print "*** building documentation ***"
-    for site in sites:
-        site_staging_dir = join(site_root, site['root'], site['staging'])
-        data_file = join(site_root, site_staging_dir, '_data', name + '.yml')
-        out = subprocess.Popen(["git log -1 --format=%ci"], stdout=subprocess.PIPE, shell=True)
-        date = out.communicate()[0]
-        # this file is used to generate the site home page
-        if not isdir(join(site_staging_dir, '_data')):
-            makedirs(join(site_staging_dir, '_data'))
-        copyfile(join(site_root, repositories, name, '_config.yml'), data_file)
+    def stage(self):
+        print("Staging site")
+        os.makedirs(os.path.join(self.staging_dir, '_data'))
+        for repo in os.listdir(self.repositories_dir):
+            self.current_repo = repo
+            self.current_repo_dir = os.path.join(self.repositories_dir, self.current_repo)
+            if self.has_repo():
+                data_file = os.path.join(self.staging_dir, '_data', self.current_repo + '.yml')
+                copyfile(
+                    os.path.join(self.current_repo_dir, '_config.yml'),
+                    data_file)
+                self.update_data_file(data_file)
+                copy_dir(
+                    os.path.join(self.current_repo_dir),
+                    os.path.join(self.staging_dir, self.current_repo))
+
+    def build(self):
+        print("Building site")
+        call_command(["/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll", "build",
+                      "--source", self.staging_dir, "--destination", self.build_dir])
+        for repo in os.listdir(self.repositories_dir):
+            self.current_repo = repo
+
+    def has_repo(self):
+        if not os.path.isdir(self.current_repo_dir):
+            return False
+        if self.site_config == config['public_site']:
+            with open(os.path.join(self.current_repo_dir, '_config.yml')) as f:
+                yaml_config = yaml.safe_load(f)
+                return True if yaml_config['public'] else False
+        elif self.site_config == config['private_site']:
+            return True
+
+    def update_data_file(self, data_file):
+        updated_date = self.get_updated_date()
         with open(data_file) as f:
             yaml_config = yaml.safe_load(f)
-        yaml_config['updated'] = date.rstrip()
-        yaml_config['slug'] = name
-        yaml_config['github_repo'] = 'https://github.com/RockefellerArchiveCenter/{0}'.format(name)
+        yaml_config['updated'] = updated_date.rstrip()
+        yaml_config['slug'] = self.current_repo
+        yaml_config['github_repo'] = 'https://github.com/RockefellerArchiveCenter/{0}'.format(self.current_repo)
         with open(data_file, 'w') as f:
             yaml.safe_dump(yaml_config, f, default_flow_style=False)
-        create_structure(join(site_root, repositories, name), join(site_staging_dir, name), site)
+
+    def get_updated_date(self):
+        out = subprocess.Popen(["git --git-dir={0}/.git show --format=%ci".format(self.current_repo_dir)], stdout=subprocess.PIPE, shell=True)
+        return out.communicate()[0]
 
 
-def update_theme_structure(name, sites=[], *args):
-    print "*** building theme ***"
-    for site in sites:
-        create_structure(join(base_path, name), join(site_root, site['root'], site['staging']), site)
-
-
-def main():
-    update_theme_structure('theme', [public_site, private_site])
-    for d in listdir(join(site_root, repositories)):
-        get_updates(d)
-        build_structure(d)
-    for site in [public_site, private_site]:
-        build_site(site)
-        if site.get('link'):
-            link_site(site)
-
-main()
+UpdateRoutine().run()

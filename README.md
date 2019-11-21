@@ -5,14 +5,16 @@ repositories, and builds internal and external-facing sites. It can be set to
 run at a specified time (for example on a nightly basis) using cron. Requires at
 least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual)).
 
-## Install
+## Quick Start
+
+A Docker container is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
 
     git clone https://github.com/RockefellerArchiveCenter/docs-build.git
-    cd docs-build
-    ./install.sh
+    cd docs-build/repositories
+    git submodule add https://github.com/RockefellerArchiveCenter/docs-guide.git
+    docker-compose up
 
-`./install.sh` will install all the necessary dependencies, and also creates SSH
-keys which enable the application to interact with Github.
+The docs site will be available in your browser at `http://localhost:4000`. This will include the RAC's Documentation Site Guide to Managing Content as an example piece of documentation. To include additional sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
 
 ## Setup
 
@@ -24,24 +26,25 @@ You can configure what the application does by copying the sample config file
 of that file looks like this:
 
     {
-        "site_root": "/var/www",
-        "repositories": "repositories",
+        "site_root": "/home/docs",
+        "repositories": "docs-build/repositories",
         "public_site": {
           "root": "public",
           "staging": "staging",
           "build": "build",
-          "link": "link"
+          "link": "/var/www/external"
         },
         "private_site": {
           "root": "private",
           "staging": "staging",
           "build": "build",
-          "link": "link"
+          "link": "/var/www/internal"
         }
     }
 
 `repositories`: Sets base directory into which repositories will be pulled from
-Github.
+Github using git submodules. This directory must be a subdirectory of the root
+directory of this repository.
 
 `site_root`: Configures the root directory for the site.
 
@@ -64,18 +67,16 @@ your site somewhere other than a web accessible directory on your server.
 rebuilds the site using Jekyll. It handles build processes for documentation and
 theme repositories differently.
 
-#### Repository Configuration
+#### Documentation Repository Configuration
 
 In order to work correctly, `build_sites.py` expects that the following variables
 will be available in a file named `_config.yml` located the root directory of a
 documentation repository. These files should be valid [YAML](http://yaml.org).
 
     public: true
+    category: "collection development and management"
     tags:
       - "policy"
-      - "preservation"
-      - "appraisal"
-      - "mission"
     title: "Collection Policy"
     description: "The main collecting areas of the Rockefeller Archive Center."
     pages:
@@ -84,7 +85,9 @@ documentation repository. These files should be valid [YAML](http://yaml.org).
 `public` indicates whether or not the documentation should be public. Values
 should be either `true` or `false` (booleans, not strings).
 
-`tags` are a list of tags you wish to associate with the documentation.
+`categories` indicate what archival life cycle category(s) applies to the documentation. Categories enable filtering of documentation items on homepage. Values should be `"collection development and management"`, `"preservation"`, `"arrangement and description"`, and/or `"reference and outreach"`.
+
+`tags` are used to describe what type of documentation the item is. Values should be either `"policy"` or `"workflow"`.
 
 `title` is the official title of the documentation, which will be displayed on
 the home page of the site.
@@ -99,15 +102,6 @@ extension). These values are used when building tables of contents.
 
 Other variables can be included in this config file if desired.
 
-#### Repository Structure
-
-The application will create a directory (configured in `config.json` as described above) containing subdirectories (based on repository name) for each documentation repository. Based on the default values supplied in `config.json.sample` that structure would be:
-
-    /repositories/
-      ∟public/
-        ∟documentation files
-      ∟private/
-        ∟documentation files
 
 #### Theme
 
@@ -125,7 +119,7 @@ variables in the documentation files' YAML front matter.
 
 #### Build Structure
 
-The build process copies directories and files from the repository directory to a new structure before executing the Jekyll build structure.
+The build process copies directories and files to a "staging" structure before executing the Jekyll build, which generates HTML files and places them in their final location.
 
 Assuming the values in `config.json.sample` above, the final structure would be:
 
@@ -145,9 +139,13 @@ The `build` directory for the public and private sites contain the final sites t
 
 #### Adding Repositories
 
-To add a repository, navigate to the root of the repositories directory, and then clone the repository you want to add:
+Documentation repositories are managed as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). To add a new repository, from the root of this repository navigate into the `repositories/` directory:
 
-      git clone git@github.com:DocumentationWriter/my-awesome-docs.github
+      cd repositories/
+
+Then run the following command, substituting `submodule_url` with a URL for a repository on GitHub, such as `https://github.com/rockefellerArchiveCenter/processing-manual`:
+
+      git submodule add [submodule url]
 
 If you want to see how things look immediately, you can trigger the build process by running `update.py`
 
