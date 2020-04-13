@@ -1,29 +1,32 @@
-FROM centos:6.10
+FROM centos:7.5.1804
 
-RUN yum -y install https://centos6.iuscommunity.org/ius-release.rpm \
-  epel-release && yum -y update && yum -y install \
-  git2u make gcc \
-  python-pip python-setuptools \
-  curl \
+ENV RUBY_VERSION=2.6.6
+ENV CONTAINER_ROOT=/home/docs/docs-build/
+
+RUN yum -y install epel-release && yum -y update && yum -y --setopt=tsflags=nodocs install \
+  make gcc curl gpg which \
+  git \
+  python-pip \
   inotify-tools \
-  httpd mod_ssl
+  httpd mod_ssl && \
+  yum -y clean all
 
-# Install RVM and use RVM to install Ruby 2.1.8
+# Install RVM and use RVM to install desired version of Ruby
 RUN gpg2 --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 RUN curl -sSL https://get.rvm.io | bash -s stable
 RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
-  rvm install 2.1.8 && \
-  rvm use 2.1.8 --default && \
-  gem install rb-inotify:0.9.10 ruby_dep:1.3.1 listen:3.0.8 public_suffix:3.1.1 jekyll:3.6.2"
+  rvm install ${RUBY_VERSION} && \
+  rvm --default use ${RUBY_VERSION} && \
+  gem install --no-document bundler jekyll:4.0.0"
 
-RUN pip install pyyaml
+ADD requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-RUN yum -y install nodejs
+WORKDIR ${CONTAINER_ROOT}
 
-WORKDIR /home/docs/docs-build/
-RUN npm install http-server -g
+COPY apache/httpd.conf /etc/httpd/conf.d/docs.httpd.conf
 
 ADD . .
 
 EXPOSE 4000
+EXPOSE 4001
