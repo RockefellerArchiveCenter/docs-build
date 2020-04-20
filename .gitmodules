@@ -1,4 +1,0 @@
-[submodule "repositories/docs-guide"]
-	path = repositories/docs-guide
-	url = https://github.com/RockefellerArchiveCenter/docs-guide
-	branch = development
