@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo "Creating config file"
+echo "Creating config files"
 cp config.json.sample config.json
+
+if [ ! -f .gitmodules ]; then
+  cp .gitmodules-dev .gitmodules
+fi
 
 if [ -z "$TRAVIS_CI" ]
 then
