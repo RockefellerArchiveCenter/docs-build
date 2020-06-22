@@ -9,8 +9,8 @@ RUN dnf -y install epel-release && dnf -y update && dnf -y --setopt=tsflags=nodo
   python36 \
   inotify-tools \
   httpd && \
-  ln -fs /usr/bin/python3.6 /usr/bin/python && \
-  ln -fs /usr/bin/pip3 /usr/bin/pip && \
+  alternatives --set python /usr/bin/python3.6 && \
+  alternatives --set pip /usr/bin/pip3 && \
   dnf -y clean all
 
 # Install RVM and use RVM to install desired version of Ruby
