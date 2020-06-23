@@ -14,7 +14,7 @@ A Docker container is included in this repository so you can quickly spin up a s
     git submodule add https://github.com/RockefellerArchiveCenter/docs-guide.git
     docker-compose up
 
-The docs site will be available in your browser at `http://localhost:4000`. This will include the RAC's Documentation Site Guide to Managing Content as an example piece of documentation. To include additional sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
+The public docs site will be available in your browser at `http://localhost:4000` and the private site will be available at `http://localhost:4001`. This will include the RAC's Documentation Site Guide to Managing Content as an example piece of documentation. To include additional sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
 
 ## Setup
 

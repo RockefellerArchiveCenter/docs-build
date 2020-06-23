@@ -4,13 +4,11 @@
     "public_site": {
       "root": "public",
       "staging": "staging",
-      "build": "build",
-      "link": "/var/www/external"
+      "build": "build"
     },
     "private_site": {
       "root": "private",
       "staging": "staging",
-      "build": "build",
-      "link": "/var/www/internal"
+      "build": "build"
     }
 }

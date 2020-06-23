@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-import yaml
-from json import loads
 import os
-from shutil import copyfile, copytree, rmtree
 import subprocess
+import yaml
 from datetime import datetime
+from json import loads
+from shutil import copyfile, copytree, rmtree
 
 
 base_path = os.path.normpath(os.path.abspath(os.path.join(os.path.dirname(__file__))))
@@ -20,10 +20,15 @@ def copy_dir(src, target):
 
 
 def call_command(command):
-    c = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output = c.communicate()
-    if len(output[1]):
-        print("Error calling `{command}`: {output}".format(command=" ".join(command), output=output[1]))
+    try:
+        c = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        while True:
+            line = c.stdout.readline().rstrip()
+            if not line:
+                break
+            print(line)
+    except Exception as e:
+        print("Error calling `{command}`: {output}".format(command=" ".join(command), output=e))
 
 
 class UpdateRoutine:
@@ -46,7 +51,7 @@ class Site:
         self.build_dir = os.path.join(self.root, site_config['build'])
         self.repositories_dir = os.path.join(config['site_root'], config['repositories'])
         self.site_config = site_config
-        for d in [self.build_dir, os.path.join(self.staging_dir)]:
+        for d in [self.build_dir, self.staging_dir]:
             if os.path.isdir(d):
                 rmtree(d)
             os.makedirs(d)
@@ -73,7 +78,7 @@ class Site:
 
     def build(self):
         print("Building site")
-        call_command(["/usr/local/rvm/gems/ruby-2.1.8/wrappers/jekyll", "build",
+        call_command(["jekyll", "build",
                       "--source", self.staging_dir, "--destination", self.build_dir])
         for repo in os.listdir(self.repositories_dir):
             self.current_repo = repo
