@@ -15,6 +15,12 @@ then
   echo "Starting Apache"
   /usr/sbin/httpd
 
+  echo "
+Sites built successfully!
+  Public site available at http://localhost:4000
+  Private site available at http://localhost:4001
+"
+
   inotifywait -e modify,move,create,delete -m theme/ -r |
   while read filename; do
     echo "Regenerating..."
