@@ -9,7 +9,7 @@ from shutil import copyfile, copytree, rmtree
 
 
 base_path = os.path.normpath(os.path.abspath(os.path.join(os.path.dirname(__file__))))
-with open(os.path.join(base_path, 'config.json.sample'), 'r') as cfg:
+with open(os.path.join(base_path, 'config.json'), 'r') as cfg:
     config = loads(cfg.read())
 
 
