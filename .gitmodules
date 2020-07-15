@@ -1,1 +1,4 @@
 
+[submodule "docs-guide"]
+	path = docs-guide
+	url = https://github.com/RockefellerArchiveCenter/docs-guide.git
