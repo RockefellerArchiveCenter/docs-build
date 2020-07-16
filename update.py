@@ -82,9 +82,9 @@ class Site:
         print("Building site")
         call_command(["jekyll", "build",
                       "--source", self.staging_dir, "--destination", self.build_dir])
-        user = getpwnam('someuser').pw_uid
-        group = grp.getgrnam('somegroup')[2]
-        for for root, dirs, files in os.walk(your_dir):
+        user = getpwnam('apache').pw_uid
+        group = grp.getgrnam('apache')[2]
+        for root, dirs, files in os.walk(self.build_dir):
             for d in dirs:
                 os.chown(os.path.join(root, d), user, group)
             for f in files:
