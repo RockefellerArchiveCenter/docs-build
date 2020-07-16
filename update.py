@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 
+import grp
 import os
 import subprocess
 import yaml
 from datetime import datetime
 from json import loads
+from pwd import getpwnam
 from shutil import copyfile, copytree, rmtree
 
 
@@ -80,6 +82,13 @@ class Site:
         print("Building site")
         call_command(["jekyll", "build",
                       "--source", self.staging_dir, "--destination", self.build_dir])
+        user = getpwnam('someuser').pw_uid
+        group = grp.getgrnam('somegroup')[2]
+        for for root, dirs, files in os.walk(your_dir):
+            for d in dirs:
+                os.chown(os.path.join(root, d), user, group)
+            for f in files:
+                os.chown(os.path.join(root, f), user, group)
         for repo in os.listdir(self.repositories_dir):
             self.current_repo = repo
 
