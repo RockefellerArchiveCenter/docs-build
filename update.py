@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 
+import grp
 import os
 import subprocess
 import yaml
 from datetime import datetime
 from json import loads
+from pwd import getpwnam
 from shutil import copyfile, copytree, rmtree
 
 
 base_path = os.path.normpath(os.path.abspath(os.path.join(os.path.dirname(__file__))))
-with open(os.path.join(base_path, 'config.json.sample'), 'r') as cfg:
+with open(os.path.join(base_path, 'config.json'), 'r') as cfg:
     config = loads(cfg.read())
 
 
@@ -80,6 +82,13 @@ class Site:
         print("Building site")
         call_command(["jekyll", "build",
                       "--source", self.staging_dir, "--destination", self.build_dir])
+        user = getpwnam('apache').pw_uid
+        group = grp.getgrnam('apache')[2]
+        for root, dirs, files in os.walk(self.build_dir):
+            for d in dirs:
+                os.chown(os.path.join(root, d), user, group)
+            for f in files:
+                os.chown(os.path.join(root, f), user, group)
         for repo in os.listdir(self.repositories_dir):
             self.current_repo = repo
 

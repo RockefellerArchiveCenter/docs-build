@@ -18,10 +18,12 @@ The public docs site will be available in your browser at `http://localhost:4000
 
 ## Setup
 
-Copy or move `_config.yml.example` to `_config.yml`. You may need to modify some
+### Update configuration files
+
+Copy or move `theme/_config.yml.example` to `theme/_config.yml`. You may need to modify some
 of the configs in this file in order to build the site correctly for your needs.
 
-You can configure what the application does by copying the sample config file
+Then, configure the site build by copying the sample config file
 `config.json.sample` to `config.json` and adapting it to your needs. The structure
 of that file looks like this:
 
@@ -60,6 +62,22 @@ which will be nested below the `root` directory for that site.
 
 `link`: Configures an optional symbolic link target. Useful if you want to build
 your site somewhere other than a web accessible directory on your server.
+
+### Install dependencies
+
+In order to use the script which updates the site, you will need to install some
+system dependencies:
+
+- Python 3.6
+- Ruby 2.6.6
+- Jekyll 4.0.0
+
+In addition, several Python packages need to be installed. Ideally you should
+set a [virtual environment](https://docs.python.org/3/tutorial/venv.html) to isolate these dependencies. Once you've done that, the quickest way to install dependencies is
+to use `pip`:
+```
+pip install -r requirements.txt
+```
 
 ## Build Script
 
