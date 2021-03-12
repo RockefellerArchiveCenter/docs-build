@@ -96,6 +96,7 @@ documentation repository. These files should be valid [YAML](http://yaml.org).
     tags:
       - "policy"
     title: "Collection Policy"
+    description: "The main collecting areas of the Rockefeller Archive Center."
     pages:
       - ["Rockefeller Archive Center Collection Policy", "index"]
 
@@ -108,6 +109,8 @@ should be either `true` or `false` (booleans, not strings).
 
 `title` is the official title of the documentation, which will be displayed on
 the home page of the site.
+
+`description` is a short statement of what the documentation is, limited to 160 characters. This text will become the description meta tag for the site, which is displayed in search-engine results.
 
 `pages` is a list of lists of the pages included in this site. The first value
 in each list is the name, and the second is the filename of the page (without the
