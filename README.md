@@ -110,7 +110,7 @@ should be either `true` or `false` (booleans, not strings).
 `title` is the official title of the documentation, which will be displayed on
 the home page of the site.
 
-`description` is a short statement of what the documentation is, limited to 160 characters. This text will become the description meta tag for the site, which is displayed in search-engine results.
+`description` is a statement of what the documentation is. This text will become the description meta tag for the site, which is displayed in search-engine results, so keep it short and snappy.
 
 `pages` is a list of lists of the pages included in this site. The first value
 in each list is the name, and the second is the filename of the page (without the
