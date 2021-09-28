@@ -8,5 +8,6 @@ before_install:
   - cp theme/_config.yml.example theme/config.yml
   - cp config.json.sample config.json
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-  - docker-compose up -d
 install: true
+script:
+  - docker-compose up -d
