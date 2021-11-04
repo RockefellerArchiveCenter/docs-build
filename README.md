@@ -5,6 +5,8 @@ repositories, and builds internal and external-facing sites. It can be set to
 run at a specified time (for example on a nightly basis) using cron. Requires at
 least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual)).
 
+![Build Status](https://travis-ci.org/RockefellerArchiveCenter/docs-build.svg?branch=base)](https://travis-ci.org/RockefellerArchiveCenter/docs-build)
+
 ## Quick Start
 
 A Docker container is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
