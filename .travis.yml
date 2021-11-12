@@ -9,8 +9,6 @@ before_install:
   - cp theme/_config.yml.example theme/config.yml
   - cp config.json.sample config.json
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
-install:
-  - docker-compose up
+install: true
 script:
-  - ./wait-for-it.sh $CONTAINER:4000 -- echo "done"
-  - ./cibuild
+  - docker-compose up
