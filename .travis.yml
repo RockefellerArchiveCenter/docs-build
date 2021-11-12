@@ -4,7 +4,6 @@ services:
 env:
   global:
     - TRAVIS_CI: "true"
-    - CONTAINER: docs
 before_install:
   - cp theme/_config.yml.example theme/config.yml
   - cp config.json.sample config.json
