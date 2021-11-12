@@ -167,6 +167,21 @@ Then run the following command, substituting `submodule_url` with a URL for a re
 
 If you want to see how things look immediately, you can trigger the build process by running `update.py`
 
+## Docker image
+
+The Dockerfile in the root of this repository provides an easy way to get up and
+running, and allows for easy local development. The image built from this file
+is used in the Compose file as well as in the continuous integration pipeline.
+
+To publish changes to this image, first build it locally:
+
+      docker build -t rockarch/docs-build-base .
+
+And then push the built image to Docker Hub:
+
+      docker push rockarch/docs-build-base:latest
+
+
 ## Contributing
 
 Pull requests accepted!
