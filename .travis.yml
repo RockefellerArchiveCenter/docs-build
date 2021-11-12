@@ -10,7 +10,7 @@ before_install:
   - cp config.json.sample config.json
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 install:
-  - docker-compose up -d
+  - docker-compose up
 script:
   - ./wait-for-it.sh $CONTAINER:4000 -- echo "done"
   - ./cibuild
