@@ -12,4 +12,4 @@ before_install:
 install:
   - docker-compose up -d
 script:
-  - ./wait-for-it.sh $CONTAINER:4000 -- ./test_urls.py
+  - ./wait-for-it.sh $CONTAINER:4000 -- docker compose exec docs bash -c curl http://localhost:4000/
