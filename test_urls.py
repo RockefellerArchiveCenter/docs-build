@@ -15,6 +15,6 @@ http = urllib3.PoolManager()
 
 for path in EXPECTED_PATHS:
     for port in ["4000", "4001"]:
-        url = f"http://localhost:{port}{path}"
+        url = "http://localhost:{}{}".format(port, path)
         resp = http.request("GET", url)
-        assert resp.status == 200, f"Did not receive the expected response for {url}"
+        assert resp.status == 200, "Did not receive the expected response for {}".format(url)
