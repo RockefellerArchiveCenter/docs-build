@@ -4,6 +4,7 @@ services:
 env:
   global:
     - TRAVIS_CI: "true"
+    - CONTAINER: docs
 before_install:
   - cp theme/_config.yml.example theme/config.yml
   - cp config.json.sample config.json
@@ -11,4 +12,4 @@ before_install:
 install:
   - docker-compose up -d
 script:
-  - ./test_urls.py
+  - ./wait-for-it.sh $CONTAINER:4000 -- ./test_urls.py
