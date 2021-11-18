@@ -10,4 +10,4 @@ before_install:
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 install: true
 script:
-  - docker-compose up -d
+  - docker-compose up
