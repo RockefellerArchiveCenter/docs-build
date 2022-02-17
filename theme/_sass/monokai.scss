@@ -71,3 +71,9 @@ Source: mpchadwick at https://github.com/mpchadwick/pygments-high-contrast-style
 .highlight .vi { color: #f8f8f2; }
 .highlight .vm { color: #f8f8f2; }
 .highlight .il { color: #ae81ff; }
+
+/* Inline code styles (colors from RAC styles library) */
+.highlighter-rouge {
+    color: #9F3C0F;
+    background-color: #F6F6F4;
+}
