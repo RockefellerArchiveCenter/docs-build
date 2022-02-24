@@ -1,15 +1,15 @@
-FROM centos:8.2.2004
+FROM redhat/ubi8
 
-ENV RUBY_VERSION=2.6.6
+ENV RUBY_VERSION=3.1.1
 ENV CONTAINER_ROOT=/home/docs/docs-build/
 
 RUN dnf -y install epel-release && dnf -y update && dnf -y --setopt=tsflags=nodocs install \
   make gcc curl gpg which \
   git \
-  python36 \
+  python310 \
   inotify-tools \
   httpd && \
-  ln -fs /usr/bin/python3.6 /usr/bin/python && \
+  ln -fs /usr/bin/python3.10 /usr/bin/python && \
   ln -fs /usr/bin/pip3 /usr/bin/pip && \
   dnf -y clean all
 
