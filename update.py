@@ -40,7 +40,7 @@ class UpdateRoutine:
         site.stage(repositories_config[audience], branch, audience)
         site.build()
         if deploy:
-            site.upload()
+            site.upload(audience, branch)
         return f'Update process for {audience} {branch} site completed at {datetime.now()}'
 
 
@@ -102,7 +102,7 @@ class Site:
             shell=True)
         return out.communicate()[0]
 
-    def upload(self):
+    def upload(self, audience, branch):
         s3 = boto3.resource(
             service_name='s3',
             region_name=os.environ.get('REGION_NAME'),
@@ -113,7 +113,8 @@ class Site:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.meta.client.upload_file(
                     os.path.join(root, f),
-                    os.environ.get('BUCKET_NAME'),
+                    os.environ.get(
+                        f'{branch.upper()}_{audience.upper()}_BUCKET_NAME'),
                     os.path.join(
                         root.replace(
                             self.build_dir,
@@ -124,9 +125,11 @@ class Site:
 
 def main(event, context):
     if event:
-        audience = 'public' if event.get(
-            'repository', {}).get('private') else 'private'
+        audience = 'private' if event.get(
+            'repository', {}).get('private') else 'public'
         branch = event.get('ref', '').replace('refs/heads/', '')
+        if branch not in ['base', 'development']:
+            return f"Branch {branch} is not eligible to be built"
         return UpdateRoutine().run(audience, branch)
     else:
         return UpdateRoutine().run('private', 'base', False)

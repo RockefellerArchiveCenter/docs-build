@@ -188,8 +188,12 @@ to an S3 bucket from where they can be served.
 
 The following environment variables must be present:
 - GH_TOKEN - a GitHub Personal Access Token which has the necessary permissions to clone private repositories
-- BUCKET_NAME - the name of an S3 bucket to which the built site will be uploaded.
-- REGION_NAME - the AWS region in which that bucket is located.
+- Environment variables for S3 buckets to which files will be uploaded which take
+  the form of {BRANCH}_{AUDIENCE}_BUCKET_NAME:
+  - DEVELOPMENT_PRIVATE_BUCKET_NAME
+  - BASE_PRIVATE_BUCKET_NAME -
+  - BASE_PUBLIC_BUCKET_NAME
+- REGION_NAME - the AWS region in which the S3 buckets are located.
 - ACCESS_KEY - an Access Key for an IAM user that has the necessary permissions to upload files to the bucket.
 - SECRET_KEY - the Secret Key for an IAM user with the necessary permissions to upload files to the bucket.
 
