@@ -1,18 +1,13 @@
 #!/usr/bin/env python
 
-import grp
+import mimetypes
 import os
 import subprocess
-import yaml
 from datetime import datetime
-from json import loads
-from pwd import getpwnam
 from shutil import copyfile, copytree, rmtree
 
-
-base_path = os.path.normpath(os.path.abspath(os.path.join(os.path.dirname(__file__))))
-with open(os.path.join(base_path, 'config.json'), 'r') as cfg:
-    config = loads(cfg.read())
+import boto3
+import yaml
 
 
 def copy_dir(src, target):
@@ -23,84 +18,68 @@ def copy_dir(src, target):
 
 def call_command(command):
     try:
-        c = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        c = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT)
         while True:
             line = c.stdout.readline().rstrip()
             if not line:
                 break
             print(line)
     except Exception as e:
-        print("Error calling `{command}`: {output}".format(command=" ".join(command), output=e))
+        print(f'Error calling `{" ".join(command)}`: {e}')
 
 
 class UpdateRoutine:
-    def run(self):
-        print("Update process started at {time}".format(time=datetime.now()))
-        call_command(["git", "submodule", "init"])
-        call_command(["git", "submodule", "update", "--remote"])
-        for s in [config['public_site'], config['private_site']]:
-            site = Site(s)
-            site.update_theme()
-            site.stage()
-            site.build()
-        print("Update process completed at {time}".format(time=datetime.now()))
+    def run(self, audience, branch, deploy=True):
+        with open('repositories.yml') as f:
+            repositories_config = yaml.safe_load(f)
+        site = Site()
+        site.update_theme()
+        site.stage(repositories_config[audience], branch)
+        site.build()
+        if deploy:
+            site.upload()
+        return f'Update process for {audience} {branch} site completed at {datetime.now()}'
 
 
 class Site:
-    def __init__(self, site_config):
-        self.root = os.path.join(config['site_root'], site_config['root'])
-        self.staging_dir = os.path.join(self.root, site_config['staging'])
-        self.build_dir = os.path.join(self.root, site_config['build'])
-        self.repositories_dir = os.path.join(config['site_root'], config['repositories'])
-        self.site_config = site_config
-        for d in [self.build_dir, self.staging_dir]:
-            if os.path.isdir(d):
-                rmtree(d)
-            os.makedirs(d)
+    def __init__(self):
+        self.staging_dir = '/tmp/staging/'
+        self.build_dir = '/tmp/build/'
+        self.repositories_dir = '/tmp/repositories/'
 
     def update_theme(self):
-        print("Updating theme")
-        copy_dir(os.path.join(base_path, 'theme'), os.path.join(self.staging_dir))
+        copy_dir('theme', os.path.join(self.staging_dir))
 
-    def stage(self):
-        print("Staging site")
+    def stage(self, repositories, branch):
         os.makedirs(os.path.join(self.staging_dir, '_data'))
-        for repo in os.listdir(self.repositories_dir):
-            self.current_repo = repo
-            self.current_repo_dir = os.path.join(self.repositories_dir, self.current_repo)
-            if self.has_repo():
-                data_file = os.path.join(self.staging_dir, '_data', self.current_repo + '.yml')
-                copyfile(
-                    os.path.join(self.current_repo_dir, '_config.yml'),
-                    data_file)
-                self.update_data_file(data_file)
-                copy_dir(
-                    os.path.join(self.current_repo_dir),
-                    os.path.join(self.staging_dir, self.current_repo))
+        for repo in repositories:
+            self.current_repo = next(iter(repo))
+            repo_path = os.path.join(self.repositories_dir, self.current_repo)
+            if os.path.isdir(repo_path):
+                rmtree(repo_path)
+            call_command([
+                'git', 'clone',
+                repo['url'],
+                repo_path,
+                '--branch', branch])
+            self.current_repo_dir = os.path.join(
+                self.repositories_dir, self.current_repo)
+            data_file = os.path.join(
+                self.staging_dir, '_data', self.current_repo + '.yml')
+            copyfile(
+                os.path.join(self.current_repo_dir, '_config.yml'),
+                data_file)
+            self.update_data_file(data_file)
+            copy_dir(
+                os.path.join(self.current_repo_dir),
+                os.path.join(self.staging_dir, self.current_repo))
 
     def build(self):
-        print("Building site")
-        call_command(["jekyll", "build",
-                      "--source", self.staging_dir, "--destination", self.build_dir])
-        user = getpwnam('apache').pw_uid
-        group = grp.getgrnam('apache')[2]
-        for root, dirs, files in os.walk(self.build_dir):
-            for d in dirs:
-                os.chown(os.path.join(root, d), user, group)
-            for f in files:
-                os.chown(os.path.join(root, f), user, group)
-        for repo in os.listdir(self.repositories_dir):
-            self.current_repo = repo
-
-    def has_repo(self):
-        if not os.path.isdir(self.current_repo_dir):
-            return False
-        if self.site_config == config['public_site']:
-            with open(os.path.join(self.current_repo_dir, '_config.yml')) as f:
-                yaml_config = yaml.safe_load(f)
-                return True if yaml_config['public'] else False
-        elif self.site_config == config['private_site']:
-            return True
+        call_command(['/usr/local/rvm/gems/ruby-2.6.6/wrappers/jekyll', 'build',
+                      '--source', self.staging_dir, '--destination', self.build_dir])
 
     def update_data_file(self, data_file):
         updated_date = self.get_updated_date()
@@ -108,13 +87,43 @@ class Site:
             yaml_config = yaml.safe_load(f)
         yaml_config['updated'] = updated_date.rstrip()
         yaml_config['slug'] = self.current_repo
-        yaml_config['github_repo'] = 'https://github.com/RockefellerArchiveCenter/{0}'.format(self.current_repo)
+        yaml_config[
+            'github_repo'] = f'https://github.com/RockefellerArchiveCenter/{self.current_repo}'
         with open(data_file, 'w') as f:
             yaml.safe_dump(yaml_config, f, default_flow_style=False)
 
     def get_updated_date(self):
-        out = subprocess.Popen(["git --git-dir={0}/.git show --format=%ci".format(self.current_repo_dir)], stdout=subprocess.PIPE, shell=True)
+        out = subprocess.Popen(
+            [f'git --git-dir={self.current_repo_dir}/.git show --format=%ci'],
+            stdout=subprocess.PIPE,
+            shell=True)
         return out.communicate()[0]
 
+    def upload(self):
+        s3 = boto3.resource(
+            service_name='s3',
+            region_name=os.environ.get('REGION_NAME'),
+            aws_access_key_id=os.environ.get('ACCESS_KEY'),
+            aws_secret_access_key=os.environ.get('SECRET_KEY'))
+        for root, dirs, files in os.walk(self.build_dir):
+            for f in files:
+                mtype, _ = mimetypes.guess_type(os.path.join(root, f))
+                s3.meta.client.upload_file(
+                    os.path.join(root, f),
+                    os.environ.get('BUCKET_NAME'),
+                    os.path.join(
+                        root.replace(
+                            self.build_dir,
+                            '').lstrip('/'),
+                        f),
+                    ExtraArgs={'ContentType': mtype if mtype else 'application/json'})
 
-UpdateRoutine().run()
+
+def main(event, context):
+    if event:
+        audience = 'public' if event.get(
+            'repository', {}).get('private') else 'private'
+        branch = event.get('ref', '').replace('refs/heads/', '')
+        UpdateRoutine().run(audience, branch)
+    else:
+        UpdateRoutine().run('private', 'base', False)
