@@ -2,6 +2,9 @@ version: '3'
 
 services:
   docs:
+    build:
+      context: .
+      dockerfile: Dockerfile-local
     image: rockarch/docs-build-base
     entrypoint: /bin/bash -l -c /home/docs/docs-build/entrypoint.sh
     volumes:

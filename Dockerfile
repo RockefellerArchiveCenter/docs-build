@@ -1,33 +1,23 @@
-FROM centos:8.2.2004
+FROM public.ecr.aws/lambda/python:3.9
 
 ENV RUBY_VERSION=2.6.6
-ENV CONTAINER_ROOT=/home/docs/docs-build/
 
-RUN dnf -y install epel-release && dnf -y update && dnf -y --setopt=tsflags=nodocs install \
-  make gcc curl gpg which \
-  git \
-  python36 \
-  inotify-tools \
-  httpd && \
-  ln -fs /usr/bin/python3.6 /usr/bin/python && \
-  ln -fs /usr/bin/pip3 /usr/bin/pip && \
-  dnf -y clean all
+RUN yum update && yum install -y \
+  make gcc curl gpg which tar procps \
+  git
 
 # Install RVM and use RVM to install desired version of Ruby
-RUN curl -sSL https://get.rvm.io | bash
-RUN /bin/bash -l -c ". /etc/profile.d/rvm.sh && \
-  rvm install ${RUBY_VERSION} && \
-  rvm --default use ${RUBY_VERSION} && \
-  gem install --no-document bundler jekyll:4.0.0"
+RUN \curl -L https://get.rvm.io | bash
+RUN /bin/bash -l -c "rvm requirements"
+RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
+RUN /bin/bash -l -c "gem install bundler --no-document"
+RUN /bin/bash -l -c "gem install jekyll --no-document"
 
-ADD requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
+ADD requirements.txt ${LAMBDA_TASK_ROOT}
+RUN pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
-WORKDIR ${CONTAINER_ROOT}
+COPY update.py ${LAMBDA_TASK_ROOT}
+COPY repositories.yml ${LAMBDA_TASK_ROOT}
+COPY theme ${LAMBDA_TASK_ROOT}/theme
 
-COPY apache/httpd.conf /etc/httpd/conf.d/docs.httpd.conf
-
-ADD . .
-
-EXPOSE 4000
-EXPOSE 4001
+CMD [ "update.main" ]
