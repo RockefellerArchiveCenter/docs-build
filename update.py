@@ -37,7 +37,7 @@ class UpdateRoutine:
             repositories_config = yaml.safe_load(f)
         site = Site()
         site.update_theme()
-        site.stage(repositories_config[audience], branch)
+        site.stage(repositories_config[audience], branch, audience)
         site.build()
         if deploy:
             site.upload()
@@ -53,16 +53,19 @@ class Site:
     def update_theme(self):
         copy_dir('theme', os.path.join(self.staging_dir))
 
-    def stage(self, repositories, branch):
+    def stage(self, repositories, branch, audience):
         os.makedirs(os.path.join(self.staging_dir, '_data'))
         for repo in repositories:
-            self.current_repo = next(iter(repo))
+            self.current_repo = repo
             repo_path = os.path.join(self.repositories_dir, self.current_repo)
+            repo_url = (f'https://github.com/RockefellerArchiveCenter/{self.current_repo}.git'
+                        if audience == 'public' else
+                        f'https://{os.environ.get("GH_TOKEN")}@github.com/RockefellerArchiveCenter/{self.current_repo}.git')
             if os.path.isdir(repo_path):
                 rmtree(repo_path)
             call_command([
                 'git', 'clone',
-                repo['url'],
+                repo_url,
                 repo_path,
                 '--branch', branch])
             self.current_repo_dir = os.path.join(
@@ -124,6 +127,6 @@ def main(event, context):
         audience = 'public' if event.get(
             'repository', {}).get('private') else 'private'
         branch = event.get('ref', '').replace('refs/heads/', '')
-        UpdateRoutine().run(audience, branch)
+        return UpdateRoutine().run(audience, branch)
     else:
-        UpdateRoutine().run('private', 'base', False)
+        return UpdateRoutine().run('private', 'base', False)

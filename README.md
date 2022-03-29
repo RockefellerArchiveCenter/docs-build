@@ -181,6 +181,18 @@ And then push the built image to Docker Hub:
 
       docker push rockarch/docs-build-base:latest
 
+## Deployment
+
+This repository is intended to be deployed as an AWS Lambda which pushes updates
+to an S3 bucket from where they can be served.
+
+The following environment variables must be present:
+- GH_TOKEN - a GitHub Personal Access Token which has the necessary permissions to clone private repositories
+- BUCKET_NAME - the name of an S3 bucket to which the built site will be uploaded.
+- REGION_NAME - the AWS region in which that bucket is located.
+- ACCESS_KEY - an Access Key for an IAM user that has the necessary permissions to upload files to the bucket.
+- SECRET_KEY - the Secret Key for an IAM user with the necessary permissions to upload files to the bucket.
+
 
 ## Contributing
 

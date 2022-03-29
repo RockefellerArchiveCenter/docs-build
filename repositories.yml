@@ -1,6 +1,33 @@
 private:
-  - docs-guide:
-    url: https://github.com/RockefellerArchiveCenter/docs-guide.git
+  - shred-policy-memo
+  - systems-info-sheets
+  - chagall-procedures
+  - posting-on-bits-and-bytes
+  - development-guide
+  - scripts-appraisal-policy
 public:
-  - docs-guide:
-    url: https://github.com/RockefellerArchiveCenter/docs-guide.git
+  - docs-guide
+  - reading-room-manual
+  - reappraisal-policy
+  - rm-policy
+  - social-media-policy
+  - textile-policy
+  - valuable-vulnerable-policy
+  - library-policy
+  - nitrate-policy
+  - collection-policy
+  - deaccession-policy
+  - dm-transfer-workflow
+  - digitization-guide
+  - docs-policy
+  - exhibit-policy
+  - gdpr-report
+  - processing-manual
+  - archivematica-local
+  - premis-rights-guidelines
+  - loan-policy
+  - digital-preservation-policy
+  - archival-description-license
+  - takedown-policy
+  - ux-templates
+  - ccd-education-campaign
