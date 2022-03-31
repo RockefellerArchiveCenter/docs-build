@@ -187,7 +187,9 @@ This repository is intended to be deployed as an AWS Lambda which pushes updates
 to an S3 bucket from where they can be served.
 
 The following environment variables must be present:
-- GH_TOKEN - a GitHub Personal Access Token which has the necessary permissions to clone private repositories
+- GH_TOKEN - a GitHub Personal Access Token which has the necessary permissions
+  to clone private repositories. Make sure this  has the scope org:read as well.
+- GH_SECRET - a secret key associated with the GitHub webhook triggered on push to repositories.
 - Environment variables for S3 buckets to which files will be uploaded which take
   the form of {BRANCH}_{AUDIENCE}_BUCKET_NAME:
   - DEVELOPMENT_PRIVATE_BUCKET_NAME
