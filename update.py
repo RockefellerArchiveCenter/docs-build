@@ -1,28 +1,14 @@
 #!/usr/bin/env python
 
-import hashlib
-import hmac
 import json
 import mimetypes
 import os
-import re
 import subprocess
 from datetime import datetime
 from shutil import copyfile, copytree, rmtree
-from urllib.parse import unquote
 
 import boto3
 import yaml
-
-
-def calculate_signature(github_signature, githhub_payload):
-    signature_bytes = bytes(github_signature, 'utf-8')
-    digest = hmac.new(
-        key=signature_bytes,
-        msg=githhub_payload,
-        digestmod=hashlib.sha1)
-    signature = digest.hexdigest()
-    return signature
 
 
 def copy_dir(src, target):
@@ -140,17 +126,6 @@ class Site:
 
 def main(event, context):
     if event:
-        incoming_signature = re.sub(
-            r'^sha1=', '', event['headers']['X-Hub-Signature'])
-        incoming_payload = unquote(re.sub(r'^payload=', '', event['body']))
-        calculated_signature = calculate_signature(
-            os.environ.get("GH_SECRET"), incoming_payload.encode('utf-8'))
-
-        if incoming_signature != calculated_signature:
-            return {
-                'statusCode': 403,
-                'body': json.dumps('Forbidden')
-            }
         audience = 'private' if event.get(
             'repository', {}).get('private') else 'public'
         branch = event.get('ref', '').replace('refs/heads/', '')
