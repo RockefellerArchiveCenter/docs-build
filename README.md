@@ -1,96 +1,63 @@
 # docs-build
 
 Theme file along with a Python script which retrieves updates for documentation
-repositories, and builds internal and external-facing sites. It can be set to
-run at a specified time (for example on a nightly basis) using cron. Requires at
+repositories, and builds internal and external-facing sites. Requires at
 least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual)).
 
 ![Build Status](https://travis-ci.org/RockefellerArchiveCenter/docs-build.svg?branch=base)](https://travis-ci.org/RockefellerArchiveCenter/docs-build)
 
 ## Quick Start
 
-A Docker container is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
+A Dockerfile for local development (`Dockerfile-local`) is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
 
     git clone https://github.com/RockefellerArchiveCenter/docs-build.git
-    cd docs-build/repositories
-    git submodule add https://github.com/RockefellerArchiveCenter/docs-guide.git
+    docker-compose build
     docker-compose up
 
-The public docs site will be available in your browser at `http://localhost:4000` and the private site will be available at `http://localhost:4001`. This will include the RAC's Documentation Site Guide to Managing Content as an example piece of documentation. To include additional sets of documentation, you will need to add them as submodules in the `repositories/` subdirectory. Refer to the [Adding Repositories](#adding-repositories) section of this document.
+The public docs site will be available in your browser at `http://localhost:4000`.
 
-## Setup
+## Usage
 
-### Update configuration files
+## Adding or Removing Repositories
 
-Copy or move `theme/_config.yml.example` to `theme/_config.yml`. You may need to modify some
-of the configs in this file in order to build the site correctly for your needs.
+Repositories can be added or removed from either the public or private site by
+updating `repositories.yml`.
 
-Then, configure the site build by copying the sample config file
-`config.json.sample` to `config.json` and adapting it to your needs. The structure
-of that file looks like this:
+### Theme
 
-    {
-        "site_root": "/home/docs",
-        "repositories": "docs-build/repositories",
-        "public_site": {
-          "root": "public",
-          "staging": "staging",
-          "build": "build",
-          "link": "/var/www/external"
-        },
-        "private_site": {
-          "root": "private",
-          "staging": "staging",
-          "build": "build",
-          "link": "/var/www/internal"
-        }
-    }
+The site uses a Jekyll-based theme to create a cohesive structure and
+customizable interface. These files are located in the `theme/` directory.
 
-`repositories`: Sets base directory into which repositories will be pulled from
-Github using git submodules. This directory must be a subdirectory of the root
-directory of this repository.
+Layouts are written in HTML and are chiefly composed from a separate directory
+of Jekyll-based includes and one default layout template. They are styled with
+both Bootstrap and custom CSS and are rendered with the Liquid template language.
 
-`site_root`: Configures the root directory for the site.
+The layout directory formats the various documentation files stored in the
+individual GitHub repositories and thereby creates the site's central interface for
+access to documentation. This process is achieved through the use of layout
+variables in the documentation files' YAML front matter.
 
-`public_site` and `private_site`: Objects containing configs to be set for each site.
+### Deployment
 
-`root`: Sets the root directory for the site, which will be nested underneath `site_root_dir`.
+This site is intended to be deployed as an AWS Lambda which pushes updates
+to an S3 bucket from where they can be served.
 
-`staging`: Configures the staging directory to which directories will be copied
-before the build process, which will be nested below the `root` directory for that site.
+The following environment variables must be present in order for this deployment pattern to work effectively:
+- GH_TOKEN - a GitHub Personal Access Token which has the necessary permissions
+  to clone private repositories. Make sure this  has the scope org:read as well.
+- Environment variables for S3 buckets to which files will be uploaded. These
+  should be formatted as {BRANCH}_{AUDIENCE}_BUCKET_NAME:
+  - DEVELOPMENT_PRIVATE_BUCKET_NAME
+  - BASE_PRIVATE_BUCKET_NAME -
+  - BASE_PUBLIC_BUCKET_NAME
+- REGION_NAME - the AWS region in which the S3 buckets are located.
+- ACCESS_KEY - an Access Key for an IAM user that has the necessary permissions to upload files to the bucket.
+- SECRET_KEY - the Secret Key for an IAM user with the necessary permissions to upload files to the bucket.
 
-`build`: Configures the directory into which the final sites will be built,
-which will be nested below the `root` directory for that site.
+## Documentation Repository Configuration
 
-`link`: Configures an optional symbolic link target. Useful if you want to build
-your site somewhere other than a web accessible directory on your server.
-
-### Install dependencies
-
-In order to use the script which updates the site, you will need to install some
-system dependencies:
-
-- Python 3.6
-- Ruby 2.6.6
-- Jekyll 4.0.0
-
-In addition, several Python packages need to be installed. Ideally you should
-set a [virtual environment](https://docs.python.org/3/tutorial/venv.html) to isolate these dependencies. Once you've done that, the quickest way to install dependencies is
-to use `pip`:
-```
-pip install -r requirements.txt
-```
-
-## Build Script
-
-`update.py` is the script that pulls the updated data from GitHub, and then
-rebuilds the site using Jekyll. It handles build processes for documentation and
-theme repositories differently.
-
-#### Documentation Repository Configuration
-
-In order to work correctly, `build_sites.py` expects that the following variables
-will be available in a file named `_config.yml` located the root directory of a
+In order to build the full documentation site, the following variables must be
+available in a file named `_config.yml` located the root directory of each
 documentation repository. These files should be valid [YAML](http://yaml.org).
 
     public: true
@@ -119,86 +86,6 @@ in each list is the name, and the second is the filename of the page (without th
 extension). These values are used when building tables of contents.
 
 Other variables can be included in this config file if desired.
-
-
-#### Theme
-
-The site uses a Jekyll-based theme to create a cohesive structure and
-customizable interface. These files are located in the `theme/` directory.
-
-Layouts are written in HTML and are chiefly composed from a separate directory
-of Jekyll-based includes and one default layout template. They are styled with
-both Bootstrap and custom CSS and are rendered with the Liquid template language.
-
-The layout directory formats the various documentation files stored in the
-individual GitHub repositories and thereby creates the site's central interface for
-access to documentation. This process is achieved through the use of layout
-variables in the documentation files' YAML front matter.
-
-#### Build Structure
-
-The build process copies directories and files to a "staging" structure before executing the Jekyll build, which generates HTML files and places them in their final location.
-
-Assuming the values in `config.json.sample` above, the final structure would be:
-
-    /var/www/
-      ∟public/
-        ∟staging/
-          ∟files to be built
-        ∟build/
-          ∟generated site
-      ∟private/
-        ∟staging/
-          ∟files to be built
-        ∟build/
-          ∟generated site
-
-The `build` directory for the public and private sites contain the final sites that need to be served up via Apache or some other method.
-
-#### Adding Repositories
-
-Documentation repositories are managed as [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). To add a new repository, from the root of this repository navigate into the `repositories/` directory:
-
-      cd repositories/
-
-Then run the following command, substituting `submodule_url` with a URL for a repository on GitHub, such as `https://github.com/rockefellerArchiveCenter/processing-manual`:
-
-      git submodule add [submodule url]
-
-If you want to see how things look immediately, you can trigger the build process by running `update.py`
-
-## Docker image
-
-The Dockerfile in the root of this repository provides an easy way to get up and
-running, and allows for easy local development. The image built from this file
-is used in the Compose file as well as in the continuous integration pipeline.
-
-To publish changes to this image, first build it locally:
-
-      docker build -t rockarch/docs-build-base .
-
-And then push the built image to Docker Hub:
-
-      docker push rockarch/docs-build-base:latest
-
-## Deployment
-
-This repository is intended to be deployed as an AWS Lambda which pushes updates
-to an S3 bucket from where they can be served.
-
-The following environment variables must be present:
-- GH_TOKEN - a GitHub Personal Access Token which has the necessary permissions
-  to clone private repositories. Make sure this  has the scope org:read as well.
-- GH_SECRET - a secret key associated with the GitHub webhook triggered on push to repositories.
-- Environment variables for S3 buckets to which files will be uploaded which take
-  the form of {BRANCH}_{AUDIENCE}_BUCKET_NAME:
-  - DEVELOPMENT_PRIVATE_BUCKET_NAME
-  - BASE_PRIVATE_BUCKET_NAME -
-  - BASE_PUBLIC_BUCKET_NAME
-- REGION_NAME - the AWS region in which the S3 buckets are located.
-- ACCESS_KEY - an Access Key for an IAM user that has the necessary permissions to upload files to the bucket.
-- SECRET_KEY - the Secret Key for an IAM user with the necessary permissions to upload files to the bucket.
-
 
 ## Contributing
 

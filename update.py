@@ -34,10 +34,12 @@ def call_command(command):
 
 class UpdateRoutine:
     def run(self, audience, branch, deploy=True):
-        try:
-            os.environ[f'{branch.upper()}_{audience.upper()}_BUCKET_NAME']
-        except KeyError:
-            return f'No build destination for {audience} {branch} site'
+        if deploy:
+            try:
+                os.environ[f'{branch.upper()}_{audience.upper()}_BUCKET_NAME']
+            except KeyError:
+                return f'No build destination for {audience} {branch} site'
+
         with open('repositories.yml') as f:
             repositories_config = yaml.safe_load(f)
         site = Site()
@@ -61,11 +63,11 @@ class Site:
     def stage(self, repositories, branch, audience):
         os.makedirs(os.path.join(self.staging_dir, '_data'))
         for repo in repositories:
-            self.current_repo = repo
+            self.current_repo = repo.split("/")[-1]
             repo_path = os.path.join(self.repositories_dir, self.current_repo)
-            repo_url = (f'https://github.com/RockefellerArchiveCenter/{self.current_repo}.git'
+            repo_url = (f'https://github.com/{repo}.git'
                         if audience == 'public' else
-                        f'https://{os.environ.get("GH_TOKEN")}@github.com/RockefellerArchiveCenter/{self.current_repo}.git')
+                        f'https://{os.environ.get("GH_TOKEN")}@github.com/{repo}.git')
             if os.path.isdir(repo_path):
                 rmtree(repo_path)
             call_command([
@@ -147,4 +149,8 @@ def main(event, context):
             'body': json.dumps(message)
         }
     else:
-        return UpdateRoutine().run('private', 'base', False)
+        return UpdateRoutine().run('public', 'base', False)
+
+
+if __name__ == '__main__':
+    main(None, None)

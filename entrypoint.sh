@@ -1,19 +1,12 @@
 #!/bin/bash
 
-echo "Creating config files"
-cp config.json.sample config.json
-
-if [ ! -f .gitmodules ]; then
-  cp .gitmodules-dev .gitmodules
-fi
-
 if [ -z "$TRAVIS_CI" ]
 then
   echo "Performing initial build of site"
   python ./update.py
 
   echo "Starting Apache"
-  /usr/sbin/httpd
+  /usr/sbin/apachectl start
 
   echo "
 Sites built successfully!
