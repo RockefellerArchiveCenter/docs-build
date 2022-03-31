@@ -135,6 +135,9 @@ def main(event, context):
                 'body': json.dumps(f"Branch {branch} is not eligible to be built")
             }
         message = UpdateRoutine().run(audience, branch)
+        if audience == 'public':
+            UpdateRoutine().run('private', branch)
+            message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
         return {
             'statusCode': 200,
             'body': json.dumps(message)
