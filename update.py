@@ -34,6 +34,10 @@ def call_command(command):
 
 class UpdateRoutine:
     def run(self, audience, branch, deploy=True):
+        try:
+            os.environ[f'{branch.upper()}_{audience.upper()}_BUCKET_NAME']
+        except KeyError:
+            return f'No build destination for {audience} {branch} site'
         with open('repositories.yml') as f:
             repositories_config = yaml.safe_load(f)
         site = Site()
