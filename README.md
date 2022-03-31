@@ -21,7 +21,12 @@ The public docs site will be available in your browser at `http://localhost:4000
 ## Adding or Removing Repositories
 
 Repositories can be added or removed from either the public or private site by
-updating `repositories.yml`.
+updating `repositories.yml`. You will also need to make sure the repositories
+have the necessary configuration files
+(see [Documentation Repository Configuration](#documentation-repository-configuration))
+and configure a webhook to trigger a build of the site
+(see [GitHub Webhooks](#github-webhooks)).
+
 
 ### Theme
 
