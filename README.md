@@ -37,22 +37,34 @@ individual GitHub repositories and thereby creates the site's central interface 
 access to documentation. This process is achieved through the use of layout
 variables in the documentation files' YAML front matter.
 
-### Deployment
+## Deployment
 
 This site is intended to be deployed as an AWS Lambda which pushes updates
 to an S3 bucket from where they can be served.
 
+### Environment Variables
+
 The following environment variables must be present in order for this deployment pattern to work effectively:
-- GH_TOKEN - a GitHub Personal Access Token which has the necessary permissions
+- `GH_TOKEN` - a GitHub Personal Access Token which has the necessary permissions
   to clone private repositories. Make sure this  has the scope org:read as well.
+- `GH_SECRET` - a secret key associated with the GitHub Webhook.
 - Environment variables for S3 buckets to which files will be uploaded. These
   should be formatted as {BRANCH}_{AUDIENCE}_BUCKET_NAME:
-  - DEVELOPMENT_PRIVATE_BUCKET_NAME
-  - BASE_PRIVATE_BUCKET_NAME -
-  - BASE_PUBLIC_BUCKET_NAME
-- REGION_NAME - the AWS region in which the S3 buckets are located.
-- ACCESS_KEY - an Access Key for an IAM user that has the necessary permissions to upload files to the bucket.
-- SECRET_KEY - the Secret Key for an IAM user with the necessary permissions to upload files to the bucket.
+  - `DEVELOPMENT_PRIVATE_BUCKET_NAME`
+  - `BASE_PRIVATE_BUCKET_NAME`
+  - `BASE_PUBLIC_BUCKET_NAME`
+- `REGION_NAME` - the AWS region in which the S3 buckets are located.
+- `ACCESS_KEY` - an Access Key for an IAM user that has the necessary permissions to upload files to the bucket.
+- `SECRET_KEY` - the Secret Key for an IAM user with the necessary permissions to upload files to the bucket.
+
+### GitHub Webhooks
+
+In order to trigger deployments, a webhook which listens for `push` events should
+be added to a GitHub repository. This webhook should point at the AWS API Gateway
+endpoint tied to the Lambda task.
+
+A Secret should be added in the webhook configuration, the value of which should
+match the `GH_TOKEN` environment variable from the preceding section.
 
 ## Documentation Repository Configuration
 

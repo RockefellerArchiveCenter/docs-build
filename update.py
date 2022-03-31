@@ -1,14 +1,29 @@
 #!/usr/bin/env python
 
+import hashlib
+import hmac
 import json
 import mimetypes
 import os
+import re
 import subprocess
 from datetime import datetime
 from shutil import copyfile, copytree, rmtree
+from urllib.parse import unquote
 
 import boto3
 import yaml
+
+
+def calculate_signature(github_signature, github_payload):
+    """Calculates hash of payload to ensure secret is valid"""
+    signature_bytes = bytes(github_signature, 'utf-8')
+    digest = hmac.new(
+        key=signature_bytes,
+        msg=github_payload,
+        digestmod=hashlib.sha256)
+    signature = digest.hexdigest()
+    return signature
 
 
 def copy_dir(src, target):
@@ -132,22 +147,34 @@ class Site:
 
 def main(event, context):
     if event:
-        audience = 'private' if event.get(
+        """Code in this branch is executed in an AWS Lambda context."""
+        incoming_signature = re.sub(
+            r'^sha256=', '', event['headers']['x-hub-signature-256'])
+        incoming_payload = unquote(re.sub(r'^payload=', '', event['body']))
+        calculated_signature = calculate_signature(
+            os.environ.get('GH_SECRET'), incoming_payload.encode('utf-8'))
+
+        if incoming_signature != calculated_signature:
+            return {
+                'statusCode': 403,
+                'body': json.dumps('Forbidden')}
+
+        payload_data = json.loads(event['body'])
+        audience = 'private' if payload_data.get(
             'repository', {}).get('private') else 'public'
-        branch = event.get('ref', '').replace('refs/heads/', '')
+        branch = payload_data.get('ref', '').replace('refs/heads/', '')
         if branch not in ['base', 'development']:
             return {
                 'statusCode': 200,
-                'body': json.dumps(f"Branch {branch} is not eligible to be built")
-            }
+                'body': json.dumps(f"Branch {branch} is not eligible to be built")}
+
         message = UpdateRoutine().run(audience, branch)
         if audience == 'public':
             UpdateRoutine().run('private', branch)
             message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
         return {
             'statusCode': 200,
-            'body': json.dumps(message)
-        }
+            'body': json.dumps(message)}
     else:
         return UpdateRoutine().run('public', 'base', False)
 
