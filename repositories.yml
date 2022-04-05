@@ -30,6 +30,7 @@ private:
   - RockefellerArchiveCenter/takedown-policy
   - RockefellerArchiveCenter/ux-templates
   - RockefellerArchiveCenter/ccd-education-campaign
+  - RockefellerArchiveCenter/aurora-docs
 public:
   - RockefellerArchiveCenter/docs-guide
   - RockefellerArchiveCenter/reading-room-manual
@@ -56,3 +57,4 @@ public:
   - RockefellerArchiveCenter/takedown-policy
   - RockefellerArchiveCenter/ux-templates
   - RockefellerArchiveCenter/ccd-education-campaign
+  - RockefellerArchiveCenter/aurora-docs
