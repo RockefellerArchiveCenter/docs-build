@@ -14,14 +14,19 @@ A Dockerfile for local development (`Dockerfile-local`) is included in this repo
     docker-compose build
     docker-compose up
 
-The public docs site will be available in your browser at `http://localhost:4000`.
+The public docs site (which includes all the repositories listed under the `public`
+key in `repositories.yml`) will be available in your browser at `http://localhost:4000`.
 
 ## Usage
 
 ## Adding or Removing Repositories
 
 Repositories can be added or removed from either the public or private site by
-updating `repositories.yml`. You will also need to make sure the repositories
+updating `repositories.yml`. Only the sites listed under the `public` or `private`
+key will be built for each site, so make sure to add publicly-available Repositories
+to both the `public` and `private` lists.
+
+You will also need to make sure the repositories
 have the necessary configuration files
 (see [Documentation Repository Configuration](#documentation-repository-configuration))
 and configure a webhook to trigger a build of the site
@@ -64,11 +69,11 @@ The following environment variables must be present in order for this deployment
 
 ### GitHub Webhooks
 
-In order to trigger deployments, a webhook which listens for `push` events should
+In order to trigger deployments, a [GitHub Webhook](https://docs.github.com/en/developers/webhooks-and-events/webhooks/about-webhooks) which listens for `push` events should
 be added to a GitHub repository. This webhook should point at the AWS API Gateway
 endpoint tied to the Lambda task.
 
-A Secret should be added in the webhook configuration, the value of which should
+A `Secret` should be added in the webhook configuration, the value of which should
 match the `GH_TOKEN` environment variable from the preceding section.
 
 ## Documentation Repository Configuration
