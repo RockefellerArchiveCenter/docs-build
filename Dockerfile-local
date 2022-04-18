@@ -1,0 +1,28 @@
+FROM python:3.9
+
+ENV RUBY_VERSION=2.6.6
+ENV CONTAINER_ROOT=/home/docs/docs-build/
+
+RUN apt-get -y update && apt-get -y install \
+  make gcc curl gpg \
+  apache2 \
+  git \
+  inotify-tools
+
+# Install RVM and use RVM to install desired version of Ruby
+RUN \curl -L https://get.rvm.io | bash
+RUN /bin/bash -l -c "rvm requirements"
+RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
+RUN /bin/bash -l -c "gem install bundler --no-document"
+RUN /bin/bash -l -c "gem install jekyll --no-document"
+
+ADD requirements.txt .
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+WORKDIR ${CONTAINER_ROOT}
+
+COPY apache/httpd.conf /etc/apache2/sites-enabled/000-default.conf
+
+ADD . .
+
+EXPOSE 4000
