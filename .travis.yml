@@ -10,3 +10,10 @@ before_install:
 install: true
 script:
   - docker-compose up
+deploy:
+  provider: script
+  script: bash scripts/docker_push.sh
+  on:
+    branch: base
+notifications:
+  email: false
