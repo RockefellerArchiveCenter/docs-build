@@ -145,7 +145,7 @@ class Site:
                     ExtraArgs={'ContentType': mtype if mtype else 'application/json'})
 
 
-def main(event, context):
+def main(event=None, context=None):
     if event:
         """Code in this branch is executed in an AWS Lambda context."""
         incoming_signature = re.sub(
@@ -180,4 +180,4 @@ def main(event, context):
 
 
 if __name__ == '__main__':
-    main(None, None)
+    main()
