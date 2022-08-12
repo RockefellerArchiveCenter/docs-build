@@ -10,7 +10,6 @@ before_install:
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 install: true
 script:
-  - docker build -t ${DOCKER_REPO} .
   - docker-compose up
 deploy:
   provider: script
