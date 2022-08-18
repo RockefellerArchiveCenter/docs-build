@@ -3,7 +3,7 @@ FROM public.ecr.aws/lambda/python:3.9
 ENV RUBY_VERSION=2.6.6
 ENV GH_CLI_VERSION=2.6.0
 
-RUN yum update && yum install -y \
+RUN yum update -y && yum install -y \
   make gcc curl gpg which tar procps wget \
   git
 
