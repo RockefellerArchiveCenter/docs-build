@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-local
-    image: docs-build
     entrypoint: /bin/bash -l -c /home/docs/docs-build/entrypoint.sh
     volumes:
       - .:/home/docs/docs-build/
