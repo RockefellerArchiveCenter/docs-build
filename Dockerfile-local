@@ -14,7 +14,7 @@ RUN \curl -L https://get.rvm.io | bash
 RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
 RUN /bin/bash -l -c "gem install bundler --no-document"
-RUN /bin/bash -l -c "gem install jekyll --no-document"
+RUN /bin/bash -l -c "gem install jekyll -v 4.2.2 --no-document"
 
 ADD requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
