@@ -47,6 +47,15 @@ def call_command(command):
         print(f'Error calling `{" ".join(command)}`: {e}')
 
 
+def send_trigger_response(audience, branch):
+    message = f'Update process for {audience} {branch} site started at {datetime.now()}'
+    if audience == 'public':
+            message = f'Update process for public and private {branch} sites started at {datetime.now()}'
+    return {
+        'statusCode': 200,
+        'body': json.dumps(message)}
+
+
 class UpdateRoutine:
     def run(self, audience, branch, deploy=True):
         if deploy:
@@ -167,6 +176,8 @@ def main(event=None, context=None):
             return {
                 'statusCode': 200,
                 'body': json.dumps(f"Branch {branch} is not eligible to be built")}
+
+        send_trigger_response(audience, branch)
 
         message = UpdateRoutine().run(audience, branch)
         if audience == 'public':
