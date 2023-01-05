@@ -1,6 +1,6 @@
 FROM python:3.9
 
-ENV RUBY_VERSION=2.6.6
+ENV RUBY_VERSION=3.1.2
 ENV CONTAINER_ROOT=/home/docs/docs-build/
 
 RUN apt-get -y update && apt-get -y install \
@@ -14,7 +14,7 @@ RUN \curl -L https://get.rvm.io | bash
 RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
 RUN /bin/bash -l -c "gem install bundler --no-document"
-RUN /bin/bash -l -c "gem install jekyll -v 4.2.2 --no-document"
+RUN /bin/bash -l -c "gem install jekyll --no-document"
 
 ADD requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt

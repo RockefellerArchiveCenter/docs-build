@@ -1,7 +1,6 @@
 FROM public.ecr.aws/lambda/python:3.9
 
-ENV RUBY_VERSION=2.6.6
-ENV GH_CLI_VERSION=2.6.0
+ENV RUBY_VERSION=3.1.2
 
 RUN yum update -y && yum install -y \
   make gcc curl gpg which tar procps wget \
@@ -12,7 +11,7 @@ RUN \curl -L https://get.rvm.io | bash
 RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
 RUN /bin/bash -l -c "gem install bundler --no-document"
-RUN /bin/bash -l -c "gem install jekyll -v 4.2.2 --no-document"
+RUN /bin/bash -l -c "gem install jekyll --no-document"
 
 ADD requirements.txt ${LAMBDA_TASK_ROOT}
 RUN pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
