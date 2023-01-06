@@ -14,6 +14,8 @@ from urllib.parse import unquote
 import boto3
 import yaml
 
+RUBY_VERSION = "ruby-3.1.2"
+
 
 def calculate_signature(github_signature, github_payload):
     """Calculates hash of payload to ensure secret is valid"""
@@ -112,7 +114,7 @@ class Site:
                 os.path.join(self.staging_dir, self.current_repo))
 
     def build(self):
-        call_command([f'/usr/local/rvm/gems/{os.environ.get("RUBY_VERSION")}/wrappers/jekyll', 'build',
+        call_command([f'/usr/local/rvm/gems/{RUBY_VERSION}/wrappers/jekyll', 'build',
                       '--source', self.staging_dir, '--destination', self.build_dir])
 
     def update_data_file(self, data_file):
