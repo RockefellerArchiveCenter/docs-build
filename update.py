@@ -112,7 +112,7 @@ class Site:
                 os.path.join(self.staging_dir, self.current_repo))
 
     def build(self):
-        call_command(['/usr/local/rvm/gems/ruby-2.6.6/wrappers/jekyll', 'build',
+        call_command([f'/usr/local/rvm/gems/{os.environ.get("RUBY_VERSION")}/wrappers/jekyll', 'build',
                       '--source', self.staging_dir, '--destination', self.build_dir])
 
     def update_data_file(self, data_file):

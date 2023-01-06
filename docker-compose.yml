@@ -12,4 +12,4 @@ services:
       - 4000:4000
       - 4001:4001
     environment:
-      - TRAVIS_CI=${TRAVIS_CI}
+      - TRAVIS_CI=${TRAVIS_CI:-false}
