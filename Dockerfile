@@ -4,7 +4,7 @@ ENV RUBY_VERSION=3.1.2
 
 RUN yum update -y && yum install -y \
   make gcc curl gpg which tar procps wget \
-  git
+  git libffi-dev
 
 # Install RVM and use RVM to install desired version of Ruby
 RUN \curl -L https://get.rvm.io | bash
