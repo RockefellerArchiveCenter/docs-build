@@ -13,7 +13,6 @@ install: true
 script:
   - docker-compose up
 before_deploy:
-  - docker build -t ${DOCKER_REPO} .
   - bash scripts/docker_push.sh
 deploy:
   provider: script
