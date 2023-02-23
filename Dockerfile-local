@@ -4,7 +4,7 @@ ENV RUBY_VERSION=3.1.2
 ENV CONTAINER_ROOT=/home/docs/docs-build/
 
 RUN apt-get -y update && apt-get -y install \
-  make gcc curl gpg \
+  make gcc curl gpg libffi-dev \
   apache2 \
   git \
   inotify-tools

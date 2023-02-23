@@ -4,18 +4,19 @@ services:
 env:
   global:
     - TRAVIS_CI: "true"
+    - TIMESTAMP: $(date '+%Y%m%d%H%M%S')
 before_install:
   - cp theme/_config.yml.example theme/config.yml
   - pip install awscli
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 install: true
 script:
-  - docker-compose up
-before_deploy:
   - docker build -t ${DOCKER_REPO} .
+before_deploy:
+  - bash scripts/docker_push.sh
 deploy:
   provider: script
-  script: bash scripts/docker_push.sh
+  script: bash scripts/lambda_deploy.sh
   on:
     branch: base
 notifications:
