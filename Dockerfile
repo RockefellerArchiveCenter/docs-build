@@ -11,8 +11,7 @@ RUN \curl -L https://get.rvm.io | bash
 RUN /bin/bash -l -c "rvm requirements"
 RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
 RUN /bin/bash -l -c "gem install bundler --no-document"
-RUN /bin/bash -l -c "gem install ffi"
-RUN /bin/bash -l -c "gem install jekyll --no-document"
+# RUN /bin/bash -l -c "gem install jekyll --no-document"
 
 ADD requirements.txt ${LAMBDA_TASK_ROOT}
 RUN pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
