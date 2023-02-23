@@ -4,8 +4,9 @@ services:
 env:
   global:
     - TRAVIS_CI: "true"
-    - TIMESTAMP: date '+%Y%m%d%H%M%S'
+    - TIMESTAMP: $(date '+%Y%m%d%H%M%S')
 before_install:
+  - echo ${TIMESTAMP}
   - cp theme/_config.yml.example theme/config.yml
   - pip install awscli
   - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
