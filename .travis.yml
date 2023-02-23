@@ -8,7 +8,6 @@ env:
 before_install:
   - cp theme/_config.yml.example theme/config.yml
   - pip install awscli
-  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 install: true
 script:
   - docker-compose up
