@@ -13,5 +13,4 @@ $(aws ecr get-login --no-include-email)
 
 aws lambda update-function-code \
     --function-name  ${LAMBDA_FUNCTION_NAME} \
-    --image-uri ${TARGET_IMAGE_VERSIONED} \
-    --architectures arm64
+    --image-uri ${TARGET_IMAGE_VERSIONED}
