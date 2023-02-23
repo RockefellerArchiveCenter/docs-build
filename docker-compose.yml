@@ -2,7 +2,6 @@ version: '3'
 
 services:
   docs-build:
-    image: ${DOCKER_REPO:-docs-build}
     build:
       context: .
       dockerfile: Dockerfile-local
