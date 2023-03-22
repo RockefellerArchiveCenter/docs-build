@@ -32,6 +32,7 @@ private:
   - RockefellerArchiveCenter/ccd-education-campaign
   - RockefellerArchiveCenter/aurora-docs
   - RockefellerArchiveCenter/argo-docs
+  - RockefellerArchiveCenter/digital-transfer-guide
 public:
   - RockefellerArchiveCenter/docs-guide
   - RockefellerArchiveCenter/reading-room-manual
@@ -60,3 +61,4 @@ public:
   - RockefellerArchiveCenter/ccd-education-campaign
   - RockefellerArchiveCenter/aurora-docs
   - RockefellerArchiveCenter/argo-docs
+  - RockefellerArchiveCenter/digital-transfer-guide
