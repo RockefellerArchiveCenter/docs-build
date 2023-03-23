@@ -159,12 +159,8 @@ class Site:
 def main(event=None, context=None):
     if event:
         """Code in this branch is executed in an AWS Lambda context."""
-        try:
-            incoming_signature = re.sub(
-            r'^sha256=', '', event['headers'].get('x-hub-signature-256', event['headers']['X-Hub-Signature-256']))
-        except KeyError as e:
-            print(event['headers'])
-            raise e
+        incoming_signature = re.sub(
+            r'^sha256=', '', event['headers']['x-hub-signature-256'])
         incoming_payload = unquote(re.sub(r'^payload=', '', event['body']))
         calculated_signature = calculate_signature(
             os.environ.get('GH_SECRET'), incoming_payload.encode('utf-8'))
