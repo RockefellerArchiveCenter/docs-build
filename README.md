@@ -27,10 +27,18 @@ key will be built for each site, so make sure to add publicly-available Reposito
 to both the `public` and `private` lists.
 
 You will also need to make sure the repositories
-have the necessary configuration files
-(see [Documentation Repository Configuration](#documentation-repository-configuration))
-and configure a webhook to trigger a build of the site
-(see [GitHub Webhooks](#github-webhooks)).
+have some necessary configuration files:
+- Jekyll configuration files (see [Documentation Repository Configuration](#documentation-repository-configuration))
+- GitHub Actions file to publish update notifications to AWS Simple
+Notification Service (SNS) (see [example file](https://github.com/RockefellerArchiveCenter/digital-transfer-guide/blob/base/.github/workflows/publish_sns.yml))
+
+Last, you will need to ensure that the repository has access to the following
+Organization Secrets in Github:
+- AWS_DOCS_ACCESS_KEY_ID
+- AWS_DOCS_ACCOUNT_ID
+- AWS_DOCS_REGION
+- AWS_DOCS_SECRET_ACCESS_KEY
+- AWS_DOCS_SNS_TOPIC
 
 
 ### Theme
