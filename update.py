@@ -141,6 +141,8 @@ def main(event=None, context=None):
     if event:
         """Code in this branch is executed in an AWS Lambda context."""
         message_data = json.loads(event['Records'][0]['Sns']['Message'])
+        logging.info(type(message_data))
+        logging.info(message_data)
         audience = 'private' if message_data.get(
             'repository', {}).get('private') else 'public'
         branch = message_data.get('ref_name', '')
