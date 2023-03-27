@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 
-import hashlib
-import hmac
 import json
+import logging
 import mimetypes
 import os
-import re
 import subprocess
 from datetime import datetime
 from shutil import copyfile, copytree, rmtree
@@ -16,16 +14,8 @@ import yaml
 
 RUBY_VERSION = "ruby-3.1.2"
 
-
-def calculate_signature(github_signature, github_payload):
-    """Calculates hash of payload to ensure secret is valid"""
-    signature_bytes = bytes(github_signature, 'utf-8')
-    digest = hmac.new(
-        key=signature_bytes,
-        msg=github_payload,
-        digestmod=hashlib.sha256)
-    signature = digest.hexdigest()
-    return signature
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 
 def copy_dir(src, target):
@@ -47,15 +37,6 @@ def call_command(command):
             print(line)
     except Exception as e:
         print(f'Error calling `{" ".join(command)}`: {e}')
-
-
-def send_trigger_response(audience, branch):
-    message = f'Update process for {audience} {branch} site started at {datetime.now()}'
-    if audience == 'public':
-            message = f'Update process for public and private {branch} sites started at {datetime.now()}'
-    return {
-        'statusCode': 200,
-        'body': json.dumps(message)}
 
 
 class UpdateRoutine:
@@ -159,27 +140,17 @@ class Site:
 def main(event=None, context=None):
     if event:
         """Code in this branch is executed in an AWS Lambda context."""
-        incoming_signature = re.sub(
-            r'^sha256=', '', event['headers']['x-hub-signature-256'])
-        incoming_payload = unquote(re.sub(r'^payload=', '', event['body']))
-        calculated_signature = calculate_signature(
-            os.environ.get('GH_SECRET'), incoming_payload.encode('utf-8'))
 
-        if incoming_signature != calculated_signature:
-            return {
-                'statusCode': 403,
-                'body': json.dumps('Forbidden')}
+        logger.info(event['Records'][0]['Sns']['Message'])
+        message_data = json.loads(event['Records'][0]['Sns']['Message'])
 
-        payload_data = json.loads(event['body'])
-        audience = 'private' if payload_data.get(
+        audience = 'private' if message_data.get(
             'repository', {}).get('private') else 'public'
-        branch = payload_data.get('ref', '').replace('refs/heads/', '')
+        branch = message_data.get('ref', '').replace('refs/heads/', '')
         if branch not in ['base', 'development']:
             return {
                 'statusCode': 200,
                 'body': json.dumps(f"Branch {branch} is not eligible to be built")}
-
-        send_trigger_response(audience, branch)
 
         message = UpdateRoutine().run(audience, branch)
         if audience == 'public':
