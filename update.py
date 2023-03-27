@@ -140,12 +140,10 @@ class Site:
 def main(event=None, context=None):
     if event:
         """Code in this branch is executed in an AWS Lambda context."""
-        message_data = json.loads(event['Records'][0]['Sns']['Message'])
-        logging.info(type(message_data))
-        logging.info(message_data)
+        message_data = json.loads(event['Records'][0]['Sns']['Message']['event'])
         audience = 'private' if message_data.get(
             'repository', {}).get('private') else 'public'
-        branch = message_data.get('ref_name', '')
+        branch = message_data.get('ref', '').replace('refs/heads/', '')
         if branch not in ['base', 'development']:
             return {
                 'statusCode': 200,
