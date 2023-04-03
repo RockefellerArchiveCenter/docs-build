@@ -141,6 +141,7 @@ def main(event=None, context=None):
     if event:
         """Code in this branch is executed in an AWS Lambda context."""
         message_data = json.loads(event['Records'][0]['Sns']['Message'])
+        logging.info(message_data)
         audience = 'private' if message_data['event'].get(
             'repository', {}).get('private') else 'public'
         branch = message_data['event'].get('ref', '').replace('refs/heads/', '')
@@ -150,9 +151,9 @@ def main(event=None, context=None):
                 'body': json.dumps(f"Branch {branch} is not eligible to be built")}
 
         message = UpdateRoutine().run(audience, branch)
-        if audience == 'public':
-            UpdateRoutine().run('private', branch)
-            message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
+        # if audience == 'public':
+        #     UpdateRoutine().run('private', branch)
+        #     message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
         return {
             'statusCode': 200,
             'body': json.dumps(message)}
