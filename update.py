@@ -156,8 +156,6 @@ def main(event=None, context=None):
         return {
             'statusCode': 200,
             'body': json.dumps(message)}
-    else:
-        return UpdateRoutine().run('public', 'base', False)
 
 
 if __name__ == '__main__':
