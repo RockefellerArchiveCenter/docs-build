@@ -30,7 +30,7 @@ You will also need to make sure the repositories
 have some necessary configuration files:
 - Jekyll configuration files (see [Documentation Repository Configuration](#documentation-repository-configuration))
 - GitHub Actions file to publish update notifications to AWS Simple
-Notification Service (SNS) (see [example file](https://github.com/RockefellerArchiveCenter/digital-transfer-guide/blob/base/.github/workflows/publish_sns.yml))
+Notification Service (SNS) (see [GitHub Action Configuration](#github-action-configuration))
 
 Last, you will need to ensure that the repository has access to the following
 Organization Secrets in Github:
@@ -75,15 +75,6 @@ The following environment variables must be present in order for this deployment
 - `ACCESS_KEY` - an Access Key for an IAM user that has the necessary permissions to upload files to the bucket.
 - `SECRET_KEY` - the Secret Key for an IAM user with the necessary permissions to upload files to the bucket.
 
-### GitHub Webhooks
-
-In order to trigger deployments, a [GitHub Webhook](https://docs.github.com/en/developers/webhooks-and-events/webhooks/about-webhooks) which listens for `push` events should
-be added to a GitHub repository. This webhook should point at the AWS API Gateway
-endpoint tied to the Lambda task.
-
-A `Secret` should be added in the webhook configuration, the value of which should
-match the `GH_TOKEN` environment variable from the preceding section.
-
 ## Documentation Repository Configuration
 
 In order to build the full documentation site, the following variables must be
@@ -116,6 +107,39 @@ in each list is the name, and the second is the filename of the page (without th
 extension). These values are used when building tables of contents.
 
 Other variables can be included in this config file if desired.
+
+## GitHub Action Configuration
+In order to deliver update notifications to Amazon SNS (which will trigger a build 
+of the site), a GitHub Actions file named `.github/workflows/publish_sns.yml` needs
+to be created and populated with the following content:
+
+```
+name: Publish to SNS
+on:
+  push:
+    branches:
+      - base
+      - development
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Publish SNS Notification
+      uses: nothingalike/sns-publish-topic@v1.6
+      with:
+        MESSAGE: ${{ toJSON(github) }}
+        TOPIC_ARN: "arn:aws:sns:${{ secrets.AWS_DOCS_REGION }}:${{ secrets.AWS_DOCS_ACCOUNT_ID }}:${{ secrets.AWS_DOCS_SNS_TOPIC }}"
+      env:
+        AWS_REGION: ${{ secrets.AWS_DOCS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_DOCS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_DOCS_SECRET_ACCESS_KEY }}
+```
+
+To test this configuration, you can trigger a workflow run from the GitHub interface.
 
 ## Contributing
 
