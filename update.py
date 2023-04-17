@@ -5,6 +5,7 @@ import logging
 import mimetypes
 import os
 import subprocess
+from base64 import b64decode
 from datetime import datetime
 from shutil import copyfile, copytree, rmtree
 from urllib.parse import unquote
@@ -39,11 +40,19 @@ def call_command(command):
         print(f'Error calling `{" ".join(command)}`: {e}')
 
 
+def decrypt_env_variable(key):
+    ENCRYPTED = os.environ[key]
+    return boto3.client('kms').decrypt(
+        CiphertextBlob=b64decode(ENCRYPTED),
+        EncryptionContext={'LambdaFunctionName': os.environ['AWS_LAMBDA_FUNCTION_NAME']}
+    )['Plaintext'].decode('utf-8')
+
+
 class UpdateRoutine:
     def run(self, audience, branch, deploy=True):
         if deploy:
             try:
-                os.environ[f'{branch.upper()}_{audience.upper()}_BUCKET_NAME']
+                decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
             except KeyError:
                 return f'No build destination for {audience} {branch} site'
 
@@ -74,7 +83,7 @@ class Site:
             repo_path = os.path.join(self.repositories_dir, self.current_repo)
             repo_url = (f'https://github.com/{repo}.git'
                         if audience == 'public' else
-                        f'https://{os.environ.get("GH_TOKEN")}@github.com/{repo}.git')
+                        f'https://{decrypt_env_variable("GH_TOKEN")}@github.com/{repo}.git')
             if os.path.isdir(repo_path):
                 rmtree(repo_path)
             call_command([
@@ -119,15 +128,15 @@ class Site:
     def upload(self, audience, branch):
         s3 = boto3.resource(
             service_name='s3',
-            region_name=os.environ.get('REGION_NAME'),
-            aws_access_key_id=os.environ.get('ACCESS_KEY'),
-            aws_secret_access_key=os.environ.get('SECRET_KEY'))
+            region_name=decrypt_env_variable('REGION_NAME'),
+            aws_access_key_id=decrypt_env_variable('ACCESS_KEY'),
+            aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
         for root, dirs, files in os.walk(self.build_dir):
             for f in files:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.meta.client.upload_file(
                     os.path.join(root, f),
-                    os.environ.get(
+                    decrypt_env_variable(
                         f'{branch.upper()}_{audience.upper()}_BUCKET_NAME'),
                     os.path.join(
                         root.replace(
