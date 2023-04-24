@@ -72,6 +72,7 @@ class Site:
         copy_dir('theme', os.path.join(self.staging_dir))
 
     def stage(self, repositories, branch, audience):
+        logging.info(f'Staging {audience} site for {branch} branch')
         os.makedirs(os.path.join(self.staging_dir, '_data'))
         for repo in repositories:
             self.current_repo = repo.split("/")[-1]
@@ -99,6 +100,7 @@ class Site:
                 os.path.join(self.staging_dir, self.current_repo))
 
     def build(self):
+        logging.info(f'Building site.')
         call_command([f'/usr/local/rvm/gems/{RUBY_VERSION}/wrappers/jekyll', 'build',
                       '--source', self.staging_dir, '--destination', self.build_dir])
 
@@ -130,7 +132,6 @@ class Site:
             aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
         for root, dirs, files in os.walk(self.build_dir):
             for f in files:
-                logging.info(f'Uploading {os.path.join(root, f)}')
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.upload_file(
                     os.path.join(root, f),
