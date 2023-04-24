@@ -108,6 +108,7 @@ class Site:
                       '--source', self.staging_dir, '--destination', self.build_dir])
 
     def update_data_file(self, data_file):
+        logging.info(f'Updating data file {data_file}.')
         updated_date = self.get_updated_date()
         with open(data_file) as f:
             yaml_config = yaml.safe_load(f)
