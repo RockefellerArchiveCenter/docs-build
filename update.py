@@ -58,7 +58,7 @@ class UpdateRoutine:
 
         with open('repositories.yml') as f:
             repositories_config = yaml.safe_load(f)
-        site = Site()
+        site = Site(audience)
         site.update_theme()
         site.stage(repositories_config[audience], branch, audience)
         site.build()
@@ -68,9 +68,9 @@ class UpdateRoutine:
 
 
 class Site:
-    def __init__(self):
-        self.staging_dir = '/tmp/staging/'
-        self.build_dir = '/tmp/build/'
+    def __init__(self, audience):
+        self.staging_dir = f'/tmp/staging/{audience}/'
+        self.build_dir = f'/tmp/build/{audience}/'
         self.repositories_dir = '/tmp/repositories/'
 
     def update_theme(self):
@@ -108,7 +108,6 @@ class Site:
                       '--source', self.staging_dir, '--destination', self.build_dir])
 
     def update_data_file(self, data_file):
-        logging.info(f'Updating data file {data_file}.')
         updated_date = self.get_updated_date()
         with open(data_file) as f:
             yaml_config = yaml.safe_load(f)
@@ -129,15 +128,15 @@ class Site:
     def upload(self, audience, branch):
         bucket_name = decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
         logging.info(f'Uploading site to {bucket_name}.')
-        s3 = boto3.resource(
-            service_name='s3',
+        s3 = boto3.client(
+            's3',
             region_name=decrypt_env_variable('REGION_NAME'),
             aws_access_key_id=decrypt_env_variable('ACCESS_KEY'),
             aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
         for root, dirs, files in os.walk(self.build_dir):
             for f in files:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
-                s3.meta.client.upload_file(
+                s3.upload_file(
                     os.path.join(root, f),
                     bucket_name,
                     os.path.join(
