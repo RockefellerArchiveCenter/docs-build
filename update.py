@@ -127,7 +127,7 @@ class Site:
 
     def upload(self, audience, branch):
         bucket_name = decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
-        logging.info(f'Uploading site to {bucket_name}.')
+        logging.info(f'Uploading site in {self.build_dir} to {bucket_name}.')
         s3 = boto3.client(
             's3',
             region_name=decrypt_env_variable('REGION_NAME'),
@@ -135,6 +135,7 @@ class Site:
             aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
         for root, dirs, files in os.walk(self.build_dir):
             for f in files:
+                logging.info(f'Uploading {os.path.join(root, f)}')
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.upload_file(
                     os.path.join(root, f),
