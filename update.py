@@ -126,6 +126,8 @@ class Site:
         return out.communicate()[0]
 
     def upload(self, audience, branch):
+        bucket_name = decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
+        logging.info(f'Uploading site to {bucket_name}.')
         s3 = boto3.resource(
             service_name='s3',
             region_name=decrypt_env_variable('REGION_NAME'),
@@ -136,8 +138,7 @@ class Site:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.meta.client.upload_file(
                     os.path.join(root, f),
-                    decrypt_env_variable(
-                        f'{branch.upper()}_{audience.upper()}_BUCKET_NAME'),
+                    bucket_name,
                     os.path.join(
                         root.replace(
                             self.build_dir,
@@ -150,7 +151,6 @@ def main(event=None, context=None):
     if event:
         """Code in this branch is executed in an AWS Lambda context."""
         message_data = json.loads(event['Records'][0]['Sns']['Message'])
-        logging.info(message_data)
         audience = 'private' if message_data['event'].get(
             'repository', {}).get('private') else 'public'
         branch = message_data['event'].get('ref', '').replace('refs/heads/', '')
@@ -163,6 +163,7 @@ def main(event=None, context=None):
         if audience == 'public':
             UpdateRoutine().run('private', branch)
             message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
+        logging.info(message)
         return {
             'statusCode': 200,
             'body': json.dumps(message)}
