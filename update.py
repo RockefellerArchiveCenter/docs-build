@@ -21,7 +21,7 @@ logger.setLevel(logging.INFO)
 
 def copy_dir(src, target):
     if os.path.isdir(target):
-        rmtree(target)
+        rmtree(target, ignore_errors=True)
     copytree(src, target)
 
 
