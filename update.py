@@ -27,15 +27,10 @@ def copy_dir(src, target):
 
 def call_command(command):
     try:
-        c = subprocess.Popen(
+        subprocess.run(
             command,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
-        while True:
-            line = c.stdout.readline().rstrip()
-            if not line:
-                break
-            print(line)
     except Exception as e:
         print(f'Error calling `{" ".join(command)}`: {e}')
 
