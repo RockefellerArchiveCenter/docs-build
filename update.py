@@ -117,7 +117,7 @@ class Site:
 
     def get_updated_date(self):
         out = subprocess.Popen(
-            [f'git --git-dir={self.current_repo_dir}/.git show --format=%ci'],
+            [f'git --git-dir={self.current_repo_dir}/.git show --quiet --pretty=format:%ci'],
             stdout=subprocess.PIPE,
             shell=True)
         return out.communicate()[0]
