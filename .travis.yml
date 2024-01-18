@@ -5,6 +5,7 @@ env:
   global:
     - TRAVIS_CI: "true"
     - TIMESTAMP: $(date '+%Y%m%d%H%M%S')
+    - APPLICATION_NAME: "docs-build"
 before_install:
   - cp theme/_config.yml.example theme/config.yml
   - pip install awscli
@@ -14,7 +15,7 @@ script:
   - docker build -t ${DOCKER_REPO} .
 before_deploy:
   - if [ ! -d deploy_scripts ]; then git clone https://github.com/RockefellerArchiveCenter/deploy_scripts.git; fi
-  - bash deploy_scripts/containers/push_image_to_ecr.sh
+  - bash deploy_scripts/containers/push_image_to_ecr.sh $APPLICATION_NAME
 deploy:
   provider: script
   script: bash deploy_scripts/containers/deploy_image_lambda.sh
