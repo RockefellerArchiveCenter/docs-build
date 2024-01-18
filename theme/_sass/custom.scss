@@ -20,6 +20,11 @@ a {
   }
 }
 
+// Override Bootstrap styles
+h3, .h3 {
+  font-size: 1.5rem;
+}
+
 .footer-logo {
     float: left;
     height: 5em;
