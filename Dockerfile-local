@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.11
 
 ENV RUBY_VERSION=3.1.2
 ENV CONTAINER_ROOT=/home/docs/docs-build/
