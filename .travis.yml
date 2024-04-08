@@ -1,4 +1,10 @@
-language: generic
+dist: focal
+language: python
+python: "3.11"
+cache:
+  directories:
+    - $HOME/.cache/pip
+    - $HOME/.cache/pre-commit
 services:
   - docker
 env:
