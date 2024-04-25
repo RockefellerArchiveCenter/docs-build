@@ -44,7 +44,7 @@ def decrypt_env_variable(key):
 
 
 class UpdateRoutine:
-    def run(self, audience, branch, deploy=False):
+    def run(self, audience, branch, deploy=True):
         if deploy:
             try:
                 decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
