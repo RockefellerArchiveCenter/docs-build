@@ -150,7 +150,7 @@ def main(event=None, context=None):
         """Code in this branch is executed in an AWS Lambda context."""
         message_data = json.loads(event['Records'][0]['Sns']['Message'])
         audience = 'private' if message_data['event'].get(
-            'repository', {}).get('private') else 'public'
+            'repository_visibility') in ['private', 'internal'] else 'public'
         branch = message_data['event'].get('ref', '').replace('refs/heads/', '')
         if branch not in ['base', 'development']:
             return {
