@@ -44,12 +44,12 @@ def decrypt_env_variable(key):
 
 
 class UpdateRoutine:
-    def run(self, audience, branch, deploy=True):
+    def run(self, audience, branch, deploy=False):
         if deploy:
             try:
                 decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
             except KeyError:
-                return f'No build destination for {audience} {branch} site'
+                raise Exception(f'No build destination for {audience} {branch} site')
 
         with open('repositories.yml') as f:
             repositories_config = yaml.safe_load(f)
@@ -75,6 +75,7 @@ class Site:
         logging.info(f'Staging {audience} site for {branch} branch')
         os.makedirs(os.path.join(self.staging_dir, '_data'))
         for repo in repositories:
+            logging.info(repo)
             self.current_repo = repo.split("/")[-1]
             repo_path = os.path.join(self.repositories_dir, self.current_repo)
             repo_url = (f'https://github.com/{repo}.git'
@@ -146,6 +147,7 @@ class Site:
 
 def main(event=None, context=None):
     if event:
+        logging.info(event)
         """Code in this branch is executed in an AWS Lambda context."""
         message_data = json.loads(event['Records'][0]['Sns']['Message'])
         audience = 'private' if message_data['event'].get(
@@ -156,14 +158,20 @@ def main(event=None, context=None):
                 'statusCode': 200,
                 'body': json.dumps(f"Branch {branch} is not eligible to be built")}
 
-        message = UpdateRoutine().run(audience, branch)
-        if audience == 'public':
-            UpdateRoutine().run('private', branch)
-            message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
-        logging.info(message)
-        return {
-            'statusCode': 200,
-            'body': json.dumps(message)}
+        try:
+            message = UpdateRoutine().run(audience, branch)
+            if audience == 'public':
+                UpdateRoutine().run('private', branch)
+                message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
+            
+            return {
+                'statusCode': 200,
+                'body': json.dumps(message)}
+        except Exception as e:
+            return {
+                'statusCode': 500,
+                'body': str(e)
+            }
 
 
 if __name__ == '__main__':
