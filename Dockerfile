@@ -1,6 +1,6 @@
 FROM public.ecr.aws/lambda/python:3.11
 
-ENV RUBY_VERSION=3.1.2
+ENV RUBY_VERSION=3.2.4
 
 RUN yum update -y && yum install -y \
   make gcc curl gpg which tar procps wget \

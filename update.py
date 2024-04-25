@@ -13,7 +13,7 @@ from urllib.parse import unquote
 import boto3
 import yaml
 
-RUBY_VERSION = "ruby-3.1.2"
+RUBY_VERSION = "ruby-3.2.4"
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -29,6 +29,7 @@ def call_command(command):
     try:
         subprocess.run(
             command,
+            check=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
     except Exception as e:
@@ -131,8 +132,6 @@ class Site:
             region_name=decrypt_env_variable('REGION_NAME'),
             aws_access_key_id=decrypt_env_variable('ACCESS_KEY'),
             aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
-        logging.info(os.listdir(self.build_dir))
-        logging.info(os.listdir(self.staging_dir))
         for root, dirs, files in os.walk(self.build_dir):
             for f in files:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
