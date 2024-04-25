@@ -168,6 +168,7 @@ def main(event=None, context=None):
                 'statusCode': 200,
                 'body': json.dumps(message)}
         except Exception as e:
+            logging.error(e)
             return {
                 'statusCode': 500,
                 'body': str(e)
