@@ -131,6 +131,7 @@ class Site:
             aws_access_key_id=decrypt_env_variable('ACCESS_KEY'),
             aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
         for root, dirs, files in os.walk(self.build_dir):
+            logging.info(files)
             for f in files:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.upload_file(
