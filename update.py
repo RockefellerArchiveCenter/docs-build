@@ -32,7 +32,8 @@ def call_command(command):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT)
     except Exception as e:
-        print(f'Error calling `{" ".join(command)}`: {e}')
+        logging.error(f'Error calling `{" ".join(command)}`: {e}')
+        raise Exception(f'Error calling `{" ".join(command)}`: {e}')
 
 
 def decrypt_env_variable(key):
@@ -130,8 +131,9 @@ class Site:
             region_name=decrypt_env_variable('REGION_NAME'),
             aws_access_key_id=decrypt_env_variable('ACCESS_KEY'),
             aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
+        logging.info(os.listdir(self.build_dir))
+        logging.info(os.listdir(self.staging_dir))
         for root, dirs, files in os.walk(self.build_dir):
-            logging.info(files)
             for f in files:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.upload_file(
