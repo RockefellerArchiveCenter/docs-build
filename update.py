@@ -75,7 +75,6 @@ class Site:
         logging.info(f'Staging {audience} site for {branch} branch')
         os.makedirs(os.path.join(self.staging_dir, '_data'))
         for repo in repositories:
-            logging.info(repo)
             self.current_repo = repo.split("/")[-1]
             repo_path = os.path.join(self.repositories_dir, self.current_repo)
             repo_url = (f'https://github.com/{repo}.git'
