@@ -131,6 +131,7 @@ class Site:
             aws_access_key_id=decrypt_env_variable('ACCESS_KEY'),
             aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
         for root, dirs, files in os.walk(self.build_dir):
+            logging.info(files)
             for f in files:
                 mtype, _ = mimetypes.guess_type(os.path.join(root, f))
                 s3.upload_file(
@@ -150,7 +151,7 @@ def main(event=None, context=None):
         """Code in this branch is executed in an AWS Lambda context."""
         message_data = json.loads(event['Records'][0]['Sns']['Message'])
         audience = 'private' if message_data['event'].get(
-            'repository', {}).get('private') else 'public'
+            'repository_visibility') in ['private', 'internal'] else 'public'
         branch = message_data['event'].get('ref', '').replace('refs/heads/', '')
         if branch not in ['base', 'development']:
             return {
