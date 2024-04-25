@@ -1,6 +1,6 @@
 FROM python:3.11
 
-ENV RUBY_VERSION=3.1.2
+ENV RUBY_VERSION=3.2.4
 ENV CONTAINER_ROOT=/home/docs/docs-build/
 
 RUN apt-get -y update && apt-get -y install \
@@ -26,3 +26,5 @@ COPY apache/httpd.conf /etc/apache2/sites-enabled/000-default.conf
 ADD . .
 
 EXPOSE 4000
+
+CMD ["./entrypoint.sh"]
