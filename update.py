@@ -47,21 +47,24 @@ def decrypt_env_variable(key):
 
 class UpdateRoutine:
     def run(self, audience, branch, deploy=True):
-        if deploy:
-            try:
-                decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
-            except KeyError:
-                raise Exception(f'No build destination for {audience} {branch} site')
+        if branch == 'development' and audience == 'public':
+            return f"Skipping build for {audience} {branch} site."
+        else:
+            if deploy:
+                try:
+                    decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
+                except KeyError:
+                    raise Exception(f'No build destination for {audience} {branch} site')
 
-        with open('repositories.yml') as f:
-            repositories_config = yaml.safe_load(f)
-        site = Site(audience)
-        site.update_theme()
-        site.stage(repositories_config[audience], branch, audience)
-        site.build()
-        if deploy:
-            site.upload(audience, branch)
-        return f'Update process for {audience} {branch} site completed at {datetime.now()}'
+            with open('repositories.yml') as f:
+                repositories_config = yaml.safe_load(f)
+            site = Site(audience)
+            site.update_theme()
+            site.stage(repositories_config[audience], branch, audience)
+            site.build()
+            if deploy:
+                site.upload(audience, branch)
+            return f'Update process for {audience} {branch} site completed at {datetime.now()}'
 
 
 class Site:
@@ -164,7 +167,7 @@ def main(event=None, context=None):
             if audience == 'public':
                 UpdateRoutine().run('private', branch)
                 message = f'Update process for public and private {branch} sites completed at {datetime.now()}'
-            
+
             return {
                 'statusCode': 200,
                 'body': json.dumps(message)}
