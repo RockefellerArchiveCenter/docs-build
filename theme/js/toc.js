@@ -1,4 +1,4 @@
-(function($){
+$(document).ready(function(){
   $.fn.toc = function(options) {
     var defaults = {
       noBackToTopLinks: false,
