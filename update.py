@@ -180,11 +180,12 @@ def main(event=None, context=None):
                 'body': str(e)
             }
     else:
-        """Execute update routine for local build"""
-        deploy=False
-        audience = 'public'
-        branch = 'base'
-        UpdateRoutine().run(audience, branch, deploy)
+        if os.getenv("TRAVIS_CI", "false") != "true":
+            # Execute update routine for local build
+            deploy=False
+            audience = 'public'
+            branch = 'base'
+            UpdateRoutine().run(audience, branch, deploy)
 
 if __name__ == '__main__':
     main()
