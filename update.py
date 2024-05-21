@@ -180,7 +180,7 @@ def main(event=None, context=None):
                 'body': str(e)
             }
     else:
-        """Executing update routine for local build"""
+        """Execute update routine for local build"""
         deploy=False
         audience = 'public'
         branch = 'base'
