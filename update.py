@@ -56,15 +56,17 @@ class UpdateRoutine:
                 except KeyError:
                     raise Exception(f'No build destination for {audience} {branch} site')
 
-            with open('repositories.yml') as f:
-                repositories_config = yaml.safe_load(f)
-            site = Site(audience)
-            site.update_theme()
-            site.stage(repositories_config[audience], branch, audience)
-            site.build()
-            if deploy:
-                site.upload(audience, branch)
-            return f'Update process for {audience} {branch} site completed at {datetime.now()}'
+        with open('repositories.yml') as f:
+            repositories_config = yaml.safe_load(f)
+        site = Site(audience)
+        site.update_theme()
+        site.stage(repositories_config[audience], branch, audience)
+        site.build()
+        if deploy:
+            site.upload(audience, branch)
+        else:
+            logging.info(f'Skipping upload to S3 for {audience} {branch} site.')
+        return f'Update process for {audience} {branch} site completed at {datetime.now()}'
 
 
 class Site:
@@ -177,7 +179,13 @@ def main(event=None, context=None):
                 'statusCode': 500,
                 'body': str(e)
             }
-
+    else:
+        if os.getenv("TRAVIS_CI", "false") != "true":
+            # Execute update routine for local build
+            deploy = False
+            audience = 'public'
+            branch = 'base'
+            UpdateRoutine().run(audience, branch, deploy)
 
 if __name__ == '__main__':
     main()
