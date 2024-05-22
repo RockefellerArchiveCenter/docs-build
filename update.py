@@ -182,7 +182,7 @@ def main(event=None, context=None):
     else:
         if os.getenv("TRAVIS_CI", "false") != "true":
             # Execute update routine for local build
-            deploy=False
+            deploy = False
             audience = 'public'
             branch = 'base'
             UpdateRoutine().run(audience, branch, deploy)
