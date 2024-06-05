@@ -7,35 +7,35 @@ body {
     height: 100%
 }
 
-a {
-  text-decoration: underline;
-  &.nounderline {
-    text-decoration: none;
-  }
-  &.hover {
-    text-decoration: none;
-  }
-  &.nounderline:hover {
-    text-decoration: underline;
-  }
-}
+// a {
+//   text-decoration: underline;
+//   &.nounderline {
+//     text-decoration: none;
+//   }
+//   &.hover {
+//     text-decoration: none;
+//   }
+//   &.nounderline:hover {
+//     text-decoration: underline;
+//   }
+// }
 
 // Override Bootstrap styles
-h3, .h3 {
-  font-size: 1.5rem;
-}
+// h3, .h3 {
+//   font-size: 1.5rem;
+// }
 
-.footer-logo {
-    float: left;
-    height: 5em;
-    margin-right: 1em;
-}
+// .footer-logo {
+//     float: left;
+//     height: 5em;
+//     margin-right: 1em;
+// }
 
-.header-logo {
-  float: left;
-  height: 5em;
-  margin-right: 1em;
-}
+// .header-logo {
+//   float: left;
+//   height: 5em;
+//   margin-right: 1em;
+// }
 
 .full-height {
   height: 100%;
@@ -88,9 +88,9 @@ div.toc-striped li:nth-child(even) {
   margin-bottom: 1em;
 }
 
-.site-subtitle {
-  color: #737373;
-}
+// .site-subtitle {
+//   color: #737373;
+// }
 
 #table-of-contents {
   height: 95vh;
