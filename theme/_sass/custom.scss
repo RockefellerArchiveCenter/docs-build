@@ -1,3 +1,20 @@
+/**
+Breakpoints map
+**/
+$break-md: 580px;
+$break-lg: 1024px;
+
+/**
+Media queries
+**/
+@mixin md-up {
+  @media screen and (min-width: $break-md) { @content; }
+}
+
+@mixin lg-up {
+  @media screen and (min-width: $break-lg) { @content; }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -41,9 +58,9 @@ body {
   height: 100%;
 }
 
-div.toc-striped li:nth-child(even) {
-    background: #efefef;
-}
+// div.toc-striped li:nth-child(even) {
+//     background: #efefef;
+// }
 
 #documents {
   list-style-type: none;
@@ -92,11 +109,6 @@ div.toc-striped li:nth-child(even) {
 //   color: #737373;
 // }
 
-#table-of-contents {
-  height: 95vh;
-  overflow-y: auto;
-}
-
 // Skip link
 .skip-link {
   background: rgba(255,255,255,.9);
@@ -124,4 +136,33 @@ div.toc-striped li:nth-child(even) {
       width: auto;
       z-index: 99;
     }
+}
+
+
+/**
+Layout for documentation page
+**/
+.docs-page__sidebar {
+  grid-column: 1 / span 3;
+}
+
+.docs-page__content {
+  grid-column: 4 / span 9;
+}
+
+/**
+Make table of contents scrollable independently from the docs contents.
+**/
+.toc {
+  height: 90vh;
+  overflow-y: auto;
+}
+
+/**
+Add dotted border to h2. Using custom styles instead of RAC style library heading--dotted-border class
+because the h2 comes from the documentation markdown, not markup in this repo.
+**/
+h2 {
+  border-bottom: 1.5px dotted #192d48;
+  padding-bottom: 12px;
 }
