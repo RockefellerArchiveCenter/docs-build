@@ -1,12 +1,16 @@
-/**
-Breakpoints map
-**/
+html {
+  scroll-behavior: smooth;
+}
+
+ body {
+    position: relative;
+     height: 100%
+}
+
+// Breakpoints map
 $break-md: 580px;
 $break-lg: 1024px;
 
-/**
-Media queries
-**/
 @mixin md-up {
   @media screen and (min-width: $break-md) { @content; }
 }
@@ -15,14 +19,17 @@ Media queries
   @media screen and (min-width: $break-lg) { @content; }
 }
 
-html {
-  scroll-behavior: smooth;
+.card-list {
+  @include md-up {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include lg-up {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
-body {
-    position: relative;
-    height: 100%
-}
+
 
 // a {
 //   text-decoration: underline;
@@ -85,14 +92,14 @@ body {
   }
 }
 
-.card-container {
-  display: flex;
-  flex-flow: row wrap;
-}
+// .card-container {
+//   display: flex;
+//   flex-flow: row wrap;
+// }
 
-.title-card {
-  flex: 0 1 auto;
-}
+// .title-card {
+//   flex: 0 1 auto;
+// }
 
 .codeblock {
     color: #bd4147;

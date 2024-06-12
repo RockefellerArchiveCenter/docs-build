@@ -3,24 +3,21 @@ layout: home
 title: Rockefeller Archive Center Documentation
 ---
 
-<div class="container-fluid" id="docs-list">
-  {% include search-category.html %}
-  <div id="documents" class="list row card-container">
+<div id="docs-list">
+{% include search-category.html %}
+<ul class="card-list">
   {% for file in site.data %}
   {% assign doc = file[1] %}
-    <div class="col-sm-4 mt-4">
-      <div class="card full-height shadow">
-        <div class="card-body">
-          <h2 class="card-title"><a class="sort-title nounderline" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
-          {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
-          {% for category in doc.category %}{% include category.html %}{% endfor %}
-        </div>
-        <div class="card-footer">
-          <p class="card-text"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
-        </div>
-      </div>
+  <li class="card">
+    <div class="card__body">
+      <a class="card__title" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
+      {% if doc.public == false %}<p class="badge--orange"> Internal Only</p>{% endif %}
+      <p class="card__body-text">{% for category in doc.category %}{% include category.html %}{% endfor %}</p>
     </div>
+    <div class="card__footer">
+      <p class="card__footer-text">Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</p>
+    </div>
+  </li>
   {% endfor %}
-  </div>
-
+</ul>
 </div>
