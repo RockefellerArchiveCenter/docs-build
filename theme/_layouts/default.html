@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
   {% include head.html %}
 
   <body data-spy="scroll" data-target="#current" data-offset="100">
@@ -9,17 +8,17 @@
 
     {% include nav.html %}
 
-    <main id="main" role="main">
+    <main id="main">
       {% unless page.layout == "docs" %}
        <!-- <div class="container mt-5"> -->
-         <h1 class="display-5 text-center">{{ page.title }}</h1>
+         <h1 class="wrapper">{{ page.title }}</h1>
        </div>
        {% endunless %}
       <!-- <div class="row mt-4 pb-3"> -->
         {{ content }}
       <!-- </div> -->
-      </main>
-    
+    </main>
+
     {% include footer.html %}
 
     {% include scripts.html %}
