@@ -7,7 +7,9 @@ html {
      height: 100%
 }
 
-// Breakpoints map
+/**
+Breakpoints map
+**/
 $break-md: 580px;
 $break-lg: 1024px;
 
@@ -19,6 +21,10 @@ $break-lg: 1024px;
   @media screen and (min-width: $break-lg) { @content; }
 }
 
+/**
+Card styles
+1. Adjust layout of badges to be on their own line in the cards on the homepage
+**/
 .card-list {
   @include md-up {
     grid-template-columns: repeat(2, 1fr);
@@ -27,6 +33,15 @@ $break-lg: 1024px;
   @include lg-up {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.card__body {
+  flex-direction: column; /* 1 */
+}
+
+.badge {
+  width: fit-content; /* 1 */
+  width: -moz-fit-content //for Firefox
 }
 
 
