@@ -11,8 +11,8 @@ title: Rockefeller Archive Center Documentation
   <li class="card">
     <div class="card__body">
       <a class="card__title" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
-      {% if doc.public == false %}<p class="badge badge--orange"> Internal Only</p>{% endif %}
-      <p class="card__body-text">{% for category in doc.category %}{% include category.html %}{% endfor %}</p>
+      {% if doc.public == false %}<div class="badge badge--orange"> Internal Only</div>{% endif %}
+      {% for category in doc.category %}<p class="card__body-text mb-0">{{category}}</p>{% endfor %}
     </div>
     <div class="card__footer">
       <p class="card__footer-text">Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</p>
