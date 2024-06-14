@@ -22,7 +22,7 @@ $break-lg: 1024px;
 }
 
 /**
-Card styles
+Homepage card styles
 1. Adjust layout of badges to be on their own line in the cards on the homepage
 **/
 .card-list {
@@ -165,19 +165,37 @@ Card styles
 Layout for documentation page
 **/
 .docs-page__sidebar {
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 12;
+
+  @include lg-up {
+    grid-column: 1 / span 3;
+  }
 }
 
 .docs-page__content {
-  grid-column: 4 / span 9;
+  grid-column: 1 / span 12;
+
+  @include lg-up {
+    grid-column: 4 / span 9;
+  }
 }
 
 /**
 Make table of contents scrollable independently from the docs contents.
 **/
 .toc {
-  height: 90vh;
-  overflow-y: auto;
+  @include lg-up {
+    height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+/**
+Add focus styles to currently active toc headings and items
+**/
+.toc .active {
+  outline: solid 2px #5c5c5c; //mortar-grey
+  outline-offset: 2px;
 }
 
 /**
@@ -185,6 +203,6 @@ Add dotted border to h2. Using custom styles instead of RAC style library headin
 because the h2 comes from the documentation markdown, not markup in this repo.
 **/
 h2 {
-  border-bottom: 1.5px dotted #192d48;
+  border-bottom: 1.5px dotted #192d48; //regal-blue
   padding-bottom: 12px;
 }
