@@ -181,19 +181,21 @@ Layout for documentation page
 }
 
 /**
-Make table of contents scrollable independently from the docs contents.
+Table of contents styles
+1. Remove bottom margin on small screens
+2. On large screens, make table of contents scrollable independently from the docs contents.
+3. Add focus styles to currently active toc headings and items.
 **/
 .toc {
-  @include lg-up {
+  margin-bottom: 0; /* 1 */
+
+  @include lg-up { /* 2 */
     height: 90vh;
     overflow-y: auto;
   }
 }
 
-/**
-Add focus styles to currently active toc headings and items
-**/
-.toc .active {
+.toc .active { /* 3 */
   outline: solid 2px #5c5c5c; //mortar-grey
   outline-offset: 2px;
 }
