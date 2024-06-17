@@ -160,6 +160,12 @@ Homepage card styles
     }
 }
 
+/**
+Layout for all pages
+**/
+#main {
+  grid-column: 2 / span 10;
+}
 
 /**
 Layout for documentation page
@@ -198,6 +204,13 @@ Table of contents styles
 .toc .active { /* 3 */
   outline: solid 2px #5c5c5c; //mortar-grey
   outline-offset: 2px;
+}
+
+/**
+Center all h1 headers
+**/
+h1 {
+  text-align: center;
 }
 
 /**

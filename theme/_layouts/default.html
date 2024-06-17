@@ -8,16 +8,16 @@
 
     {% include nav.html %}
 
-    <main id="main">
-      {% unless page.layout == "docs" %}
-       <!-- <div class="container mt-5"> -->
-         <h1 class="wrapper">{{ page.title }}</h1>
-       </div>
-       {% endunless %}
-      <!-- <div class="row mt-4 pb-3"> -->
-        {{ content }}
-      <!-- </div> -->
-    </main>
+     <div class="wrapper">
+      <div class="container grid">
+        <main id="main">
+          {% unless page.layout == "docs" %}
+            <h1>{{ page.title }}</h1>
+          {% endunless %}
+            {{ content }}
+        </main>
+      </div>
+     </div>
 
     {% include footer.html %}
 
