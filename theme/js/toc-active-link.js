@@ -16,15 +16,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // If there's a next header
-    if (nextHeader) {
-      var newActiveLinkId = nextHeader.id;
-      var tocLinkItems = document.querySelectorAll('#current > a.toc__link-item'); // Get all the TOC header links
+    var tocLinkItems = document.querySelectorAll('#current > a.toc__link-item'); // Get all the TOC header links
+
+    // Check if the user has scrolled to the bottom of the page
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
       for (var i = 0; i < tocLinkItems.length; i++) {
-        var tocLinkItem = tocLinkItems[i];
-        tocLinkItem.classList.remove('active');
-        if (tocLinkItem.getAttribute('href') === '#' + newActiveLinkId) {
-          tocLinkItem.classList.add('active');
+        tocLinkItems[i].classList.remove('active');
+      }
+      tocLinkItems[tocLinkItems.length - 1].classList.add('active'); // Activate the last TOC link item
+    } else {
+      // If there's a next header
+      if (nextHeader) {
+        var newActiveLinkId = nextHeader.id;
+        for (var i = 0; i < tocLinkItems.length; i++) {
+          var tocLinkItem = tocLinkItems[i];
+          tocLinkItem.classList.remove('active');
+          if (tocLinkItem.getAttribute('href') === '#' + newActiveLinkId) {
+            tocLinkItem.classList.add('active');
+          }
         }
       }
     }
