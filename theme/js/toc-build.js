@@ -74,35 +74,5 @@
     }
 
     render[settings.showEffect]();
-
-    var tocLinkItems = $('#current > a.toc__link-item'); // Get all the TOC header links
-    var activeLink = null; // Store the currently active TOC link
-
-    $(window).on('scroll', function() {
-      var scrollPosition = $(window).scrollTop();
-
-      // Find the next header that comes into view
-      var nextHeader = null;
-      headers.each(function(_, header) {
-        var headerOffset = $(header).offset().top;
-        var headerHeight = $(header).outerHeight();
-        if (headerOffset + headerHeight > scrollPosition && headerOffset < scrollPosition + $(window).height()) {
-          nextHeader = header;
-          return false; // Exit the loop once next header is found
-        }
-      });
-
-      // If there's a next header
-      if (nextHeader) {
-        var newActiveLinkId = $(nextHeader).attr('id');
-        if (newActiveLinkId !== activeLink) {
-          // Remove active class from previously active TOC link
-          tocLinkItems.removeClass('active');
-          // Add active class to the corresponding TOC link
-          tocLinkItems.filter('[href="#' + newActiveLinkId + '"]').addClass('active');
-          activeLink = newActiveLinkId; // Update active link ID
-        }
-      }
-    });
   };
 })(jQuery);
