@@ -1,41 +1,67 @@
 document.addEventListener('DOMContentLoaded', function() {
+  let lastScrollPosition = window.scrollY;
+  let ticking = false; //Used to throttle scroll events
+
   window.addEventListener('scroll', function() {
-    var scrollPosition = window.scrollY;
-    var headers = 'h2'; // Define headers as 'h2'
+    lastScrollPosition = window.scrollY; // Update scroll position
 
-    // Find the next header that comes into view
-    var nextHeader = null;
-    var headers = document.querySelectorAll(headers);
-    for (var i = 0; i < headers.length; i++) {
-      var header = headers[i];
-      var headerOffset = header.offsetTop;
-      var headerHeight = header.offsetHeight;
-      if (headerOffset + headerHeight > scrollPosition && headerOffset < scrollPosition + window.innerHeight) {
-        nextHeader = header;
-        break;
-      }
+    if (!ticking) {
+      // Throttle scroll event using requestAnimationFrame
+      window.requestAnimationFrame(function() {
+        updateActiveLink(lastScrollPosition);
+        ticking = false; //Reset ticking after active link update
+      });
     }
+    // Set ticking to true to indicate scroll event is being handled
+    ticking = true;
+  });
 
-    var tocLinkItems = document.querySelectorAll('#current > a.toc__link-item'); // Get all the TOC header links
+  function updateActiveLink(scrollPosition) {
+    const headers = document.querySelectorAll('h2');
+    const tocLinkItems = document.querySelectorAll('#current > a.toc__link-item'); // Select all TOC links
 
-    // Check if the user has scrolled to the bottom of the page
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      for (var i = 0; i < tocLinkItems.length; i++) {
-        tocLinkItems[i].classList.remove('active');
-      }
-      tocLinkItems[tocLinkItems.length - 1].classList.add('active'); // Activate the last TOC link item
-    } else {
-      // If there's a next header
-      if (nextHeader) {
-        var newActiveLinkId = nextHeader.id;
-        for (var i = 0; i < tocLinkItems.length; i++) {
-          var tocLinkItem = tocLinkItems[i];
-          tocLinkItem.classList.remove('active');
-          if (tocLinkItem.getAttribute('href') === '#' + newActiveLinkId) {
-            tocLinkItem.classList.add('active');
-          }
+    let currentHeader;
+    let scrollingDown = scrollPosition > lastScrollPosition;
+
+    // Iterate through all headers to find the current active header
+    for (let i = 0; i < headers.length; i++) {
+      const header = headers[i];
+
+      // If scrolling down, find the next header coming into view
+      if (scrollingDown) {
+        if (header.offsetTop + header.outerHeight > scrollPosition && header.offsetTop < scrollPosition + window.innerHeight) {
+          currentHeader = header;
+          break;
+        }
+      // If scrolling up, find the header going out of view
+      } else {
+        if (header.offsetTop <= scrollPosition + window.innerHeight) {
+          currentHeader = header;
+        } else {
+          break;
         }
       }
     }
-  });
+
+    // Determine if any TOC link should be active
+    let anyLinkActive = false; // Used to check if there is an active link
+
+    // Update the active state of TOC links based on currentHeader
+    for (let i = 0; i < tocLinkItems.length; i++) {
+      const tocLinkItem = tocLinkItems[i];
+      tocLinkItem.classList.remove('active');
+
+      if (currentHeader && tocLinkItem.getAttribute('href') === '#' + currentHeader.id) {
+        tocLinkItem.classList.add('active');
+        anyLinkActive = true; // Mark that there is an active link
+      }
+    }
+
+    // If no link is active, keep the last link active (handle scrolling to bottom of page)
+    if (!anyLinkActive) {
+      tocLinkItems[tocLinkItems.length - 1].classList.add('active');
+    }
+
+    lastScrollPosition = scrollPosition; // Update last scroll position
+  }
 });
