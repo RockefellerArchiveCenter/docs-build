@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const documents = document.querySelectorAll('.card');
   const docsList = document.querySelector('.card-list');
 
+  // Get the aria-live region
+  const ariaLiveRegion = document.getElementById('aria-live-region');
+
   // Add an event listener to the filter button to handle the click event
   filterButton.addEventListener('click', function(event) {
     event.preventDefault();  // Prevent the default form submission
@@ -53,6 +56,9 @@ document.addEventListener('DOMContentLoaded', function() {
     docsWithTitles.forEach(function(docWithTitle) {
       docsList.appendChild(docWithTitle.element);
     });
+
+    // Update the aria-live region with success message
+    ariaLiveRegion.textContent = `Documentation has been filtered by ${selectedCategory}`;
   });
 });
 

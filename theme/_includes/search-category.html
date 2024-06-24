@@ -1,9 +1,13 @@
 <div class="category__container mb-30">
   <fieldset>
-    <legend class="mb-15">Filter documentation by category</legend>
+    <legend id="filter-legend" class="mb-15">Filter documentation by category</legend>
     <div class="category__radio-group">
       <div>
-        <input type="radio" id="collections-dev" name="category" value="collection development and management" checked />
+        <input type="radio" id="all-categories" name="category" value="all categories" checked />
+        <label for="all-categories">All Categories</label>
+      </div>
+      <div>
+        <input type="radio" id="collections-dev" name="category" value="collection development and management" />
         <label for="collections-dev">Collection Development and Management</label>
       </div>
       <div>
@@ -18,11 +22,7 @@
         <input type="radio" id="arrange-describe" name="category" value="arrangement and description" />
         <label for="arrange-describe">Arrangement and Description</label>
       </div>
-      <div>
-        <input type="radio" id="all-categories" name="category" value="all categories" checked />
-        <label for="all-categories">All Categories</label>
-      </div>
     </div>
-    <button type="submit" class="btn btn--md btn--orange mt-15" id="filter-submit">Filter</button>
+    <button type="submit" class="btn btn--md btn--orange mt-15" id="filter-submit" aria-labelledby="filter-legend">Filter</button>
   </fieldset>
 </div>
