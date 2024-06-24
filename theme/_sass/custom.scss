@@ -247,16 +247,15 @@ Radio Group styles
 
 .category__radio-group {
   display: block;
-
   @include lg-up {
     display: flex;
+    flex-wrap: wrap;
   }
 }
 
-fieldset legend { //Following RAC styles library h2 font size
+fieldset legend { //Use RAC style library h2 font size
   font-size: 21px;
   text-transform: none;
-  margin-bottom: 10px;
 
   @include lg-up {
     font-size: 28px;
@@ -276,7 +275,6 @@ input {
   height: 24px;
   border: 1px solid #192d48; //regal-blue
   border-radius: 50%;
-  cursor: pointer;
   margin-right: 5px;
   background-color: #fff;
   position: relative;
