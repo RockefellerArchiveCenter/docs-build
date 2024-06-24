@@ -214,10 +214,22 @@ h1 {
 }
 
 /**
-Add dotted border to h2. Using custom styles instead of RAC style library heading--dotted-border class
-because the h2 comes from the documentation markdown, not markup in this repo.
+Add dotted border to h2 in documentation. Using custom styles instead of RAC style
+library heading--dotted-border class because the h2 comes from the documentation
+markdown, not markup in this repo.
 **/
-h2 {
+#documentation h2 {
   border-bottom: 1.5px dotted #192d48; //regal-blue
   padding-bottom: 12px;
+}
+
+/**
+In docs, links that are inside headings should be the same font size as the heading.
+**/
+#documentation h2 a,
+#documentation h3 a,
+#documentation h4 a,
+#documentation h5 a,
+#documentation h6 a {
+  font-size: inherit;
 }
