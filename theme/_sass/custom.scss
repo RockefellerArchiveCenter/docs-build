@@ -3,8 +3,8 @@ html {
 }
 
  body {
-    position: relative;
-     height: 100%
+  position: relative;
+  height: 100%
 }
 
 /**
@@ -190,7 +190,8 @@ Layout for documentation page
 Table of contents styles
 1. Remove bottom margin on small screens
 2. On large screens, make table of contents scrollable independently from the docs contents.
-3. Add focus styles to currently active toc headings and items.
+3. Adjust the default focus styles so that they don't conflict with the active styles.
+4. Add active styles to currently active toc heading links.
 **/
 .toc {
   margin-bottom: 0; /* 1 */
@@ -201,9 +202,15 @@ Table of contents styles
   }
 }
 
-.toc .active { /* 3 */
+.toc :focus { /* 3 */
+  outline: none;
+  text-decoration: underline;
+}
+
+.toc .active { /* 4 */
   outline: solid 2px #5c5c5c; //mortar-grey
-  outline-offset: 2px;
+  outline-offset: 3px;
+  background-color: #fff;
 }
 
 /**
