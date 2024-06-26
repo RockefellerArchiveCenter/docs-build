@@ -34,26 +34,8 @@ html {
   font-size: inherit;
 }
 
-/**
-Homepage card styles
-1. Adjust layout of badges to be on their own line in the cards on the homepage
-**/
-.card-list {
-  @include md-up {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include lg-up {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.card__body {
-  flex-direction: column; /* 1 */
-}
-
 .badge {
-  width: fit-content; /* 1 */
+  width: fit-content;
   width: -moz-fit-content //for Firefox
 }
 
@@ -64,6 +46,30 @@ Homepage card styles
 
 .table-responsive {
   overflow-x: auto;
+}
+
+.table caption {
+  text-align: left;
+}
+
+.btn--table-sort {
+  padding: 0;
+  border: none;
+
+  @include lg-up() {
+    margin-left: 10px;
+  }
+}
+
+/**
+Hide date table column on small screens for homepage docs table
+**/
+#date, #date-col {
+  display: none;
+
+  @include lg-up() {
+    display: block;
+  }
 }
 
 /**

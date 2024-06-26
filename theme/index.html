@@ -3,23 +3,36 @@ layout: default
 title: Rockefeller Archive Center Documentation
 ---
 
-<div id="docs-list">
 {% include search-category.html %}
-<ul class="card-list">
-  {% for file in site.data %}
-  {% assign doc = file[1] %}
-  <li class="card">
-    <div class="card__body">
-      <a class="card__title" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
-      {% if doc.public == false %}<div class="badge badge--orange"> Internal Only</div>{% endif %}
-      {% for category in doc.category %}<p class="card__body-text mb-0 category">{{category}}</p>{% endfor %}
-    </div>
-    <div class="card__footer">
-      <p class="card__footer-text">Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</p>
-    </div>
-  </li>
-  {% endfor %}
-</ul>
-</div>
 
 <div id="aria-live-region" role="status" tabindex="-1" class="visually-hidden"></div>
+
+<table id="docs-list">
+  <caption>Access institutional policies, procedures, and guides from the Rockefeller Archive Center.</caption>
+  <thead>
+      <tr>
+          <th id="title" role="columnheader" aria-sort="ascending">Title
+            <button class="btn btn--transparent btn--table-sort" aria-label="sort by title"><span class="material-icon" aria-hidden="true">swap_vert</span></button>
+          </th>
+          <th id="category" role="columnheader" aria-sort="ascending">Category
+            <button class="btn btn--transparent btn--table-sort" aria-label="sort by category"><span class="material-icon" aria-hidden="true">swap_vert</span></button>
+          </th>
+          <th id="date" role="columnheader" aria-sort="ascending">Last Updated
+            <button class="btn btn--transparent btn--table-sort" aria-label="sort by last updated date"><span class="material-icon" aria-hidden="true">swap_vert</span></button>
+          </th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for file in site.data %}
+      {% assign doc = file[1] %}
+      <tr>
+        <th scope="row">
+          <a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
+          {% if doc.public == false %}<div class="badge badge--orange"> Internal Only</div>{% endif %}
+        </th>
+        <td class="category flex--column">{% for category in doc.category %}<div>{{category}}</div>{% endfor %}</td>
+        <td id="date-col">{{doc.updated | date: "%b %e, %Y"}}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
