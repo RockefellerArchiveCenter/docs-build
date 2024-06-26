@@ -44,56 +44,9 @@ Homepage card styles
   width: -moz-fit-content //for Firefox
 }
 
-
-
-// a {
-//   text-decoration: underline;
-//   &.nounderline {
-//     text-decoration: none;
-//   }
-//   &.hover {
-//     text-decoration: none;
-//   }
-//   &.nounderline:hover {
-//     text-decoration: underline;
-//   }
-// }
-
-// Override Bootstrap styles
-// h3, .h3 {
-//   font-size: 1.5rem;
-// }
-
-// .footer-logo {
-//     float: left;
-//     height: 5em;
-//     margin-right: 1em;
-// }
-
-// .header-logo {
-//   float: left;
-//   height: 5em;
-//   margin-right: 1em;
-// }
-
 .full-height {
   height: 100%;
 }
-
-// div.toc-striped li:nth-child(even) {
-//     background: #efefef;
-// }
-
-// #documents {
-//   list-style-type: none;
-//   list-style: none;
-// }
-
-// #current .list-group-item {
-//     border-radius: 0;
-//     font-size: .8rem;
-//     padding: 1em 1em 1em 3em;
-// }
 
 .docs-example {
   background: #efefef;
@@ -107,15 +60,6 @@ Homepage card styles
   }
 }
 
-// .card-container {
-//   display: flex;
-//   flex-flow: row wrap;
-// }
-
-// .title-card {
-//   flex: 0 1 auto;
-// }
-
 .codeblock {
     color: #bd4147;
     white-space: pre;
@@ -126,39 +70,6 @@ Homepage card styles
 .table-responsive {
   margin-bottom: 1em;
 }
-
-// .site-subtitle {
-//   color: #737373;
-// }
-
-// // Skip link
-// .skip-link {
-//   background: rgba(255,255,255,.9);
-//   padding: 20px 10px;
-//   position: absolute;
-//   left: 0;
-//   right: 0;
-//   font-size: 18px;
-//   font-weight: 700;
-//   text-align: center;
-// }
-
-// .visually-hidden {
-//     clip: rect(1px, 1px, 1px, 1px);
-//     height: 1px;
-//     overflow: hidden;
-//     position: absolute;
-//     white-space: nowrap;
-//     width: 1px;
-//     &:focus {
-//       clip: auto;
-//       height: auto;
-//       overflow: auto;
-//       position: absolute;
-//       width: auto;
-//       z-index: 99;
-//     }
-// }
 
 /**
 Layout for all pages
