@@ -204,7 +204,6 @@ TODO: assess which of these styles should be added to the RAC Style Library and 
 Add dotted border to h2 in documentation. Using custom styles instead of RAC style
 library heading--dotted-border class because the h2 comes from the documentation
 markdown, not markup in this repo.
-TODO: Update style library margin styles and use those instead
 **/
 #documentation h2 {
   border-bottom: 1.5px dotted #192d48; //regal-blue
@@ -242,23 +241,31 @@ ol {
 }
 
 h4 {
-  font-size: 1.20rem;
   margin-bottom: 10px;
   margin-top: 30px;
+
+  @include lg-up() {
+    font-size: 18px;
+  }
 }
 
 h5 {
   color: #662700; //maroon-brown
-  font-size: 1.17rem;
   margin-bottom: 10px;
   margin-top: 20px;
+
+  @include lg-up() {
+    font-size: 17px;
+  }
 }
 
 h6 {
   color: #9f3c0f; //rust-red
-  font-size: 1.15rem;
   margin-bottom: 10px;
-  margin-top: 20px;
+
+  @include lg-up() {
+    font-size: 17px;
+  }
 }
 
 /**
@@ -273,10 +280,6 @@ Text that is visually highlighted as an example.
   & p:last-of-type {
     margin-bottom: 0;
   }
-}
-
-.docs-example > h6 {
-  margin-top: 0;
 }
 
 /**
