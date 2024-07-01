@@ -2,13 +2,27 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
-<div class="grid">
-  <div class="docs-page__sidebar mr-20">
-    {% include toc.html %}
-  </div>
-  <div id="documentation" class="docs-page__content">
-      {{ content }}
+<div class="docs-page__title-container">
+  <div class="wrapper">
+    <div class="grid container">
+      <h1 class="docs-page__title mx-15">{{ page.title }}</h1>
+    </div>
   </div>
 </div>
+
+<div class="wrapper">
+  <div class="grid container">
+    <div class="docs-page__sidebar ml-15">
+      {% include toc.html %}
+    </div>
+    <div id="documentation" class="docs-page__content mx-15">
+        {{ content }}
+    </div>
+  </div>
+</div>
+
+
+
+
+
 

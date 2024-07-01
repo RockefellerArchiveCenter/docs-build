@@ -1,3 +1,7 @@
+// -----------------------------------------------------------------------------
+// This file contains custom styles to supplement the RAC Style Library styles.
+// -----------------------------------------------------------------------------
+
 /**
 Breakpoints map
 **/
@@ -17,31 +21,82 @@ Use font-size percentage to adjust font-size based on screen size (use with rem 
 **/
 html {
   scroll-behavior: smooth;
-  font-size: 90%;
-
-  @include md-up {
-    font-size: 95%;
-  }
-
-  @include lg-up {
-    font-size: 100%;
-  }
 }
 
- body {
+body {
   position: relative;
   height: 100%;
   font-size: inherit;
 }
 
-.badge {
-  width: fit-content;
-  width: -moz-fit-content //for Firefox
+/**
+Layout classes
+**/
+
+.container {
+  margin: 0 30px;
+  max-width: 1440px;
 }
 
-.table {
+.layout--default {
+  grid-column: 1 / span 12;
+
+  @include lg-up() {
+    grid-column: 2 / span 10;
+  }
+}
+
+/**
+Layout for documentation page based on rockarch.org styles
+**/
+
+.docs-page__content,
+.docs-page__title {
+  grid-column: 1 / span 12;
+  padding-left: 0;
+  margin-left: 0;
+
+  @include lg-up {
+    grid-column: 3 / span 7;
+    padding-left: 35px;
+  }
+}
+
+.docs-page__title-container {
+  min-height: 168px;
+  background: #c5d1dd; //water-blue
+  margin-bottom: 80px;
+}
+
+.docs-page__title {
+  margin-top: 1.2em;
+}
+
+.docs-page__sidebar {
+  grid-column: 1 / span 12;
   margin-bottom: 10px;
 
+  @include lg-up {
+    grid-column: 1 / span 2;
+  }
+}
+
+/**
+Remove header nav link icon on small screens
+**/
+.nav__link .material-icon {
+  display: none;
+
+  @include lg-up() {
+    display: inline-block;
+  }
+}
+
+/**
+Homepage table styles
+**/
+.table {
+  margin-bottom: 10px;
 }
 
 .table-responsive {
@@ -61,6 +116,11 @@ html {
   }
 }
 
+.badge {
+  width: fit-content;
+  width: -moz-fit-content //for Firefox
+}
+
 /**
 Hide date table column on small screens for homepage docs table
 **/
@@ -73,63 +133,71 @@ Hide date table column on small screens for homepage docs table
 }
 
 /**
-Layout for all pages
-**/
-#main {
-  grid-column: 2 / span 10;
-}
-
-/**
-Layout for documentation page
-**/
-.docs-page__sidebar {
-  grid-column: 1 / span 12;
-
-  @include lg-up {
-    grid-column: 1 / span 3;
-  }
-}
-
-.docs-page__content {
-  grid-column: 1 / span 12;
-
-  @include lg-up {
-    grid-column: 4 / span 9;
-  }
-}
-
-/**
 Table of contents styles
-1. Remove bottom margin on small screens
-2. On large screens, make table of contents scrollable independently from the docs contents.
-3. Adjust the default focus styles so that they don't conflict with the active styles.
-4. Add active styles to currently active toc heading links.
+TODO: assess which of these styles should be added to the RAC Style Library and add them.
+1. Hide the table of contents on small screens to replace with the #toc-nav-toggle button.
+2. Make table of contents scrollable independently from the docs contents.
+3. Decrease default line height for links in toc.
+4. Adjust margins and padding to enable active styles for toc links.
+5. Decrease title font size (this should be added to Style Library)
+6. Adjust the default focus styles so that they don't conflict with the active styles.
+7. Add active styles to currently active toc heading links.
+8. Add skip link on large screens
 **/
 .toc {
-  margin-bottom: 0; /* 1 */
+  display: none; /* 1 */
+
+  @include md-up() {
+    max-width: 40%;
+  }
 
   @include lg-up { /* 2 */
+    display: block;
     height: 90vh;
     overflow-y: auto;
+    max-width: 100%;
   }
 }
 
-.toc :focus { /* 3 */
+.toc a {
+  line-height: 1.3; /* 3 */
+}
+
+.toc__title { /* 4 */
+  margin-bottom: 0;
+  padding: 10px 25px;
+  font-size: 18px; /* 5 */
+}
+
+.toc__link-item { /* 4 */
+  margin: 0;
+  padding: 10px 25px 10px 40px;
+}
+
+.toc :focus { /* 6 */
   outline: none;
   text-decoration: underline;
 }
 
-.toc .active { /* 4 */
-  outline: solid 2px #5c5c5c; //mortar-grey
-  outline-offset: 3px;
-  background-color: #fff;
+.toc .active { /* 7 */
+  outline: none;
+
+  @include lg-up() {
+    background-color: #9f3c0f; //rust-red
+    color: #f6f6f4; //desert-grey
+
+  }
 }
 
 /**
-Center all h1 headers
-**/
-h1 {
-  text-align: center;
+* Layout styles for the toc-nav-toggle button
+*/
+#toc-nav-toggle {
+  margin-top: -52px;
+
+  @include lg-up {
+    display: none;
+  }
 }
 
 /**
@@ -140,10 +208,17 @@ TODO: Update style library margin styles and use those instead
 **/
 #documentation h2 {
   border-bottom: 1.5px dotted #192d48; //regal-blue
+
+  @include lg-up {
+    &:not(:first-child) {
+      margin-top: 80px;
+    }
+  }
 }
 
 /**
 In docs, links that are inside headings should be the same font size as the heading.
+TODO: add to RAC Style Library
 **/
 #documentation h2 a,
 #documentation h3 a,
@@ -157,48 +232,33 @@ In docs, links that are inside headings should be the same font size as the head
 Improve/create typography styles with relative font size
 TODO: Update style library styles and use those styles instead
 **/
-
-p, a, li, table, code {
-  font-size: 1.15rem;
-  line-height: 1.5;
-}
-
-h1 {
-  font-size: 3.25rem;
-}
-
-h2 {
-  font-size: 1.75rem;
-  margin-top: 30px;
-  padding-bottom: 12px;
+ol {
+  line-height: 23px;
 
   @include lg-up {
-    margin-top: 40px;
+    font-size: 17px;
+    line-height: 24px;
   }
 }
 
-h3 {
-  font-size: 1.25rem;
-}
-
 h4 {
-  font-size: 1.25rem;
+  font-size: 1.20rem;
   margin-bottom: 10px;
   margin-top: 30px;
 }
 
 h5 {
   color: #662700; //maroon-brown
-  font-size: 1.25rem;
+  font-size: 1.17rem;
   margin-bottom: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 h6 {
   color: #9f3c0f; //rust-red
   font-size: 1.15rem;
   margin-bottom: 10px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 /**

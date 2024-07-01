@@ -8,15 +8,21 @@
 
     {% include nav.html %}
 
-     <div class="wrapper">
-      <div class="container grid">
-        <main id="main" class="mb-30">
-          {% unless page.layout == "docs" %}
-            <h1>{{ page.title }}</h1>
-          {% endunless %}
-            {{ content }}
-        </main>
-      </div>
+    <div class="wrapper">
+      <main id="main" class="mb-30">
+        {% if page.layout == "docs" %}
+          {{ content }}
+        {% else %}
+        <div class="wrapper">
+          <div class="container grid">
+            <div class="layout--default">
+              <h1>{{ page.title }}</h1>
+              {{ content }}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </main>
      </div>
 
     {% include footer.html %}
