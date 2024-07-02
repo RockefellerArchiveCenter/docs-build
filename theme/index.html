@@ -1,37 +1,31 @@
 ---
-layout: default
+layout: home
 title: Rockefeller Archive Center Documentation
 ---
+<div class="hero">
+  <div class="hero__logo">
+    <img alt="" src="https://assets.rockarch.org/assets/img/hero_logo.png" />
+  </div>
+  <h2 class="hero__text">
+    Explore the institutional policies, procedures, and user guides of the Rockefeller Archive Center
+  </h1>
+</div>
 
-{% include search-category.html %}
-
-<div id="aria-live-region" role="status" tabindex="-1" class="visually-hidden"></div>
-
-<table id="docs-list">
-  <caption>Access institutional policies, procedures, and guides from the Rockefeller Archive Center.</caption>
+<table id="docs-table" class="table">
   <thead>
     <tr>
-      <th id="title" role="columnheader" aria-sort="ascending">Title
-        <button class="btn btn--transparent btn--table-sort" aria-label="sort by title"><span class="material-icon" aria-hidden="true">swap_vert</span></button>
-      </th>
-      <th id="category" role="columnheader" aria-sort="ascending">Category
-        <button class="btn btn--transparent btn--table-sort" aria-label="sort by category"><span class="material-icon" aria-hidden="true">swap_vert</span></button>
-      </th>
-      <th id="date" role="columnheader" aria-sort="ascending">Last Updated
-        <button class="btn btn--transparent btn--table-sort" aria-label="sort by last updated date"><span class="material-icon" aria-hidden="true">swap_vert</span></button>
-      </th>
+      <th>Title</th>
+      <th>Last Updated</th>
     </tr>
   </thead>
   <tbody>
       {% for file in site.data %}
       {% assign doc = file[1] %}
       <tr>
-        <th scope="row">
-          <a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
+        <td><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
           {% if doc.public == false %}<div class="badge badge--orange"> Internal Only</div>{% endif %}
-        </th>
-        <td class="category flex--column">{% for category in doc.category %}<div>{{category}}</div>{% endfor %}</td>
-        <td id="date-col">{{doc.updated | date: "%b %e, %Y"}}</td>
+        </td>
+        <td>{{doc.updated | date: "%b %e, %Y"}}</td>
       </tr>
       {% endfor %}
   </tbody>

@@ -82,8 +82,8 @@ Source: mpchadwick at https://github.com/mpchadwick/pygments-high-contrast-style
 
 /* Inline code styles (colors from RAC style library) */
 .highlighter-rouge {
-    color: #9F3C0F; //rust-red
-    background-color: #E3E1DD; //wan-white-grey
+    color: $rust-red;
+    background-color: $wan-white-grey;
     margin-bottom: 10px; //matches paragraph margin style
     padding: 2px;
 }

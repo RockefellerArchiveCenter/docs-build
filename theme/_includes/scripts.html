@@ -1,5 +1,7 @@
 <!--JQuery-->
 <script type="text/javascript" src="{{ site.baseurl }}/js/jquery-3.7.1.min.js"></script>
+<!--DataTables-->
+<script type="text/javascript" src="{{ site.baseurl }}/js/datatables.min.js"></script>
 
 <!--Docs table of contents-->
 <script type="text/javascript" src="{{ site.baseurl }}/js/toc-build.js"></script>
@@ -13,15 +15,24 @@ $(document).ready(function() {
 </script>
 
 <!-- use RAC Style Library table formatting for Markdown tables-->
-
 <script type="text/javascript">
   $(document).ready(function () {
     $("table").addClass("table table-striped table-responsive");
   });
 </script>
 
-<!-- category-filters.js for homepage docs filter by category -->
-<script type="text/javascript" src="{{ site.baseurl }}/js/category-filter.js"></script>
+<!-- Initialize DataTables for homepage docs table -->
+<script type="text/javascript">
+  new DataTable('#docs-table', {
+  info: false,
+  ordering: true,
+  paging: false,
+  order: [[0, 'asc']],
+  searching: true,
+  language: {
+    search: 'Search titles:',
+    searchPlaceholder: 'Start typing to filter content...'
+  },
+});
+</script>
 
-<!-- table-sort.js for homepage docs table sorting -->
-<script type="text/javascript" src="{{ site.baseurl }}/js/table-sort.js"></script>
