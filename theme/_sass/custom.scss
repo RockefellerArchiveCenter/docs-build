@@ -100,6 +100,11 @@ Table styles
   margin-bottom: 10px;
 }
 
+.table a, p, li { //TODO: add to RAC Style Library
+  font-size: inherit;
+  line-height: inherit;
+}
+
 .table-responsive {
   overflow-x: auto;
 }
