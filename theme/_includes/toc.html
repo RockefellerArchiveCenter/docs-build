@@ -1,6 +1,6 @@
 <nav class="toc--sticky" aria-label="table of contents">
   <button class="btn btn--md btn--orange" id="toc-nav-toggle" aria-expanded="false">Open Page Menu</button>
-  <div class="toc toc--neutral py-25 px-0" id="toc__link-group" hidden>
+  <div class="toc toc--neutral py-25 px-0" id="toc-link-group" hidden>
     <a href="#documentation" class="toc__skip-link toc__skip-link--blue">
       Skip navigation
     </a>
@@ -9,7 +9,7 @@
       {% assign pages = file[1].pages %}
         {% for p in pages %}
           <a class="toc__title{% if page.name contains p[1] %} active{% endif %}" href="{{site.url}}/{{file[0]}}/{% if p[1] != 'index' %}{{p[1]}}{% endif %}">{{p[0]}}</a>
-          {% if page.name contains p[1] %} <div id="current" class="toc__link-group"></div>{% endif %}
+          {% if page.name contains p[1] %} <div id="current" class="toc-link-group"></div>{% endif %}
         {% endfor %}
       {% endif %}
     {% endfor %}

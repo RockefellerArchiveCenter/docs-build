@@ -14,12 +14,19 @@ body {
   height: 100%;
 }
 
+.home {
+  background-color: $desert-grey;
+}
+
 /**
 Layout classes
 **/
 
 .container {
   margin: 0 30px;
+}
+
+main .container {
   max-width: 1440px;
 }
 
@@ -77,15 +84,14 @@ Remove header nav link icon on small screens
   }
 }
 
+/**
+Hero component layout on homepage
+**/
 .hero {
-  margin: 10px 0 10px;
+  margin-top: 10px;
 
   @include md-up {
-    margin: 113px 0 113px;
-  }
-
-  @include lg-up {
-    margin: 103px 0 103px;
+    margin: 90px 0 20px;
   }
 }
 
@@ -100,7 +106,9 @@ Table styles
   margin-bottom: 10px;
 }
 
-.table a, p, li { //TODO: add to RAC Style Library
+.table a,
+.table p,
+.table li { //TODO: add to RAC Style Library
   font-size: inherit;
   line-height: inherit;
 }
@@ -192,7 +200,7 @@ markdown, not markup in this repo.
 
   @include lg-up {
     &:not(:first-child) {
-      margin-top: 80px;
+      margin-top: 80px; //follow rockarch.org styles to improve spacing for text-heavy sites
     }
   }
 }

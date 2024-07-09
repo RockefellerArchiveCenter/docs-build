@@ -2,17 +2,24 @@
 // Custom styles for DataTables instead of using datatables.css from DataTables.net
 // -----------------------------------------------------------------------------
 
+/**
+Center search bar
+**/
+.dt-end {
+  display: flex;
+  justify-content: center;
+}
+
 .dt-search {
   width: 100%;
-  float: right;
 
   @include lg-up() {
-    width: 35%;
+    width: 67%;
   }
 }
 
 .dt-search label {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .dt-input {
@@ -20,15 +27,17 @@
   border: 1px solid $night-grey;
   border-radius: 0;
   font-size: 18px;
-  height: 50px;
   margin-bottom: 20px;
-  padding: 20px;
+  padding: 15px;
 }
 
 .dt-column-title {
   font-size: 18px;
 }
 
+/**
+Styles for ascending and descending sorting columns arrow from datatables.net CSS
+**/
 table.dataTable thead > tr > th.dt-orderable-asc span.dt-column-order:before,
 table.dataTable thead > tr > th.dt-ordering-asc span.dt-column-order:before,
 table.dataTable thead > tr > td.dt-orderable-asc span.dt-column-order:before,
