@@ -1,0 +1,17 @@
+{
+  "name": "docs.rockarch.org",
+  "version": "1.0.0",
+  "description": "Documentation Site for the Rockefeller Archive Center",
+  "main": "index.html",
+  "repository": "https://github.com/RockefellerArchiveCenter/docs-build",
+  "author": "Rockefeller Archive Center",
+  "license": "MIT",
+  "devDependencies": {
+    "backstopjs": "^6.3.23"
+  },
+  "scripts": {
+    "backstop-approve": "backstop approve",
+    "backstop-test": "backstop test --docker",
+    "backstop-reference": "backstop reference --docker"
+  }
+}
