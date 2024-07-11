@@ -2,9 +2,6 @@
 // This file contains custom styles to supplement the RAC Style Library styles.
 // -----------------------------------------------------------------------------
 
-/**
-Use font-size percentage to adjust font-size based on screen size (use with rem units)
-**/
 html {
   scroll-behavior: smooth;
 }
@@ -114,19 +111,26 @@ Table styles
 Table of contents styles
 1. Hide the table of contents on small screens to replace with the #toc-nav-toggle button.
 2. Make table of contents scrollable independently from the docs contents.
+3. Don't show active styles on small screens when the toc is positioned above the page content.
 **/
 .toc {
   display: none; /* 1 */
-
-  @include md-up() {
-    max-width: 40%;
-  }
 
   @include lg-up { /* 2 */
     display: block;
     height: 90vh;
     overflow-y: auto;
     max-width: 100%;
+  }
+}
+
+.toc .active { /* 3 */
+  background: $desert-grey;
+  color: $night-grey;
+
+  @include lg-up {
+    background: $rust-red;
+    color: $desert-grey;
   }
 }
 
