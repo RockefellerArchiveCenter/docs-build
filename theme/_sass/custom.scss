@@ -41,7 +41,6 @@ main .container {
 /**
 Layout for documentation page based on rockarch.org styles
 **/
-
 .docs-page__content,
 .docs-page__title {
   grid-column: 1 / span 12;
@@ -106,17 +105,6 @@ Table styles
   margin-bottom: 10px;
 }
 
-.table a,
-.table p,
-.table li { //TODO: add to RAC Style Library
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.table-responsive {
-  overflow-x: auto;
-}
-
 .badge {
   width: fit-content;
   width: -moz-fit-content //for Firefox
@@ -124,15 +112,8 @@ Table styles
 
 /**
 Table of contents styles
-TODO: assess which of these styles should be added to the RAC Style Library and add them.
 1. Hide the table of contents on small screens to replace with the #toc-nav-toggle button.
 2. Make table of contents scrollable independently from the docs contents.
-3. Decrease default line height for links in toc.
-4. Adjust margins and padding to enable active styles for toc links.
-5. Decrease title font size (this should be added to Style Library)
-6. Adjust the default focus styles so that they don't conflict with the active styles.
-7. Add active styles to currently active toc heading links.
-8. Add skip link on large screens
 **/
 .toc {
   display: none; /* 1 */
@@ -146,36 +127,6 @@ TODO: assess which of these styles should be added to the RAC Style Library and 
     height: 90vh;
     overflow-y: auto;
     max-width: 100%;
-  }
-}
-
-.toc a {
-  line-height: 1.3; /* 3 */
-}
-
-.toc__title { /* 4 */
-  margin-bottom: 0;
-  padding: 10px 25px;
-  font-size: 18px; /* 5 */
-}
-
-.toc__link-item { /* 4 */
-  margin: 0;
-  padding: 10px 25px 10px 40px;
-}
-
-.toc :focus { /* 6 */
-  outline: none;
-  text-decoration: underline;
-}
-
-.toc .active { /* 7 */
-  outline: none;
-
-  @include lg-up() {
-    background-color: $rust-red;
-    color: $desert-grey;
-
   }
 }
 
@@ -202,59 +153,6 @@ markdown, not markup in this repo.
     &:not(:first-child) {
       margin-top: 80px; //follow rockarch.org styles to improve spacing for text-heavy sites
     }
-  }
-}
-
-/**
-In docs, links that are inside headings should be the same font size as the heading.
-TODO: add to RAC Style Library
-**/
-#documentation h2 a,
-#documentation h3 a,
-#documentation h4 a,
-#documentation h5 a,
-#documentation h6 a {
-  font-size: inherit;
-}
-
-/**
-Improve/create typography styles with relative font size
-TODO: Update style library styles and use those styles instead
-**/
-ol {
-  line-height: 23px;
-
-  @include lg-up {
-    font-size: 17px;
-    line-height: 24px;
-  }
-}
-
-h4 {
-  margin-bottom: 10px;
-  margin-top: 30px;
-
-  @include lg-up() {
-    font-size: 18px;
-  }
-}
-
-h5 {
-  color: $maroon-brown;
-  margin-bottom: 10px;
-  margin-top: 20px;
-
-  @include lg-up() {
-    font-size: 17px;
-  }
-}
-
-h6 {
-  color: $rust-red;
-  margin-bottom: 10px;
-
-  @include lg-up() {
-    font-size: 17px;
   }
 }
 
