@@ -6,7 +6,6 @@ private:
   - RockefellerArchiveCenter/development-guide
   - RockefellerArchiveCenter/scripts-appraisal-policy
   - RockefellerArchiveCenter/docs-guide
-  - RockefellerArchiveCenter/reading-room-manual
   - RockefellerArchiveCenter/reappraisal-policy
   - RockefellerArchiveCenter/rm-policy
   - RockefellerArchiveCenter/textile-policy
@@ -16,7 +15,6 @@ private:
   - RockefellerArchiveCenter/collection-policy
   - RockefellerArchiveCenter/deaccession-policy
   - RockefellerArchiveCenter/dm-transfer-workflow
-  - RockefellerArchiveCenter/digitization-guide
   - RockefellerArchiveCenter/docs-policy
   - RockefellerArchiveCenter/exhibit-policy
   - RockefellerArchiveCenter/gdpr-report
@@ -38,7 +36,6 @@ private:
   - RockefellerArchiveCenter/employee-handbook
 public:
   - RockefellerArchiveCenter/docs-guide
-  - RockefellerArchiveCenter/reading-room-manual
   - RockefellerArchiveCenter/reappraisal-policy
   - RockefellerArchiveCenter/rm-policy
   - RockefellerArchiveCenter/textile-policy
@@ -48,7 +45,6 @@ public:
   - RockefellerArchiveCenter/collection-policy
   - RockefellerArchiveCenter/deaccession-policy
   - RockefellerArchiveCenter/dm-transfer-workflow
-  - RockefellerArchiveCenter/digitization-guide
   - RockefellerArchiveCenter/docs-policy
   - RockefellerArchiveCenter/exhibit-policy
   - RockefellerArchiveCenter/gdpr-report
