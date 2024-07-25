@@ -70,8 +70,12 @@ Layout for documentation page based on rockarch.org styles
 }
 
 /**
-Remove header nav link icon on small screens
+Fix header layout on small screens
 **/
+.nav__link {
+  padding-left: 14px;
+}
+
 .nav__link .material-icon {
   display: none;
 
