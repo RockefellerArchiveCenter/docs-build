@@ -8,7 +8,6 @@ import subprocess
 from base64 import b64decode
 from datetime import datetime
 from shutil import copyfile, copytree, rmtree
-from urllib.parse import unquote
 
 import boto3
 import yaml
@@ -41,7 +40,8 @@ def decrypt_env_variable(key):
     ENCRYPTED = os.environ[key]
     return boto3.client('kms').decrypt(
         CiphertextBlob=b64decode(ENCRYPTED),
-        EncryptionContext={'LambdaFunctionName': os.environ['AWS_LAMBDA_FUNCTION_NAME']}
+        EncryptionContext={
+            'LambdaFunctionName': os.environ['AWS_LAMBDA_FUNCTION_NAME']}
     )['Plaintext'].decode('utf-8')
 
 
@@ -52,9 +52,11 @@ class UpdateRoutine:
         else:
             if deploy:
                 try:
-                    decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
+                    decrypt_env_variable(
+                        f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
                 except KeyError:
-                    raise Exception(f'No build destination for {audience} {branch} site')
+                    raise Exception(
+                        f'No build destination for {audience} {branch} site')
 
         with open('repositories.yml') as f:
             repositories_config = yaml.safe_load(f)
@@ -65,7 +67,8 @@ class UpdateRoutine:
         if deploy:
             site.upload(audience, branch)
         else:
-            logging.info(f'Skipping upload to S3 for {audience} {branch} site.')
+            logging.info(
+                f'Skipping upload to S3 for {audience} {branch} site.')
         return f'Update process for {audience} {branch} site completed at {datetime.now()}'
 
 
@@ -107,7 +110,7 @@ class Site:
                 os.path.join(self.staging_dir, self.current_repo))
 
     def build(self):
-        logging.info(f'Building site.')
+        logging.info('Building site.')
         call_command([f'/usr/local/rvm/gems/{RUBY_VERSION}/wrappers/jekyll', 'build',
                       '--source', self.staging_dir, '--destination', self.build_dir])
 
@@ -130,7 +133,8 @@ class Site:
         return out.communicate()[0]
 
     def upload(self, audience, branch):
-        bucket_name = decrypt_env_variable(f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
+        bucket_name = decrypt_env_variable(
+            f'{branch.upper()}_{audience.upper()}_BUCKET_NAME')
         logging.info(f'Uploading site in {self.build_dir} to {bucket_name}.')
         s3 = boto3.client(
             's3',
@@ -158,7 +162,9 @@ def main(event=None, context=None):
         message_data = json.loads(event['Records'][0]['Sns']['Message'])
         audience = 'private' if message_data['event'].get(
             'repository_visibility') in ['private', 'internal'] else 'public'
-        branch = message_data['event'].get('ref', '').replace('refs/heads/', '')
+        branch = message_data['event'].get(
+            'ref', '').replace(
+            'refs/heads/', '')
         if branch not in ['base', 'development']:
             return {
                 'statusCode': 200,
@@ -186,6 +192,7 @@ def main(event=None, context=None):
             audience = 'public'
             branch = 'base'
             UpdateRoutine().run(audience, branch, deploy)
+
 
 if __name__ == '__main__':
     main()
