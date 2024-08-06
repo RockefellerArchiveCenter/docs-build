@@ -3,3 +3,6 @@ config.json
 .DS_Store
 .gitmodules
 __pycache__*
+node_modules
+backstop_data/html_report/
+bitmaps_test/

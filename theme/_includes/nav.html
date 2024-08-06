@@ -1,21 +1,25 @@
-<header class="site-header">
-  <nav class="navbar navbar-expand-lg" role="navigation" aria-label="homepage">
-    <div class="container-fluid">
-      <div>
-      <a href="//rockarch.org">
-        <img class="header-logo" src="{{ site.baseurl }}/img/RAC-logo.png" alt="RAC logo"/>
-      </a>
-      <a class="navbar-brand nounderline" href="{{ site.baseurl }}/">{{ site.title }} </a>
-        <br/><span class="site-subtitle">{{ site.subtitle }}</span>
+<header class="header header--blue">
+  <div class="wrapper">
+    <div class="container flex">
+      <div class="header__brand header__brand--text">
+        <a href="/" class="header__brand-title">docs.rockarch.org</a>
+        <div class="header__brand-subtitle">
+          Rockefeller Archive Center Documentation
+        </div>
       </div>
-      <ul class="navbar-nav justify-content-end">
-        <li class="nav-item">
-          <a class="nav-link nounderline" href="{{ site.baseurl }}/about">About <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link nounderline" href="//github.com/RockefellerArchiveCenter">GitHub</a>
-        </li>
-      </ul>
+
+      <nav class="nav-right" aria-label="Main">
+        <div class="nav__list">
+          <div class="nav__item btn--navy">
+            <a class="nav__link" href="{{ site.baseurl }}/about" id="about">
+              About
+              <span class="material-icon" aria-hidden="true">
+                arrow_right_alt
+              </span>
+            </a>
+          </div>
+        </div>
+      </nav>
     </div>
-  </nav>
+  </div>
 </header>

@@ -1,127 +1,187 @@
+// -----------------------------------------------------------------------------
+// This file contains custom styles to supplement the RAC Style Library styles.
+// -----------------------------------------------------------------------------
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
-    position: relative;
-    height: 100%
-}
-
-a {
-  text-decoration: underline;
-  &.nounderline {
-    text-decoration: none;
-  }
-  &.hover {
-    text-decoration: none;
-  }
-  &.nounderline:hover {
-    text-decoration: underline;
-  }
-}
-
-// Override Bootstrap styles
-h3, .h3 {
-  font-size: 1.5rem;
-}
-
-.footer-logo {
-    float: left;
-    height: 5em;
-    margin-right: 1em;
-}
-
-.header-logo {
-  float: left;
-  height: 5em;
-  margin-right: 1em;
-}
-
-.full-height {
+  position: relative;
   height: 100%;
 }
 
-div.toc-striped li:nth-child(even) {
-    background: #efefef;
+.home {
+  background-color: $desert-grey;
 }
 
-#documents {
-  list-style-type: none;
-  list-style: none;
+/**
+Layout classes
+**/
+
+.container {
+  margin: 0 30px;
 }
 
-#current .list-group-item {
-    border-radius: 0;
-    font-size: .8rem;
-    padding: 1em 1em 1em 3em;
+main .container {
+  max-width: 1440px;
 }
 
+.layout--default {
+  grid-column: 1 / span 12;
+
+  @include lg-up() {
+    grid-column: 2 / span 10;
+  }
+}
+
+/**
+Layout for documentation page based on rockarch.org styles
+**/
+.docs-page__content,
+.docs-page__title {
+  grid-column: 1 / span 12;
+  padding-left: 0;
+  margin-left: 0;
+
+  @include lg-up {
+    grid-column: 3 / span 7;
+    padding-left: 35px;
+  }
+}
+
+.docs-page__title-container {
+  min-height: 168px;
+  background: $water-blue;
+  margin-bottom: 80px;
+}
+
+.docs-page__title {
+  margin-top: 1.2em;
+}
+
+.docs-page__sidebar {
+  grid-column: 1 / span 12;
+  margin-bottom: 10px;
+
+  @include lg-up {
+    grid-column: 1 / span 2;
+  }
+}
+
+/**
+Fix header layout on small screens
+**/
+.nav__link {
+  padding-left: 14px;
+}
+
+.nav__link .material-icon {
+  display: none;
+
+  @include lg-up() {
+    display: inline-block;
+  }
+}
+
+/**
+Hero component layout on homepage
+**/
+.hero {
+  margin-top: 10px;
+
+  @include md-up {
+    margin: 90px 0 20px;
+  }
+}
+
+.hero__text {
+  max-width: 500px;
+}
+
+/**
+Table styles
+**/
+.table {
+  margin-bottom: 10px;
+}
+
+.badge {
+  margin-top: 10px;
+  width: fit-content;
+  width: -moz-fit-content //for Firefox
+}
+
+/**
+Table of contents styles
+1. Hide the table of contents on small screens to replace with the #toc-nav-toggle button.
+2. Make table of contents scrollable independently from the docs contents.
+3. Don't show active styles on small screens when the toc is positioned above the page content.
+**/
+.toc {
+  display: none; /* 1 */
+
+  @include lg-up { /* 2 */
+    display: block;
+    height: 90vh;
+    overflow-y: auto;
+    max-width: 100%;
+  }
+}
+
+.toc .active { /* 3 */
+  background: $desert-grey;
+  color: $night-grey;
+
+  @include lg-up {
+    background: $rust-red;
+    color: $desert-grey;
+  }
+}
+
+/**
+* Layout styles for the toc-nav-toggle button
+*/
+#toc-nav-toggle {
+  margin-top: -52px;
+
+  @include lg-up {
+    display: none;
+  }
+}
+
+/**
+Add dotted border to h2 in documentation. Using custom styles instead of RAC style
+library heading--dotted-border class because the h2 comes from the documentation
+markdown, not markup in this repo.
+**/
+#documentation h2 {
+  border-bottom: 1.5px dotted $regal-blue;
+
+  @include lg-up {
+    &:not(:first-child) {
+      margin-top: 80px; //follow rockarch.org styles to improve spacing for text-heavy sites
+    }
+  }
+}
+
+/**
+Text that is visually highlighted as an example.
+**/
 .docs-example {
-  background: #efefef;
+  background: $desert-grey;
   padding: 15px;
   font-family: Courier, monospace;
-  & > h6 {
-    font-weight: 600;
-  }
+  margin: 10px 0;
+
   & p:last-of-type {
     margin-bottom: 0;
   }
 }
 
-.card-container {
-  display: flex;
-  flex-flow: row wrap;
-}
-
-.title-card {
-  flex: 0 1 auto;
-}
-
-.codeblock {
-    color: #bd4147;
-    white-space: pre;
-    overflow: auto;
-    -ms-overflow-style: scrollbar;
-}
-
-.table-responsive {
-  margin-bottom: 1em;
-}
-
-.site-subtitle {
-  color: #737373;
-}
-
-#table-of-contents {
-  height: 95vh;
-  overflow-y: auto;
-}
-
-// Skip link
-.skip-link {
-  background: rgba(255,255,255,.9);
-  padding: 20px 10px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  font-size: 18px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.visually-hidden {
-    clip: rect(1px, 1px, 1px, 1px);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-    &:focus {
-      clip: auto;
-      height: auto;
-      overflow: auto;
-      position: absolute;
-      width: auto;
-      z-index: 99;
-    }
+/**
+Add margin to superscript footnote.
+**/
+.footnote {
+  margin: 0 5px;
 }

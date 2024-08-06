@@ -1,0 +1,32 @@
+/**
+Breakpoints map
+**/
+$break-md: 580px;
+$break-lg: 1024px;
+
+@mixin md-up {
+  @media screen and (min-width: $break-md) { @content; }
+}
+
+@mixin lg-up {
+  @media screen and (min-width: $break-lg) { @content; }
+}
+
+/**
+Colors by category
+**/
+
+// Blues
+$regal-blue: hsl(214deg 49% 19%);
+$water-blue: hsl(210deg 27% 82%);
+$solitude-blue: hsl(213deg 29% 94%);
+
+// Browns
+$maroon-brown: hsl(23deg 100% 20%);
+$rust-red: hsl(19deg 83% 34%);
+
+// Greys
+$wan-white-grey: hsl(40deg 10% 88%);
+$desert-grey: hsl(60deg 10% 96%);
+$night-grey: hsl(0deg 0% 18%);
+

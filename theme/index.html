@@ -2,25 +2,31 @@
 layout: home
 title: Rockefeller Archive Center Documentation
 ---
-
-<div class="container-fluid" id="docs-list">
-  {% include search-category.html %}
-  <div id="documents" class="list row card-container">
-  {% for file in site.data %}
-  {% assign doc = file[1] %}
-    <div class="col-sm-4 mt-4">
-      <div class="card full-height shadow">
-        <div class="card-body">
-          <h2 class="card-title"><a class="sort-title nounderline" href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a></h2>
-          {% if doc.public == false %}<p class="badge badge-warning">Internal Only</p>{% endif %}
-          {% for category in doc.category %}{% include category.html %}{% endfor %}
-        </div>
-        <div class="card-footer">
-          <p class="card-text"><small>Last updated {{doc.updated | date: "%A, %b %e %Y %l:%M %p"}}</small></p>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
+<div class="hero">
+  <div class="hero__logo">
+    <img alt="" src="https://assets.rockarch.org/assets/img/hero_logo.png" />
   </div>
-
+  <h1 class="hero__text">
+    Explore the institutional policies, procedures, and user guides of the Rockefeller Archive Center
+  </h1>
 </div>
+
+<table id="docs-table" class="table">
+  <thead>
+    <tr>
+      <th>Documentation Title</th>
+      <th>Last Updated</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for file in site.data %}
+      {% assign doc = file[1] %}
+      <tr>
+        <td><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
+          {% if doc.public == false %}<div class="badge badge--orange"> Internal Only</div>{% endif %}
+        </td>
+        <td>{{doc.updated | date: "%b %e, %Y"}}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
