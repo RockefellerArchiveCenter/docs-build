@@ -80,10 +80,10 @@ Source: mpchadwick at https://github.com/mpchadwick/pygments-high-contrast-style
 .highlight .vm { color: #40ffff; }
 .highlight .il { color: #438dc4; }
 
-/* Inline code styles (colors from RAC styles library) */
+/* Inline code styles (colors from RAC style library) */
 .highlighter-rouge {
-    color: #9F3C0F;
-    background-color: #E3E1DD;
-    margin-bottom: 1rem; //matches paragraph margin style
+    color: $rust-red;
+    background-color: $wan-white-grey;
+    margin-bottom: 10px; //matches paragraph margin style
     padding: 2px;
 }

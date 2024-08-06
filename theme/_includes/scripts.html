@@ -1,66 +1,38 @@
 <!--JQuery-->
-<script type="text/javascript" src="{{ site.baseurl }}/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/js/jquery-3.7.1.min.js"></script>
+<!--DataTables-->
+<script type="text/javascript" src="{{ site.baseurl }}/js/datatables.min.js"></script>
 
-<!--Popper-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-
-<!-- Bootstrap -->
-<script type="text/javascript" src="{{ site.baseurl }}/js/bootstrap/bootstrap.min.js"></script>
-
-<!--SideNav-->
-<script type="text/javascript" src="{{ site.baseurl }}/js/toc.js"></script>
+<!--Docs table of contents-->
+<script type="text/javascript" src="{{ site.baseurl }}/js/toc-build.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/js/toc-toggle.js"></script>
+<script type="text/javascript" src="{{ site.baseurl }}/js/toc-active-link.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#current').toc({classes: { list: 'list-group',item: 'list-group-item'}});
+    $('#current').toc();
 });
 </script>
 
-<!-- use Bootstrap table formatting for Markdown tables-->
-
+<!-- use RAC Style Library table formatting for Markdown tables-->
 <script type="text/javascript">
   $(document).ready(function () {
-    $("table").addClass("table table-striped table-bordered");
+    $("table").addClass("table table-striped table-responsive");
   });
 </script>
 
-<!-- list.js for homepage search/filter -->
-<script type="text/javascript" src="{{ site.baseurl }}/js/list.js"></script>
-
-<!-- code for filters-->
+<!-- Initialize DataTables for homepage docs table -->
 <script type="text/javascript">
-var options = {
-  valueNames: [ 'category', 'card-title', 'card-text', 'sort-title']
-};
-var documentsList = new List ('docs-list', options);
-
-if (documentsList.items.length) {
-  documentsList.sort('sort-title', { order: "asc" });
-}
-
-$('#filter-none').on('click', function() {
-  $('.filter-button').each(function() {
-    $(this).removeClass('active')
-  });
-  $(this).addClass('sr-only')
-  documentsList.filter();
-  return false;
+  new DataTable('#docs-table', {
+  info: false,
+  ordering: true,
+  paging: false,
+  order: [[0, 'asc']],
+  searching: true,
+  language: {
+    search: 'Search titles:',
+    searchPlaceholder: 'Start typing to filter content...'
+  },
 });
-
-$('.filter-button').on('click', function() {
-  $('.filter-button').each(function() {
-    $(this).removeClass('active')
-  });
-  $(this).addClass('active')
-  $('#filter-none').removeClass('sr-only')
-  var category = $(this).data('category')
-  documentsList.filter(function(item) {
-    if (item.values().category.includes(category)) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-});
-
 </script>
+

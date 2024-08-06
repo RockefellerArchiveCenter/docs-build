@@ -10,10 +10,11 @@
       <meta name="description" content="{%- if doc.description -%}{{ doc.description }}{%- else -%}{{ site.description }}{%- endif -%}">
     {%- endif -%}
   {%- endfor -%}
+  <link rel="stylesheet" href="https://assets.rockarch.org/v0.12.0/main.min.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
-  <link rel="shortcut icon" type="image/png" href="{{ site.baseurl }}/favicon.png">
+  <link rel="shortcut icon" type="image/png" href="https://assets.rockarch.org/assets/img/favicon.ico">
 
   <!-- Matomo Tag Manager -->
   <script>

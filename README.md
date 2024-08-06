@@ -51,9 +51,7 @@ of Jekyll-based includes and one default layout template. They are styled with
 both Bootstrap and custom CSS and are rendered with the Liquid template language.
 
 The layout directory formats the various documentation files stored in the
-individual GitHub repositories and thereby creates the site's central interface for
-access to documentation. This process is achieved through the use of layout
-variables in the documentation files' YAML front matter.
+individual GitHub repositories and thereby creates the site's central interface for access to documentation. This process is achieved through the use of layout variables in the documentation files' YAML front matter.
 
 ## Deployment
 
@@ -82,9 +80,6 @@ available in a file named `_config.yml` located the root directory of each
 documentation repository. These files should be valid [YAML](http://yaml.org).
 
     public: true
-    category: "collection development and management"
-    tags:
-      - "policy"
     title: "Collection Policy"
     description: "The main collecting areas of the Rockefeller Archive Center."
     pages:
@@ -92,10 +87,6 @@ documentation repository. These files should be valid [YAML](http://yaml.org).
 
 `public` indicates whether or not the documentation should be public. Values
 should be either `true` or `false` (booleans, not strings).
-
-`categories` indicate what archival life cycle category(s) applies to the documentation. Categories enable filtering of documentation items on homepage. Values should be `"collection development and management"`, `"preservation"`, `"arrangement and description"`, and/or `"reference and outreach"`.
-
-`tags` are used to describe what type of documentation the item is. Values should be either `"policy"` or `"workflow"`.
 
 `title` is the official title of the documentation, which will be displayed on
 the home page of the site.
@@ -109,9 +100,7 @@ extension). These values are used when building tables of contents.
 Other variables can be included in this config file if desired.
 
 ## GitHub Action Configuration
-In order to deliver update notifications to Amazon SNS (which will trigger a build 
-of the site), a GitHub Actions file named `.github/workflows/publish_sns.yml` needs
-to be created and populated with the following content:
+In order to deliver update notifications to Amazon SNS (which will trigger a build of the site), a GitHub Actions file named `.github/workflows/publish_sns.yml` needs to be created and populated with the following content:
 
 ```
 name: Publish to SNS
@@ -141,16 +130,29 @@ jobs:
 
 To test this configuration, you can trigger a workflow run from the GitHub interface.
 
+## Visual regression testing for theme
+
+The repository includes [BackstopJS](https://github.com/garris/BackstopJS) to test visual changes to the site theme by comparing a set of reference images for different screen sizes. Anytime the CSS styles are changed, use BackstopJS to test locally:
+
+1. Install BackstopJS dependency: `yarn install`
+2. Build and run the site using the steps in the [Quick Start section](#quick-start) above.
+3. In another terminal, run the BackstopJS tests: `yarn backstop-test`.
+4. Review the results in the browser and look at the diff of any failed tests.
+5. To update the reference image files with the results of the last test images use: `yarn backstop-approve`. Subsequent tests will be compared against these updated reference files.
+6. Commit any updated reference images to the repository so that future tests will be compared against the most recent images.
+
+To add or update reference images, edit the scenarios in `backstop.json` and run `yarn backstop-reference`.
+
 ## Contributing
 
 Pull requests accepted!
 
 ## Authors
 
-Hillel Arnold  
-Hannah Sistrunk  
-Katie Martin  
-Darren Young  
+Hillel Arnold
+Hannah Sistrunk
+Katie Martin
+Darren Young
 
 ## License
 
