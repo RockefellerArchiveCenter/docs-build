@@ -66,6 +66,7 @@ class UpdateRoutine:
         site.build()
         if deploy:
             site.upload(audience, branch)
+            site.invalidate_cache(audience, branch)
         else:
             logging.info(
                 f'Skipping upload to S3 for {audience} {branch} site.')
@@ -153,6 +154,27 @@ class Site:
                             '').lstrip('/'),
                         f),
                     ExtraArgs={'ContentType': mtype if mtype else 'application/json'})
+    
+    def invalidate_cache(self, audience, branch):
+        distribution_id = decrypt_env_variable(
+            f'{branch.upper()}_{audience.upper()}_DISTRIBUTION')
+        cloudfront = boto3.client(
+            'cloudfront',
+            region_name=decrypt_env_variable('REGION_NAME'),
+            aws_access_key_id=decrypt_env_variable('ACCESS_KEY'),
+            aws_secret_access_key=decrypt_env_variable('SECRET_KEY'))
+        cloudfront.create_invalidation(
+            DistributionId=distribution_id,
+            InvalidationBatch={
+                'Paths': {
+                    'Quantity': 1,
+                    'Items': [
+                        '/*',
+                    ]
+                },
+                'CallerReference': datetime.now().timestamp().replace('.', '')
+            }
+        )
 
 
 def main(event=None, context=None):
