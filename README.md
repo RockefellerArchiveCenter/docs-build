@@ -4,8 +4,6 @@ Theme file along with a Python script which retrieves updates for documentation
 repositories, and builds internal and external-facing sites. Requires at
 least one documentation repository (see [processing-manual](https://github.com/RockefellerArchiveCenter/processing-manual)).
 
-[![Build Status](https://app.travis-ci.com/RockefellerArchiveCenter/docs-build.svg?branch=base)](https://app.travis-ci.com/RockefellerArchiveCenter/docs-build)
-
 ## Quick Start
 
 A Dockerfile for local development (`Dockerfile-local`) is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
