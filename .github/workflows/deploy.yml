@@ -47,7 +47,7 @@ jobs:
       - name: Build and push Docker images with dev and versioned tags
         if: github.ref == 'refs/heads/development'
         run: |
-          docker build -t ${{ env.APP_NAME }} --target build .
+          docker build -t ${{ env.APP_NAME }}  .
           docker tag ${{ env.APP_NAME }} "${{ secrets.AWS_ACCOUNT_ID }}".dkr.ecr."${{ secrets.AWS_REGION }}".amazonaws.com/"${{ env.APP_NAME }}":dev
           docker push "${{ secrets.AWS_ACCOUNT_ID }}".dkr.ecr."${{ secrets.AWS_REGION }}".amazonaws.com/"${{ env.APP_NAME }}":dev
           docker tag ${{ env.APP_NAME }} "${{ secrets.AWS_ACCOUNT_ID }}".dkr.ecr."${{ secrets.AWS_REGION }}".amazonaws.com/"${{ env.APP_NAME }}":"${{ env.DATE }}"-"${{ github.sha }}"
