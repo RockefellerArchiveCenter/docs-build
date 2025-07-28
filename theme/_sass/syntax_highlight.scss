@@ -87,3 +87,7 @@ Source: mpchadwick at https://github.com/mpchadwick/pygments-high-contrast-style
     margin-bottom: 10px; //matches paragraph margin style
     padding: 2px;
 }
+
+.highlight {
+    overflow: scroll;
+}
