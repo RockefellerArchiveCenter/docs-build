@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Publish SNS Notification
-      uses: nothingalike/sns-publish-topic@v1.6
+      uses: nothingalike/sns-publish-topic@v1.7
       with:
         MESSAGE: ${{ toJSON(github) }}
         TOPIC_ARN: "arn:aws:sns:${{ secrets.AWS_DOCS_REGION }}:${{ secrets.AWS_DOCS_ACCOUNT_ID }}:${{ secrets.AWS_DOCS_SNS_TOPIC }}"
