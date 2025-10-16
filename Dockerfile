@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.11
+FROM public.ecr.aws/lambda/python:3.12 AS base
 
 ENV RUBY_VERSION=3.2.4
 
@@ -20,4 +20,5 @@ COPY update.py ${LAMBDA_TASK_ROOT}
 COPY repositories.yml ${LAMBDA_TASK_ROOT}
 COPY theme ${LAMBDA_TASK_ROOT}/theme
 
+FROM base AS build
 CMD [ "update.main" ]
