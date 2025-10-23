@@ -1,5 +1,7 @@
 FROM public.ecr.aws/lambda/python:3.12
 
+ENV JEKYLL_BIN=/usr/local/bin/jekyll
+
 # Install system packages
 RUN dnf -y update && \
     dnf -y install \

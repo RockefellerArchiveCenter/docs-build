@@ -3,7 +3,7 @@ FROM python:3.12-slim
 # Environment setup
 ENV DEBIAN_FRONTEND=noninteractive
 ENV CONTAINER_ROOT=/home/docs/docs-build/
-ENV RUBY_VERSION=3.2.4
+ENV JEKYLL_BIN=/usr/local/bin/jekyll
 
 # Install system dependencies
 RUN apt-get update && \
@@ -22,9 +22,7 @@ RUN apt-get update && \
 
 # Set up Ruby
 RUN gem install bundler --no-document && \
-    gem install jekyll --no-document && \
-    mkdir -p /usr/local/rvm/gems/ruby-${RUBY_VERSION}/wrappers && \
-    ln -s $(which jekyll) /usr/local/rvm/gems/ruby-${RUBY_VERSION}/wrappers/jekyll
+    gem install jekyll --no-document
 
 # Install Python dependencies
 ADD requirements.txt .
