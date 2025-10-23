@@ -1,30 +1,19 @@
 FROM public.ecr.aws/lambda/python:3.12
 
-ENV RUBY_VERSION=3.2.4
-
-# Install build tools
+# Install system packages
 RUN dnf -y update && \
     dnf -y install \
       gcc gcc-c++ make \
-      tar gzip bzip2 \
-      curl wget git which \
-      procps-ng \
-      openssl-devel readline-devel zlib-devel libyaml-devel libffi-devel gdbm-devel ncurses-devel \
-      ca-certificates findutils shadow-utils && \
+      autoconf automake bison libtool patch \
+      tar gzip bzip2 xz \
+      git which procps-ng findutils ca-certificates \
+      ruby ruby-devel rubygems \
+      openssl-devel readline-devel zlib-devel libyaml-devel libffi-devel \
+      gdbm-devel ncurses-devel sqlite-devel && \
     dnf clean all && rm -rf /var/cache/dnf
 
-# Install RVM and Ruby
-RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import - && \
-    curl -sSL https://rvm.io/pkuczynski.asc | gpg --import - && \
-    curl -sSL https://get.rvm.io | bash -s stable
-
-SHELL ["/bin/bash", "-lc"]
-
-RUN source /etc/profile.d/rvm.sh && \
-    rvm requirements && \
-    rvm install "${RUBY_VERSION}" && \
-    rvm --default use "${RUBY_VERSION}" && \
-    gem update --system && \
+# Install Ruby gems
+RUN gem update --system && \
     gem install bundler --no-document && \
     gem install jekyll --no-document
 
