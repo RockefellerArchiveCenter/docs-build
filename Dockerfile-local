@@ -1,30 +1,43 @@
-FROM python:3.12
+FROM python:3.12-slim
 
-ENV RUBY_VERSION=3.2.4
+# Environment setup
+ENV DEBIAN_FRONTEND=noninteractive
 ENV CONTAINER_ROOT=/home/docs/docs-build/
+ENV RUBY_VERSION=3.2.4
 
-RUN apt-get -y update && apt-get -y install \
-  make gcc curl gpg libffi-dev \
-  apache2 \
-  git \
-  inotify-tools
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      make gcc g++ curl gpg git \
+      apache2 \
+      inotify-tools \
+      ruby \
+      ruby-dev \
+      build-essential \
+      libffi-dev \
+      libssl-dev \
+      zlib1g-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install RVM and use RVM to install desired version of Ruby
-RUN \curl -L https://get.rvm.io | bash
-RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
-RUN /bin/bash -l -c "gem install bundler --no-document"
-RUN /bin/bash -l -c "gem install jekyll --no-document"
+# Set up Ruby
+RUN gem install bundler --no-document && \
+    gem install jekyll --no-document && \
+    mkdir -p /usr/local/rvm/gems/ruby-${RUBY_VERSION}/wrappers && \
+    ln -s $(which jekyll) /usr/local/rvm/gems/ruby-${RUBY_VERSION}/wrappers/jekyll
 
+# Install Python dependencies
 ADD requirements.txt .
-RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
-WORKDIR ${CONTAINER_ROOT}
-
+# Configure Apache
 COPY apache/httpd.conf /etc/apache2/sites-enabled/000-default.conf
 
+WORKDIR ${CONTAINER_ROOT}
 ADD . .
 
+# Expose port
 EXPOSE 4000
 
 CMD ["./entrypoint.sh"]
