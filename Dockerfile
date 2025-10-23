@@ -1,18 +1,23 @@
-FROM public.ecr.aws/lambda/python:3.11
+FROM public.ecr.aws/lambda/python:3.12
 
-ENV RUBY_VERSION=3.2.4
+# Install system packages
+RUN dnf -y update && \
+    dnf -y install \
+      gcc gcc-c++ make \
+      autoconf automake bison libtool patch \
+      tar gzip bzip2 xz \
+      git which procps-ng findutils ca-certificates \
+      ruby ruby-devel rubygems \
+      openssl-devel readline-devel zlib-devel libyaml-devel libffi-devel \
+      gdbm-devel ncurses-devel sqlite-devel && \
+    dnf clean all && rm -rf /var/cache/dnf
 
-RUN yum update -y && yum install -y \
-  make gcc curl gpg which tar procps wget \
-  git
+# Install Ruby gems
+RUN gem update --system && \
+    gem install bundler --no-document && \
+    gem install jekyll --no-document
 
-# Install RVM and use RVM to install desired version of Ruby
-RUN \curl -L https://get.rvm.io | bash
-RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install $RUBY_VERSION"
-RUN /bin/bash -l -c "gem install bundler --no-document"
-RUN /bin/bash -l -c "gem install jekyll --no-document"
-
+# Install Python dependencies
 ADD requirements.txt ${LAMBDA_TASK_ROOT}
 RUN pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
