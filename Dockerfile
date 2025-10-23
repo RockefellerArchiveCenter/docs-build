@@ -1,6 +1,6 @@
 FROM public.ecr.aws/lambda/python:3.12
 
-ENV RUBY_VERSION=3.2.4
+ENV JEKYLL_BIN=/usr/local/bin/jekyll
 
 # Install system packages
 RUN dnf -y update && \
@@ -17,9 +17,7 @@ RUN dnf -y update && \
 # Install Ruby gems
 RUN gem update --system && \
     gem install bundler --no-document && \
-    gem install jekyll --no-document && \
-    mkdir -p /usr/local/rvm/gems/ruby-${RUBY_VERSION}/wrappers && \
-    ln -s $(which jekyll) /usr/local/rvm/gems/ruby-${RUBY_VERSION}/wrappers/jekyll
+    gem install jekyll --no-document
 
 # Install Python dependencies
 ADD requirements.txt ${LAMBDA_TASK_ROOT}

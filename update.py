@@ -12,7 +12,7 @@ from shutil import copyfile, copytree, rmtree
 import boto3
 import yaml
 
-RUBY_VERSION = "ruby-3.2.4"
+JEKYLL_BIN = os.getenv("JEKYLL_BIN", "jekyll")
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -112,8 +112,11 @@ class Site:
 
     def build(self):
         logging.info('Building site.')
-        call_command([f'/usr/local/rvm/gems/{RUBY_VERSION}/wrappers/jekyll', 'build',
-                      '--source', self.staging_dir, '--destination', self.build_dir])
+        call_command([
+                      JEKYLL_BIN,
+                      'build',
+                      '--source', self.staging_dir,
+                      '--destination', self.build_dir])
 
     def update_data_file(self, data_file):
         updated_date = self.get_updated_date()
