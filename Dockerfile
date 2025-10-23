@@ -5,6 +5,7 @@ ENV RUBY_VERSION=3.2.4
 
 # Install build tools and ruby dependencies
 RUN dnf -y update && \
+    (rpm -q gnupg2-minimal && dnf -y remove gnupg2-minimal || true) && \
     dnf -y install \
       gcc gcc-c++ make \
       tar gzip bzip2 \
