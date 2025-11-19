@@ -35,6 +35,7 @@ private:
   - RockefellerArchiveCenter/r-e-content-strategy
   - RockefellerArchiveCenter/employee-handbook
   - RockefellerArchiveCenter/reading-room-handbook
+  - RockefellerArchiveCenter/ai-archival-processes
 public:
   - RockefellerArchiveCenter/docs-guide
   - RockefellerArchiveCenter/reappraisal-policy
@@ -66,3 +67,4 @@ public:
   - RockefellerArchiveCenter/r-e-content-strategy
   - RockefellerArchiveCenter/reading-room-handbook
   - RockefellerArchiveCenter/employee-handbook
+  - RockefellerArchiveCenter/ai-archival-processes
