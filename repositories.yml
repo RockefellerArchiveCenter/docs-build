@@ -20,7 +20,6 @@ private:
   - RockefellerArchiveCenter/gdpr-report
   - RockefellerArchiveCenter/processing-manual
   - RockefellerArchiveCenter/archivematica-local
-  - RockefellerArchiveCenter/premis-rights-guidelines
   - RockefellerArchiveCenter/loan-policy
   - RockefellerArchiveCenter/digital-preservation-policy
   - RockefellerArchiveCenter/archival-description-license
@@ -53,7 +52,6 @@ public:
   - RockefellerArchiveCenter/gdpr-report
   - RockefellerArchiveCenter/processing-manual
   - RockefellerArchiveCenter/archivematica-local
-  - RockefellerArchiveCenter/premis-rights-guidelines
   - RockefellerArchiveCenter/loan-policy
   - RockefellerArchiveCenter/digital-preservation-policy
   - RockefellerArchiveCenter/archival-description-license
@@ -69,3 +67,4 @@ public:
   - RockefellerArchiveCenter/reading-room-handbook
   - RockefellerArchiveCenter/employee-handbook
   - RockefellerArchiveCenter/ai-archival-processes
+  - RockefellerArchiveCenter/structured-rights-guidelines
