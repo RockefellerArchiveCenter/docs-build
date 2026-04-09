@@ -17,9 +17,9 @@ key in `repositories.yml`) will be available in your browser at `http://localhos
 
 ## Usage
 
-## Adding or Removing Repositories
+## Adding Repositories
 
-Repositories can be added or removed from either the public or private site by
+Repositories can be added from either the public or private site by
 updating `repositories.yml`. Only the sites listed under the `public` or `private`
 key will be built for each site, so make sure to add publicly-available Repositories
 to both the `public` and `private` lists.
@@ -37,6 +37,17 @@ Organization Secrets in Github:
 - AWS_DOCS_REGION
 - AWS_DOCS_SECRET_ACCESS_KEY
 - AWS_DOCS_SNS_TOPIC
+
+## Removing Repositories
+
+To remove a repository that is currently built, you need to reverse the steps above:
+1. Remove the repository from `repositories.yml`, taking care to remove it from the 
+lists under both the `public` or `private` keys if necessary.
+2. Remove Jekyll configuration files from the repository.
+3. Remove the GitHub Actions file that publishes SNS notifications.
+4. Remove repository access to Organization Secrets in GitHub.
+5. Finally, remove the previously built docs files from the public and/or private S3 
+bucket from which they are served.
 
 
 ### Theme
