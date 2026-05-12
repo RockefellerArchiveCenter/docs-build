@@ -17,7 +17,11 @@ $(document).ready(function() {
 <!-- use RAC Style Library table formatting for Markdown tables-->
 <script type="text/javascript">
   $(document).ready(function () {
-    $("table").addClass("table table-striped table-responsive");
+    $("table").addClass("table table-striped").each(function() {
+      if (!$(this).parent().hasClass("table-responsive")) {
+        $(this).wrap('<div class="table-responsive"></div>');
+      }
+    });
   });
 </script>
 

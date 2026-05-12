@@ -70,21 +70,6 @@ Layout for documentation page based on rockarch.org styles
 }
 
 /**
-Fix header layout on small screens
-**/
-.nav__link {
-  padding-left: 14px;
-}
-
-.nav__link .material-icon {
-  display: none;
-
-  @include lg-up() {
-    display: inline-block;
-  }
-}
-
-/**
 Hero component layout on homepage
 **/
 .hero {
