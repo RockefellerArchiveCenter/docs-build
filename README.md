@@ -9,13 +9,11 @@ least one documentation repository (see [processing-manual](https://github.com/R
 A Dockerfile for local development (`Dockerfile-local`) is included in this repository so you can quickly spin up a sample site on your computer. With git and Docker installed, run:
 
     git clone https://github.com/RockefellerArchiveCenter/docs-build.git
-    docker-compose build
-    docker-compose up
+    docker compose build
+    docker compose up
 
 The public docs site (which includes all the repositories listed under the `public`
 key in `repositories.yml`) will be available in your browser at `http://localhost:4000`.
-
-## Usage
 
 ## Adding Repositories
 
@@ -50,7 +48,7 @@ lists under both the `public` or `private` keys if necessary.
 bucket from which they are served.
 
 
-### Theme
+## Theme
 
 The site uses a Jekyll-based theme to create a cohesive structure and
 customizable interface. These files are located in the `theme/` directory.
@@ -139,7 +137,7 @@ jobs:
 
 To test this configuration, you can trigger a workflow run from the GitHub interface.
 
-## Visual regression testing for theme
+## Visual Regression Testing for Theme
 
 The repository includes [BackstopJS](https://github.com/garris/BackstopJS) to test visual changes to the site theme by comparing a set of reference images for different screen sizes. Anytime the CSS styles are changed, use BackstopJS to test locally:
 

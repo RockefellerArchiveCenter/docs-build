@@ -1,8 +1,8 @@
 /**
 Breakpoints map
 **/
-$break-md: 580px;
-$break-lg: 1024px;
+$break-md: 36.25em;
+$break-lg: 64em;
 
 @mixin md-up {
   @media screen and (min-width: $break-md) { @content; }
