@@ -3,16 +3,16 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - base
       - development
+  release:
+    types: [published]
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     environment:
-      name: ${{ github.ref_name }}
+      name: ${{ github.event_name == 'release' && 'base' || github.ref_name }}
 
     env:
       APP_NAME: docs-build
