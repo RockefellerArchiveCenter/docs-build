@@ -45,8 +45,7 @@ Layout for documentation page based on rockarch.org styles
   margin-left: 0;
 
   @include lg-up {
-    grid-column: 3 / span 7;
-    padding-left: 35px;
+    grid-column: 4 / span 7;
   }
 }
 
@@ -65,7 +64,8 @@ Layout for documentation page based on rockarch.org styles
   margin-bottom: 10px;
 
   @include lg-up {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 3;
+    padding-right: 40px;
   }
 }
 
@@ -122,6 +122,11 @@ Table of contents styles
     background: $rust-red;
     color: $desert-grey;
   }
+}
+
+.toc__title,
+.toc__link-item {
+  overflow-wrap: break-word; 
 }
 
 /**
