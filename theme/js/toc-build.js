@@ -19,7 +19,7 @@
 
     function createLink (header) {
       var innerText = (header.textContent === undefined) ? header.innerText : header.textContent;
-      return "<a class='toc__link-item' href='#" + fixedEncodeURIComponent(header.id) + "' >" + innerText + "</a>";
+      return "<li><a class='toc__link-item' href='#" + fixedEncodeURIComponent(header.id) + "' >" + innerText + "</a></li>";
     }
 
     var headers = $(settings.headers).filter(function() {

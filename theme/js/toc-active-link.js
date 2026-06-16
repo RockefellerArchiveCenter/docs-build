@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function updateActiveLink(scrollPosition) {
     const headers = document.querySelectorAll('h2');
-    const tocLinkItems = document.querySelectorAll('#current > a.toc__link-item'); // Select all TOC links
+    const tocLinkItems = document.querySelectorAll('#current > li > a.toc__link-item'); // Select all TOC links
 
     let currentHeader;
     let scrollingDown = scrollPosition > lastScrollPosition;
