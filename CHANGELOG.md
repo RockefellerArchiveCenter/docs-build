@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.2](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.1...v1.0.2) (2026-08-03)
+
+
+### Bug Fixes
+
+* **deps:** Scheduled dependency updates ([0810d2f](https://github.com/RockefellerArchiveCenter/docs-build/commit/0810d2f512ed583391b3b73f2fb6d9c1bc771ab7))
+* **deps:** Scheduled dependency updates ([0810d2f](https://github.com/RockefellerArchiveCenter/docs-build/commit/0810d2f512ed583391b3b73f2fb6d9c1bc771ab7))
+* **deps:** Scheduled dependency updates ([f458986](https://github.com/RockefellerArchiveCenter/docs-build/commit/f45898655971684d0f9089d4bfc460bc0a4d8444))
+* **deps:** Scheduled dependency updates ([f458986](https://github.com/RockefellerArchiveCenter/docs-build/commit/f45898655971684d0f9089d4bfc460bc0a4d8444))
+* **deps:** Scheduled dependency updates ([9289673](https://github.com/RockefellerArchiveCenter/docs-build/commit/9289673bccf1733e55c077edba4b5e88540d1514))
+
 ## [1.0.1](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.0...v1.0.1) (2026-07-06)
 
 
