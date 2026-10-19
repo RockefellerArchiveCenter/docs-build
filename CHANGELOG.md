@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.5](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.4...v1.0.5) (2026-10-19)
+
+
+### Bug Fixes
+
+* update reading room hours in footer ([2cc3bb8](https://github.com/RockefellerArchiveCenter/docs-build/commit/2cc3bb8057e1f268559f638ad2e614c45e828cc5))
+
 ## [1.0.4](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.3...v1.0.4) (2026-10-06)
 
 
