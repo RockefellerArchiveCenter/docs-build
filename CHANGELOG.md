@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.6](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.5...v1.0.6) (2026-10-21)
+
+
+### Bug Fixes
+
+* pip in dockerfile ([18b4221](https://github.com/RockefellerArchiveCenter/docs-build/commit/18b422105e73eda074bdf24439c9fda23222e458))
+* pip in dockerfile ([596794c](https://github.com/RockefellerArchiveCenter/docs-build/commit/596794c8c8e041e948238ab790780fbfb900dd31))
+* pip in dockerfile ([596794c](https://github.com/RockefellerArchiveCenter/docs-build/commit/596794c8c8e041e948238ab790780fbfb900dd31))
+* pip in dockerfile ([23c289b](https://github.com/RockefellerArchiveCenter/docs-build/commit/23c289b11e3509f1940d9d6f06df4d454fa13684))
+* pip in Dockerfile ([18b4221](https://github.com/RockefellerArchiveCenter/docs-build/commit/18b422105e73eda074bdf24439c9fda23222e458))
+
 ## [1.0.5](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.4...v1.0.5) (2026-10-19)
 
 
