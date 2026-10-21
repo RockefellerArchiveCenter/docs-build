@@ -21,7 +21,8 @@ RUN gem update --system && \
 
 # Install Python dependencies
 ADD requirements.txt ${LAMBDA_TASK_ROOT}
-RUN pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
+RUN python -m pip install --upgrade "pip>=26.2.2" && \
+    python -m pip install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
 COPY update.py ${LAMBDA_TASK_ROOT}
 COPY repositories.yml ${LAMBDA_TASK_ROOT}
