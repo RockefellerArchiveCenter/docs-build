@@ -170,6 +170,15 @@ Text that is visually highlighted as an example.
 }
 
 /**
+Wrap long inline code and links (e.g. URLs) so content reflows on small/magnified screens.
+Code blocks (pre) are left alone because they scroll horizontally within their own box.
+**/
+#documentation :not(pre) > code,
+#documentation a {
+  overflow-wrap: anywhere;
+}
+
+/**
 Add margin to superscript footnote.
 **/
 .footnote {
