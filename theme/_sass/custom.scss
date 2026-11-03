@@ -179,6 +179,14 @@ Code blocks (pre) are left alone because they scroll horizontally within their o
 }
 
 /**
+Scale images to fit their container.
+**/
+#documentation img {
+    max-width: 100%; /* 2 */
+    height: auto;
+  }
+
+/**
 Add margin to superscript footnote.
 **/
 .footnote {
