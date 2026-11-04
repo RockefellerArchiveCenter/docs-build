@@ -1,0 +1,19 @@
+{%- assign slug = page.path | split: '/' | first -%}
+{%- assign doc = site.data[slug] -%}
+{%- assign page_slug = page.name | split: '.' | first -%}
+{%- assign toc_entry = doc.pages | where_exp: 'p', 'p[1] == page_slug' | first -%}
+{%- if doc -%}
+<nav class="breadcrumbs-wrapper wrapper" aria-label="breadcrumbs">
+  <div class="grid container">
+    <ol class="breadcrumbs docs-page__breadcrumbs mx-15">
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="{{ site.baseurl }}/">Home</a></li>
+      {%- if page_slug == 'index' %}
+      <li class="breadcrumbs__item" aria-current="page">{{ doc.title }}</li>
+      {%- else %}
+      <li class="breadcrumbs__item"><a class="breadcrumbs__link" href="{{ site.baseurl }}/{{ slug }}/">{{ doc.title }}</a></li>
+      <li class="breadcrumbs__item" aria-current="page">{{ toc_entry[0] | default: page.title }}</li>
+      {%- endif %}
+    </ol>
+  </div>
+</nav>
+{%- endif -%}

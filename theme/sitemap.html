@@ -1,0 +1,31 @@
+---
+layout: default
+title: Site map
+permalink: /sitemap/
+---
+
+{%- comment -%}
+site.data can't be sorted directly, so copy each documentation's data into an array and sort that by title.
+{%- endcomment -%}
+{%- assign docs = "" | split: "" -%}
+{%- for file in site.data -%}
+  {%- assign docs = docs | push: file[1] -%}
+{%- endfor -%}
+{%- assign docs = docs | sort: "title" -%}
+
+<ul>
+  <li><a href="{{ site.baseurl }}/about/">About</a></li>
+  {%- for doc in docs %}
+  <li>
+    <a href="{{ site.baseurl }}/{{ doc.slug }}/">{{ doc.title }}</a>
+    {% if doc.public == false %}<div class="badge badge--orange">Internal Only</div>{% endif %}
+    {%- if doc.pages.size > 1 %}
+    <ul>
+      {%- for p in doc.pages %}{% if p[1] != 'index' %}
+      <li><a href="{{ site.baseurl }}/{{ doc.slug }}/{{ p[1] }}/">{{ p[0] }}</a></li>
+      {%- endif %}{% endfor %}
+    </ul>
+    {%- endif %}
+  </li>
+  {%- endfor %}
+</ul>
