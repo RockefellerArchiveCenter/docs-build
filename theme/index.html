@@ -25,7 +25,7 @@ title: Rockefeller Archive Center Documentation
         <td><a href="{{site.baseurl}}{{doc.slug}}">{{ doc.title }}</a>
           {% if doc.public == false %}<div class="badge badge--orange"> Internal Only</div>{% endif %}
         </td>
-        <td>{{doc.updated | date: "%b %e, %Y"}}</td>
+        <td data-order="{{doc.updated | date: '%Y-%m-%d'}}">{{doc.updated | date: "%b %e, %Y"}}</td>
       </tr>
       {% endfor %}
   </tbody>

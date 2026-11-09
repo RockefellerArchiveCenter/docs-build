@@ -3,14 +3,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+  <title>
+    {%- if page.url == "/" -%}
+      Rockefeller Archive Center Documentation
+    {%- elsif page.title -%}
+      {{ page.title | escape }} - {{ site.title | escape }}
+    {%- else -%}
+      {{ site.title | escape }}
+    {%- endif -%}
+  </title>
   {%- for file in site.data -%}
     {%- if page.dir contains file[0] -%}
     {%- assign doc = file[1] -%}
       <meta name="description" content="{%- if doc.description -%}{{ doc.description }}{%- else -%}{{ site.description }}{%- endif -%}">
     {%- endif -%}
   {%- endfor -%}
-  <link rel="stylesheet" href="https://assets.rockarch.org/v2.0.11/main.min.css">
+  <link rel="stylesheet" href="https://assets.rockarch.org/v2.1.6/main.min.css">
   <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
