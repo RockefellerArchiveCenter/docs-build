@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.1.0](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.7...v1.1.0) (2026-11-09)
+
+
+### Features
+
+* add breadcrumbs to docs ([154460f](https://github.com/RockefellerArchiveCenter/docs-build/commit/154460fd9f2ac489d238da19f7e52175dcb3d3da))
+* add site map to secondary footer ([cbdb35d](https://github.com/RockefellerArchiveCenter/docs-build/commit/cbdb35d90696a3714dc0708e30e143b07b682610))
+
+
+### Bug Fixes
+
+* keep long text strings with no spaces from extending out of viewport on small/magnified screens ([b65b975](https://github.com/RockefellerArchiveCenter/docs-build/commit/b65b975f70648407e99f36a97a97483df6bb26e3))
+* scale imgs to fit container ([5528b55](https://github.com/RockefellerArchiveCenter/docs-build/commit/5528b558b9fa22c56cd26921a62ab3e232fd0ff2))
+* sort dates in homepage table correctly ([00c5f6a](https://github.com/RockefellerArchiveCenter/docs-build/commit/00c5f6a49c50e60412fa5dd1b0a794f7356a4889))
+* update headers for a11y sprint ([a4c8435](https://github.com/RockefellerArchiveCenter/docs-build/commit/a4c843541248deb01df617d4f165cb3fec9260c9))
+* update headers for a11y sprint ([a4c8435](https://github.com/RockefellerArchiveCenter/docs-build/commit/a4c843541248deb01df617d4f165cb3fec9260c9))
+* update headers for accessibility ([1f547d5](https://github.com/RockefellerArchiveCenter/docs-build/commit/1f547d545d857165fcb0e0cdbe677982cd4343a3))
+
 ## [1.0.7](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.6...v1.0.7) (2026-11-02)
 
 
