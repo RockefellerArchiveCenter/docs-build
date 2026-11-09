@@ -39,7 +39,8 @@ main .container {
 Layout for documentation page based on rockarch.org styles
 **/
 .docs-page__content,
-.docs-page__title {
+.docs-page__title,
+.docs-page__breadcrumbs {
   grid-column: 1 / span 12;
   padding-left: 0;
   margin-left: 0;
@@ -52,11 +53,18 @@ Layout for documentation page based on rockarch.org styles
 .docs-page__title-container {
   min-height: 168px;
   background: $water-blue;
-  margin-bottom: 80px;
 }
 
 .docs-page__title {
   margin-top: 1.2em;
+}
+
+/**
+Breadcrumbs wrapper
+**/
+.breadcrumbs-wrapper {
+  margin-bottom: 80px;
+  background-color: $desert-grey;
 }
 
 .docs-page__sidebar {
@@ -168,6 +176,23 @@ Text that is visually highlighted as an example.
     margin-bottom: 0;
   }
 }
+
+/**
+Wrap long inline code and links (e.g. URLs) so content reflows on small/magnified screens.
+Code blocks (pre) are left alone because they scroll horizontally within their own box.
+**/
+#documentation :not(pre) > code,
+#documentation a {
+  overflow-wrap: anywhere;
+}
+
+/**
+Scale images to fit their container.
+**/
+#documentation img {
+    max-width: 100%; /* 2 */
+    height: auto;
+  }
 
 /**
 Add margin to superscript footnote.
