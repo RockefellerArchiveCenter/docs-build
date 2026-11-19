@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.2](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.1.1...v1.1.2) (2026-11-19)
+
+
+### Bug Fixes
+
+* update deploy workflow ([f5f7003](https://github.com/RockefellerArchiveCenter/docs-build/commit/f5f7003d6447628f5dd02a673d99e2739e172ce6))
+* update deploy workflow ([cbd68e5](https://github.com/RockefellerArchiveCenter/docs-build/commit/cbd68e5f3e3dc100ac3b765aea32d8eb182cf41a))
+* update deploy workflow ([08cde00](https://github.com/RockefellerArchiveCenter/docs-build/commit/08cde003807a6bbc341ae5e84319e6e23094036a))
+
 ## [1.1.1](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.1.0...v1.1.1) (2026-11-19)
 
 
