@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.1](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.1.0...v1.1.1) (2026-11-19)
+
+
+### Bug Fixes
+
+* update readme ([3d66d12](https://github.com/RockefellerArchiveCenter/docs-build/commit/3d66d12a08481483859bafe6f187f6230ca8dcc1))
+* update readme ([9263d20](https://github.com/RockefellerArchiveCenter/docs-build/commit/9263d208c4a46299ced77813ff9251b9c698785a))
+* update readme ([9263d20](https://github.com/RockefellerArchiveCenter/docs-build/commit/9263d208c4a46299ced77813ff9251b9c698785a))
+* update readme ([80e274d](https://github.com/RockefellerArchiveCenter/docs-build/commit/80e274de75e4c5a8588d9c305b54caec9a864b1c))
+
 ## [1.1.0](https://github.com/RockefellerArchiveCenter/docs-build/compare/v1.0.7...v1.1.0) (2026-11-09)
 
 
